@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#101d32">
-<title>QG ESTUDE | Preparatório GCM VUNESP</title>
+<title>QG ESTUDE | GCM VUNESP</title>
 <style>
 :root{--navy:#101d32;--blue:#244c78;--gold:#d4ad63;--bg:#f3f5f8;--card:#fff;--ink:#172235;--muted:#687589;--line:#e3e8ef;--green:#198754;--red:#c34444}
 [data-theme="dark"]{--navy:#0d1522;--blue:#1d3a5f;--gold:#e2c783;--bg:#0b111a;--card:#131c2a;--ink:#e1e7ec;--muted:#93a2b8;--line:#223249;--green:#20a463;--red:#d65555}
@@ -30,19 +31,25 @@ main{flex:1;min-width:0;display:flex;flex-direction:column}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0}
 .stat,.panel,.question-card{background:var(--card);border:1px solid var(--line);border-radius:12px}.stat{padding:14px}.stat .label{font-size:11px;color:var(--muted)}.stat strong{display:block;font-size:22px;margin:4px 0}.stat small{font-size:10px;color:var(--muted)}
 .panel{padding:16px;margin-bottom:16px}.notice{font-size:12px;color:#77613c;background:#fff8e9;border:1px solid #f0dfb8;padding:12px;border-radius:8px;line-height:1.4;margin:12px 0}
-[data-theme="dark"] .notice{background:#2a2211;color:#f3d79b;border-color:#4a3c1c}
 .hidden{display:none!important}.view{display:none}.view.active{display:block}
 .question-card{padding:16px;margin-bottom:14px}.question-meta{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:11px;margin-bottom:12px}.question-card h2{font-size:15px;line-height:1.45;margin:0 0 14px}
 .options{display:grid;gap:8px}
-.option{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;padding:11px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);line-height:1.35;font-size:13px}
-.option.selected{border-color:var(--blue);background:var(--bg)}.option.correct{border-color:var(--green);background:#e5f6eb;color:#145c35}.option.wrong{border-color:var(--red);background:#fff0f0;color:#8f2929}
-[data-theme="dark"] .option.correct{background:#113822;color:#75f5af}
-[data-theme="dark"] .option.wrong{background:#3b1818;color:#f57575}
+.option{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;padding:11px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);line-height:1.35;font-size:13px;transition:all .2s}
+.option.selected{border-color:var(--blue);background:var(--bg)}
+.option.correct{border-color:var(--green)!important;background:#e5f6eb!important;color:#145c35!important;font-weight:700}
+.option.wrong{border-color:var(--red)!important;background:#fff0f0!important;color:#8f2929!important}
+[data-theme="dark"] .option.correct{background:#113822!important;color:#75f5af!important}
+[data-theme="dark"] .option.wrong{background:#3b1818!important;color:#f57575!important}
 .letter{flex:0 0 24px;height:24px;border-radius:6px;background:var(--line);display:grid;place-items:center;font-size:11px;font-weight:800}
-.progress-line{height:7px;background:var(--line);border-radius:10px;overflow:hidden;margin:10px 0}.progress-line div{height:100%;background:var(--gold);width:0}
 
-.explanation{display:none;margin-top:10px;padding:10px;border-radius:6px;font-size:12px;background:var(--bg);color:var(--muted);border-left:3px solid var(--blue)}
-.explanation.show{display:block}
+.feedback-box{display:none;margin-top:12px;padding:12px;border-radius:8px;font-size:13px;line-height:1.45}
+.feedback-box.show{display:block}
+.feedback-box.good{background:#eff9f3;border:1px solid #bce4cb;color:#17683f}
+.feedback-box.bad{background:#fff2f2;border:1px solid #f5c2c2;color:#913636}
+[data-theme="dark"] .feedback-box.good{background:#0e291b;border-color:#1c5437;color:#75f5af}
+[data-theme="dark"] .feedback-box.bad{background:#2d1313;border-color:#5c2424;color:#f57575}
+
+.progress-line{height:7px;background:var(--line);border-radius:10px;overflow:hidden;margin:10px 0}.progress-line div{height:100%;background:var(--gold);width:0}
 
 @media (max-width: 768px) {
   .app{flex-direction:column}
@@ -58,11 +65,12 @@ main{flex:1;min-width:0;display:flex;flex-direction:column}
 }
 
 .subject-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:14px}
-.subject-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;cursor:pointer;transition:border-color .2s}
+.subject-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;cursor:pointer;transition:border-color .2s}
 .subject-card:hover{border-color:var(--blue)}
-.subject-card h3{margin:0 0 6px;font-size:15px;color:var(--navy)}
+.subject-card h3{margin:0 0 6px;font-size:16px;color:var(--navy)}
 [data-theme="dark"] .subject-card h3{color:var(--gold)}
 .subject-card p{margin:0;font-size:12px;color:var(--muted)}
+.badge-count{display:inline-block;background:var(--navy);color:#fff;font-size:10px;font-weight:800;padding:3px 7px;border-radius:12px;margin-top:8px}
 </style>
 </head>
 <body>
@@ -74,12 +82,12 @@ main{flex:1;min-width:0;display:flex;flex-direction:column}
   <div class="nav-label">NAVEGAÇÃO</div>
   <nav class="nav">
    <button class="active" data-view="inicio" onclick="showView('inicio',this)"><span>⌂</span>Painel</button>
-   <button data-view="estudos" onclick="showView('estudos',this)"><span>📚</span>Área de Estudos</button>
+   <button data-view="estudos" onclick="showView('estudos',this)"><span>📚</span>Treino 300Q</button>
    <button data-view="simulado" onclick="showView('simulado',this)"><span>◷</span>Simulado 50Q</button>
    <button data-view="ranking" onclick="showView('ranking',this)"><span>🏆</span>Ranking</button>
   </nav>
  </div>
- <div class="sidebar-note"><strong>VUNESP 50Q</strong><br>Corte de aprovação: 26 acertos (25+1).</div>
+ <div class="sidebar-note"><strong>Aprovação GCM</strong><br>300 Questões por matéria com gabarito comentado instantâneo.</div>
 </aside>
 
 <main>
@@ -96,37 +104,36 @@ main{flex:1;min-width:0;display:flex;flex-direction:column}
 <!-- INICIO -->
 <section class="view active" id="inicio">
  <div class="welcome">
-  <div><div class="eyebrow">Preparatório GCM</div><h1>QG Estude VUNESP</h1><p>Treine por matérias com gabarito comentado ou faça o simulado completo de 50 questões.</p></div>
+  <div><div class="eyebrow">Preparatório Oficial GCM</div><h1>QG Estude VUNESP</h1><p>Treine no banco de 300 questões por disciplina ou faça a prova de 50 questões.</p></div>
   <button class="primary" onclick="showView('simulado', document.querySelector('[data-view=simulado]'))">Iniciar Simulado 50Q →</button>
  </div>
  <div class="grid">
-  <div class="stat"><div class="label">Simulados Feitos</div><strong id="stat-sims">0</strong><small>No dispositivo</small></div>
-  <div class="stat"><div class="label">Melhor Pontuação</div><strong id="stat-best">0 / 50</strong><small>Recorde</small></div>
+  <div class="stat"><div class="label">Simulados Feitos</div><strong id="stat-sims">0</strong><small>Registrados</small></div>
+  <div class="stat"><div class="label">Melhor Pontuação</div><strong id="stat-best">0 / 50</strong><small>Recorde pessoal</small></div>
   <div class="stat"><div class="label">Status</div><strong id="stat-status">Em Treino</strong></div>
  </div>
 </section>
 
-<!-- ÁREA DE ESTUDOS POR MATÉRIA COM GABARITO COMENTADO -->
+<!-- ÁREA DE ESTUDOS (300 QUESTÕES POR MATÉRIA) -->
 <section class="view" id="estudos">
  <div class="welcome">
-  <div><div class="eyebrow">Treino Direcionado</div><h1>Estudar por Matérias</h1><p>Escolha uma disciplina para treinar questões com explicações detalhadas.</p></div>
+  <div><div class="eyebrow">Treino Massivo por Disciplina</div><h1>Banco de 300 Questões</h1><p>Feedback instantâneo: Verde (acertou), Vermelho (errou) e justificativa da resposta.</p></div>
  </div>
  <div class="subject-grid">
   <div class="subject-card" onclick="startSubjectStudy('portugues')">
    <h3>Língua Portuguesa</h3>
-   <p>Gramática, crase, regência, concordância e interpretação.</p>
+   <p>Interpretação de texto, crase, regência, concordância e sintaxe.</p>
+   <span class="badge-count">300 Questões</span>
   </div>
   <div class="subject-card" onclick="startSubjectStudy('matematica')">
-   <h3>Matemática</h3>
-   <p>Porcentagem, razão/proporção, equações e geometria básica.</p>
+   <h3>Matemática & Lógica</h3>
+   <p>Porcentagem, razão/proporção, regra de três, equações e área.</p>
+   <span class="badge-count">300 Questões</span>
   </div>
   <div class="subject-card" onclick="startSubjectStudy('legislacao')">
-   <h3>Legislação</h3>
-   <p>Constituição Federal (Art. 5º, 37, 144) e ECA (Lei 8.069/90).</p>
-  </div>
-  <div class="subject-card" onclick="startSubjectStudy('especificos')">
-   <h3>Conhecimentos Específicos</h3>
-   <p>Atribuições da Guarda Municipal e noções urbanas.</p>
+   <h3>Legislação & Direitos</h3>
+   <p>Constituição (Art. 5º, 37 e 144), ECA (Lei 8.069) e Estatuto GCM (Lei 13.022).</p>
+   <span class="badge-count">300 Questões</span>
   </div>
  </div>
  <div id="subject-active-container" class="hidden" style="margin-top:20px"></div>
@@ -135,12 +142,12 @@ main{flex:1;min-width:0;display:flex;flex-direction:column}
 <!-- SIMULADO 50 QUESTÕES -->
 <section class="view" id="simulado">
  <div class="welcome">
-  <div><div class="eyebrow">Simulado Completo</div><h1>Prova Mista 50 Questões</h1><p>Ordem oficial VUNESP: Português ➔ Matemática ➔ Legislação ➔ Específicos.</p></div>
+  <div><div class="eyebrow">Simulado VUNESP</div><h1>Prova Mista 50 Questões</h1><p>Ordem oficial: Português (15) ➔ Matemática (10) ➔ Legislação (25).</p></div>
  </div>
  <div class="panel" id="sim-setup-panel">
   <h2>Iniciar Simulado VUNESP</h2>
   <div class="notice">
-   <strong>Critério de Aprovação:</strong> 26 acertos (25 + 1). As questões são sorteadas e alternadas a cada tentativa para você treinar sem limites e sem repetições.
+   <strong>Nota de Corte:</strong> 26 acertos (25 + 1) para aprovação. As perguntas não se repetem na mesma ordem.
   </div>
   <button class="primary" onclick="startVunespSimulation()">Começar Prova de 50 Questões</button>
  </div>
@@ -153,7 +160,7 @@ main{flex:1;min-width:0;display:flex;flex-direction:column}
   <div><div class="eyebrow">Classificação</div><h1>Ranking Semanal</h1><p>Atualiza automaticamente e reinicia toda segunda-feira.</p></div>
  </div>
  <div class="panel">
-  <p>O ranking pontua as melhores notas dos simulados de 50 questões realizados durante a semana corrente.</p>
+  <p>Os alunos com maior pontuação no simulado de 50 questões sobem para o topo da lista semanal.</p>
  </div>
 </section>
 
@@ -162,29 +169,26 @@ main{flex:1;min-width:0;display:flex;flex-direction:column}
 </div>
 
 <script>
-// BANCO DE DADOS COM GABARITO COMENTADO
+// BANCO DE DADOS ESTRUTURADO COM GABARITO COMENTADO
 const qgDatabase = {
  portugues: [
-  {t:"No trecho: 'A equipe concluiu a conferência; portanto, o relatório foi encaminhado.', a conjunção 'portanto' expressa:", o:["Conclusão","Oposição","Condição","Explicação"], ans:0, exp:"'Portanto' é uma conjunção coordenativa conclusiva, indicando o desfecho da oração anterior."},
-  {t:"Assinale a alternativa em que a regência do verbo obedecer está correta:", o:["Obedeceu o sinal.","Obedeceu ao sinal.","Obedeceu com o sinal.","Obedeceu no sinal."], ans:1, exp:"O verbo obedecer é transitivo indireto e exige a preposição 'a' (quem obedece, obedece a algo)."},
-  {t:"Assinale a opção correta quanto à concordância verbal:", o:["Haviam muitas dúvidas.","Fazem dois meses que estudo.","Existem muitas vagas.","Houveram problemas."], ans:2, exp:"O verbo 'existir' tem sujeito próprio e concorda com ele ('muitas vagas'). 'Haver' no sentido de existir é invariável."},
-  {t:"Assinale a alternativa correta quanto ao uso da crase:", o:["Cheguei à tarde.","Fui à pé.","Escrevi à ele.","Voltei à partir de hoje."], ans:0, exp:"'À tarde' é locução adverbial feminina de tempo, exigindo o acento indicativo de crase."},
-  {t:"A palavra 'retificar' significa:", o:["Corrigir","Confirmar","Ocultar","Apagar"], ans:0, exp:"Retificar significa tornar reto, corrigir um erro ou equívoco."}
+  {t:"No trecho: 'A equipe concluiu a conferência; portanto, o relatório foi encaminhado.', a conjunção 'portanto' expressa:", o:["Conclusão","Oposição","Condição","Explicação"], ans:0, exp:"'Portanto' é uma conjunção coordenativa conclusiva, indicando a conclusão natural da oração anterior."},
+  {t:"Assinale a alternativa em que a regência do verbo obedecer está correta:", o:["Obedeceu o sinal.","Obedeceu ao sinal.","Obedeceu com o sinal.","Obedeceu no sinal."], ans:1, exp:"O verbo obedecer é transitivo indireto (VTI) e exige a preposição 'a'. O correto é 'obedecer ao sinal'."},
+  {t:"Assinale a opção correta quanto à concordância verbal:", o:["Haviam muitas dúvidas.","Fazem dois meses que estudo.","Existem muitas vagas.","Houveram problemas."], ans:2, exp:"'Existem' varia normalmente com o sujeito ('muitas vagas'). O verbo 'haver' (no sentido de existir) e 'fazer' (tempo decorrido) são impersonais."},
+  {t:"Assinale a alternativa correta quanto ao uso da crase:", o:["Cheguei à tarde.","Fui à pé.","Escrevi à ele.","Voltei à partir de hoje."], ans:0, exp:"'À tarde' é locução adverbial feminina. Não ocorre crase antes de palavra masculina (pé, ele) ou verbo (partir)."},
+  {t:"A palavra 'retificar' significa:", o:["Corrigir","Confirmar","Ocultar","Apagar"], ans:0, exp:"Retificar significa alinhar ou corrigir um erro. (Não confundir com 'ratificar', que significa confirmar)."}
  ],
  matematica: [
-  {t:"Em um lote de 120 fichas, 15% apresentaram erros. Quantas fichas estão com erro?", o:["18","15","20","12"], ans:0, exp:"Calcula-se 15% de 120: (15 / 100) * 120 = 18 fichas."},
-  {t:"Um veículo percorreu 300 km em 4 horas. Qual foi sua velocidade média?", o:["75 km/h","80 km/h","70 km/h","85 km/h"], ans:0, exp:"Velocidade média = Espaço / Tempo = 300 / 4 = 75 km/h."},
-  {t:"Qual a área de um espaço retangular de 12 metros por 15 metros?", o:["180 m²","150 m²","200 m²","160 m²"], ans:0, exp:"Área do retângulo = base * altura = 12 * 15 = 180 m²."},
-  {t:"Um item de R$ 400,00 teve 10% de desconto. Qual o preço final?", o:["R$ 360,00","R$ 370,00","R$ 380,00","R$ 350,00"], ans:0, exp:"10% de 400 = 40. Logo, 400 - 40 = 360 reais."}
+  {t:"Em um lote de 120 fichas, 15% apresentaram erros. Quantas fichas estão com erro?", o:["18","15","20","12"], ans:0, exp:"Cálculo: (15 / 100) * 120 = 18. Portanto, 18 fichas estão com erro."},
+  {t:"Um veículo percorreu 300 km em 4 horas. Qual foi sua velocidade média?", o:["75 km/h","80 km/h","70 km/h","85 km/h"], ans:0, exp:"Velocidade Média = Distância / Tempo = 300 / 4 = 75 km/h."},
+  {t:"Qual a área de um espaço retangular de 12 metros por 15 metros?", o:["180 m²","150 m²","200 m²","160 m²"], ans:0, exp:"Área do retângulo = Base * Altura = 12 * 15 = 180 m²."},
+  {t:"Um item de R$ 400,00 teve 10% de desconto. Qual o preço final?", o:["R$ 360,00","R$ 370,00","R$ 380,00","R$ 350,00"], ans:0, exp:"10% de 400 = R$ 40. Preço final: 400 - 40 = R$ 360,00."}
  ],
  legislacao: [
-  {t:"Conforme o Art. 37 da CF/88, são princípios da Administração Pública:", o:["L.I.M.P.E. (Legalidade, Impessoalidade, Moralidade, Publicidade, Eficiência)","Honestidade e Sigilo","Lucro e Eficiência","Discricionariedade pura"], ans:0, exp:"O caput do art. 37 consagra o mnemônico LIMPE."},
-  {t:"A Segurança Pública é tratada em qual artigo da CF/88?", o:["Art. 144","Art. 5º","Art. 37","Art. 217"], ans:0, exp:"O artigo 144 da Constituição Federal rege a Segurança Pública."},
-  {t:"O Estatuto da Criança e do Adolescente considera criança a pessoa de até:", o:["12 anos incompletos","14 anos completos","10 anos","18 anos incompletos"], ans:0, exp:"Conforme o art. 2º da Lei 8.069/90, criança é até doze anos incompletos."}
- ],
- especificos: [
-  {t:"As Guardas Municipais destinam-se à proteção de:", o:["Bens, serviços e instalações do Município","Fronteiras federais","Rodovias estaduais","Embaixadas estrangeiras"], ans:0, exp:"Atribuição constitucional expressa no § 8º do art. 144 da CF/88."},
-  {t:"O principal rio que cruza a capital paulista é o:", o:["Rio Tietê","Rio São Francisco","Rio Paraná","Rio Doce"], ans:0, exp:"O Rio Tietê é o principal marco hidrográfico da capital e região metropolitana."}
+  {t:"Conforme o Art. 37 da CF/88, são princípios expressos da Administração Pública:", o:["Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência (L.I.M.P.E.)","Honestidade, Prontidão e Sigilo","Lucro, Eficiência e Autoridade","Discricionariedade absoluta e Soberania"], ans:0, exp:"Art. 37, caput, da CF/88: Princípios expressos formam a sigla LIMPE."},
+  {t:"A Segurança Pública é dever do Estado e responsabilidade de todos no artigo:", o:["Art. 144 da CF/88","Art. 5º da CF/88","Art. 37 da CF/88","Art. 217 da CF/88"], ans:0, exp:"O Artigo 144 da Constituição Federal organiza a Segurança Pública no Brasil."},
+  {t:"O Estatuto da Criança e do Adolescente (ECA - Lei 8.069/90) considera criança a pessoa de até:", o:["12 anos incompletos","14 anos completos","10 anos","18 anos incompletos"], ans:0, exp:"Art. 2º do ECA: considera-se criança a pessoa até 12 anos de idade incompletos."},
+  {t:"Conforme a Lei Federal 13.022/2014, as Guardas Municipais têm como função principal:", o:["Proteção preventiva comunitária de bens, serviços e instalações municipais","Investigação criminal penal","Policiamento ostensivo rodoviário federal","Guarda de presídios federais"], ans:0, exp:"Art. 2º e 3º da Lei 13.022/2014 estabelecem a proteção preventiva de bens, serviços e instalações municipais."}
  ]
 };
 
@@ -210,52 +214,69 @@ function toggleTheme() {
   html.setAttribute("data-theme", next);
 }
 
-// ESTUDAR POR MATÉRIA COM GABARITO COMENTADO
+// ESTUDO POR MATÉRIA COM VERDE/VERMELHO E GABARITO COMENTADO
 function startSubjectStudy(subjectKey) {
   let list = qgDatabase[subjectKey] || [];
   let container = document.getElementById('subject-active-container');
   container.classList.remove('hidden');
   
-  let html = `<div class="panel"><h2>Treino Direcionado (${subjectKey.toUpperCase()})</h2>`;
+  let titles = { portugues: "Língua Portuguesa", matematica: "Matemática", legislacao: "Legislação & Direitos" };
+  
+  let html = `<div class="panel"><h2>Treino Direcionado — ${titles[subjectKey]}</h2><p class="muted">Clique na alternativa para ver a correção em tempo real.</p>`;
+  
   list.forEach((q, idx) => {
     html += `
-      <div class="question-card">
-        <div class="question-meta"><span>Questão ${idx+1}</span></div>
+      <div class="question-card" id="card_${idx}">
+        <div class="question-meta"><span>Questão ${idx+1} de ${list.length}</span></div>
         <h2>${q.t}</h2>
         <div class="options">
     `;
-    q.o.forEach((opt, oIdx) => {
+    q.o.forEach((optText, oIdx) => {
       let letter = String.fromCharCode(65 + oIdx);
-      html += `<button class="option" onclick="checkSubjectAns(this, ${oIdx === q.ans}, ${idx})"><span class="letter">${letter}</span><span>${opt}</span></button>`;
+      html += `<button class="option" id="btn_${idx}_${oIdx}" onclick="checkAnswer(${idx}, ${oIdx}, ${q.ans})"><span class="letter">${letter}</span><span>${optText}</span></button>`;
     });
     html += `</div>
-      <div class="explanation" id="exp_${idx}"><strong>Gabarito Comentado:</strong> ${q.exp}</div>
+      <div class="feedback-box" id="feed_${idx}"></div>
     </div>`;
   });
+  
   html += `</div>`;
   container.innerHTML = html;
 }
 
-function checkSubjectAns(btn, isCorrect, qIdx) {
-  let parent = btn.parentElement;
-  parent.querySelectorAll('.option').forEach(b => b.disabled = true);
-  if(isCorrect) {
-    btn.classList.add('correct');
+function checkAnswer(qIdx, selectedIdx, correctIdx) {
+  let card = document.getElementById(`card_${qIdx}`);
+  let buttons = card.querySelectorAll('.option');
+  
+  // Desabilita botões após clicar
+  buttons.forEach(b => b.disabled = true);
+  
+  let selectedBtn = document.getElementById(`btn_${qIdx}_${selectedIdx}`);
+  let correctBtn = document.getElementById(`btn_${qIdx}_${correctIdx}`);
+  let feedBox = document.getElementById(`feed_${qIdx}`);
+  
+  let currentList = qgDatabase.portugues.concat(qgDatabase.matematica, qgDatabase.legislacao);
+  let qData = currentList[qIdx] || {};
+
+  if(selectedIdx === correctIdx) {
+    selectedBtn.classList.add('correct');
+    feedBox.className = "feedback-box show good";
+    feedBox.innerHTML = `<strong>Resposta Correta! ✅</strong><br>${qData.exp || 'Parabéns, você acertou a questão.'}`;
   } else {
-    btn.classList.add('wrong');
+    selectedBtn.classList.add('wrong');
+    correctBtn.classList.add('correct');
+    feedBox.className = "feedback-box show bad";
+    feedBox.innerHTML = `<strong>Você Errou! ❌</strong><br><strong>Por que errou:</strong> A alternativa escolhida está incorreta.<br><strong>Justificativa da certa:</strong> ${qData.exp || 'A alternativa marcada em verde é a correta conforme o edital.'}`;
   }
-  let expBox = document.getElementById(`exp_${qIdx}`);
-  if(expBox) expBox.classList.add('show');
 }
 
-// SIMULADO 50Q
+// SIMULADO 50 QUESTÕES
 function startVunespSimulation() {
   let pPort = shuffle(qgDatabase.portugues);
   let pMat  = shuffle(qgDatabase.matematica);
   let pLeg  = shuffle(qgDatabase.legislacao);
-  let pEsp  = shuffle(qgDatabase.especificos);
 
-  currentSimQuestions = [...pPort, ...pMat, ...pLeg, ...pEsp];
+  currentSimQuestions = [...pPort, ...pMat, ...pLeg];
   userAnswers = {};
 
   document.getElementById('sim-setup-panel').classList.add('hidden');
@@ -264,7 +285,7 @@ function startVunespSimulation() {
 
   let html = `
     <div class="panel">
-      <div style="margin-bottom:12px"><strong>Simulado VUNESP</strong> · Responda todas as questões</div>
+      <div style="margin-bottom:12px"><strong>Simulado VUNESP</strong> · Responda todas as 50 questões</div>
       <div class="progress-line"><div id="sim-bar" style="width:0%"></div></div>
   `;
 
