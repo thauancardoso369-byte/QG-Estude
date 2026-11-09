@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="light">
 <head>
@@ -82,12 +81,12 @@ main{flex:1;min-width:0;display:flex;flex-direction:column}
   <div class="nav-label">NAVEGAÇÃO</div>
   <nav class="nav">
    <button class="active" data-view="inicio" onclick="showView('inicio',this)"><span>⌂</span>Painel</button>
-   <button data-view="estudos" onclick="showView('estudos',this)"><span>📚</span>Treino 300Q</button>
+   <button data-view="estudos" onclick="showView('estudos',this)"><span>📚</span>Treino por Matérias</button>
    <button data-view="simulado" onclick="showView('simulado',this)"><span>◷</span>Simulado 50Q</button>
    <button data-view="ranking" onclick="showView('ranking',this)"><span>🏆</span>Ranking</button>
   </nav>
  </div>
- <div class="sidebar-note"><strong>Aprovação GCM</strong><br>300 Questões por matéria com gabarito comentado instantâneo.</div>
+ <div class="sidebar-note"><strong>Aprovação GCM</strong><br>Questões com gabarito comentado e feedback verde/vermelho instantâneo.</div>
 </aside>
 
 <main>
@@ -104,7 +103,7 @@ main{flex:1;min-width:0;display:flex;flex-direction:column}
 <!-- INICIO -->
 <section class="view active" id="inicio">
  <div class="welcome">
-  <div><div class="eyebrow">Preparatório Oficial GCM</div><h1>QG Estude VUNESP</h1><p>Treine no banco de 300 questões por disciplina ou faça a prova de 50 questões.</p></div>
+  <div><div class="eyebrow">Preparatório Oficial GCM</div><h1>QG Estude VUNESP</h1><p>Treine no banco de questões por disciplina ou faça a prova de 50 questões.</p></div>
   <button class="primary" onclick="showView('simulado', document.querySelector('[data-view=simulado]'))">Iniciar Simulado 50Q →</button>
  </div>
  <div class="grid">
@@ -114,26 +113,26 @@ main{flex:1;min-width:0;display:flex;flex-direction:column}
  </div>
 </section>
 
-<!-- ÁREA DE ESTUDOS (300 QUESTÕES POR MATÉRIA) -->
+<!-- ÁREA DE ESTUDOS POR MATÉRIA -->
 <section class="view" id="estudos">
  <div class="welcome">
-  <div><div class="eyebrow">Treino Massivo por Disciplina</div><h1>Banco de 300 Questões</h1><p>Feedback instantâneo: Verde (acertou), Vermelho (errou) e justificativa da resposta.</p></div>
+  <div><div class="eyebrow">Treino Direcionado</div><h1>Banco de Questões VUNESP</h1><p>Feedback instantâneo: Verde (acertou), Vermelho (errou) e justificativa completa.</p></div>
  </div>
  <div class="subject-grid">
   <div class="subject-card" onclick="startSubjectStudy('portugues')">
    <h3>Língua Portuguesa</h3>
    <p>Interpretação de texto, crase, regência, concordância e sintaxe.</p>
-   <span class="badge-count">300 Questões</span>
+   <span class="badge-count" id="count-port">15 Questões</span>
   </div>
   <div class="subject-card" onclick="startSubjectStudy('matematica')">
    <h3>Matemática & Lógica</h3>
    <p>Porcentagem, razão/proporção, regra de três, equações e área.</p>
-   <span class="badge-count">300 Questões</span>
+   <span class="badge-count" id="count-mat">12 Questões</span>
   </div>
   <div class="subject-card" onclick="startSubjectStudy('legislacao')">
    <h3>Legislação & Direitos</h3>
    <p>Constituição (Art. 5º, 37 e 144), ECA (Lei 8.069) e Estatuto GCM (Lei 13.022).</p>
-   <span class="badge-count">300 Questões</span>
+   <span class="badge-count" id="count-leg">15 Questões</span>
   </div>
  </div>
  <div id="subject-active-container" class="hidden" style="margin-top:20px"></div>
@@ -142,12 +141,12 @@ main{flex:1;min-width:0;display:flex;flex-direction:column}
 <!-- SIMULADO 50 QUESTÕES -->
 <section class="view" id="simulado">
  <div class="welcome">
-  <div><div class="eyebrow">Simulado VUNESP</div><h1>Prova Mista 50 Questões</h1><p>Ordem oficial: Português (15) ➔ Matemática (10) ➔ Legislação (25).</p></div>
+  <div><div class="eyebrow">Simulado VUNESP</div><h1>Prova Mista 50 Questões</h1><p>Ordem oficial: Português ➔ Matemática ➔ Legislação.</p></div>
  </div>
  <div class="panel" id="sim-setup-panel">
   <h2>Iniciar Simulado VUNESP</h2>
   <div class="notice">
-   <strong>Nota de Corte:</strong> 26 acertos (25 + 1) para aprovação. As perguntas não se repetem na mesma ordem.
+   <strong>Nota de Corte:</strong> 26 acertos (25 + 1) para aprovação. As perguntas e alternativas mudam de ordem a cada tentativa.
   </div>
   <button class="primary" onclick="startVunespSimulation()">Começar Prova de 50 Questões</button>
  </div>
@@ -169,165 +168,48 @@ main{flex:1;min-width:0;display:flex;flex-direction:column}
 </div>
 
 <script>
-// BANCO DE DADOS ESTRUTURADO COM GABARITO COMENTADO
+// BANCO DE DADOS EXPANDIDO COM GABARITOS COMENTADOS COMPLETOS
 const qgDatabase = {
  portugues: [
-  {t:"No trecho: 'A equipe concluiu a conferência; portanto, o relatório foi encaminhado.', a conjunção 'portanto' expressa:", o:["Conclusão","Oposição","Condição","Explicação"], ans:0, exp:"'Portanto' é uma conjunção coordenativa conclusiva, indicando a conclusão natural da oração anterior."},
-  {t:"Assinale a alternativa em que a regência do verbo obedecer está correta:", o:["Obedeceu o sinal.","Obedeceu ao sinal.","Obedeceu com o sinal.","Obedeceu no sinal."], ans:1, exp:"O verbo obedecer é transitivo indireto (VTI) e exige a preposição 'a'. O correto é 'obedecer ao sinal'."},
-  {t:"Assinale a opção correta quanto à concordância verbal:", o:["Haviam muitas dúvidas.","Fazem dois meses que estudo.","Existem muitas vagas.","Houveram problemas."], ans:2, exp:"'Existem' varia normalmente com o sujeito ('muitas vagas'). O verbo 'haver' (no sentido de existir) e 'fazer' (tempo decorrido) são impersonais."},
-  {t:"Assinale a alternativa correta quanto ao uso da crase:", o:["Cheguei à tarde.","Fui à pé.","Escrevi à ele.","Voltei à partir de hoje."], ans:0, exp:"'À tarde' é locução adverbial feminina. Não ocorre crase antes de palavra masculina (pé, ele) ou verbo (partir)."},
-  {t:"A palavra 'retificar' significa:", o:["Corrigir","Confirmar","Ocultar","Apagar"], ans:0, exp:"Retificar significa alinhar ou corrigir um erro. (Não confundir com 'ratificar', que significa confirmar)."}
+  {t:"No trecho: 'A equipe concluiu a conferência; portanto, o relatório foi encaminhado.', a conjunção 'portanto' expressa:", o:["Conclusão","Oposição","Condição","Explicação"], ans:0, exp:"'Portanto' é uma conjunção coordenativa conclusiva, indicando o desfecho ou a conclusão da oração anterior."},
+  {t:"Assinale a alternativa em que a regência do verbo obedecer está correta conforme a norma-padrão:", o:["Obedeceu o sinal de trânsito.","Obedeceu ao sinal de trânsito.","Obedeceu com o sinal de trânsito.","Obedeceu no sinal de trânsito."], ans:1, exp:"O verbo 'obedecer' é transitivo indireto (VTI) e exige a preposição 'a'. Portanto, o correto é 'obedecer ao sinal'."},
+  {t:"Assinale a opção correta quanto à concordância verbal:", o:["Haviam muitas dúvidas no plantão.","Fazem dois meses que estudo para a GCM.","Existem muitas vagas no concurso.","Houveram vários incidentes na semana."], ans:2, exp:"'Existem' concorda com o sujeito 'muitas vagas'. Os verbos 'haver' (no sentido de existir) e 'fazer' (indicando tempo decorrido) são impessoais e ficam no singular."},
+  {t:"Assinale a alternativa correta quanto ao uso da crase:", o:["Cheguei à tarde para o treino.","Ele foi à pé até o batalhão.","Entreguei o documento à ele.","Assinei o termo à partir de hoje."], ans:0, exp:"'À tarde' é uma locução adverbial feminina de tempo. Não ocorre crase antes de palavras masculinas (pé, ele) ou de verbos no infinitivo (partir)."},
+  {t:"No contexto administrativo, a palavra 'retificar' significa:", o:["Corrigir uma informação incorreta","Confirmar o dado anterior","Ocultar o registro","Apagar o arquivo do sistema"], ans:0, exp:"'Retificar' significa corrigir ou emendar um erro. Já 'ratificar' significa confirmar."},
+  {t:"Assinale a alternativa com a grafia correta da palavra:", o:["Excessão","Exceção","Esceção","Eceção"], ans:1, exp:"A grafia correta da palavra é 'exceção' (com x e ç)."},
+  {t:"Na frase 'O guarda municipal abordou o suspeito', o termo 'o suspeito' exerce a função sintática de:", o:["Objeto Direto","Objeto Indireto","Sujeito","Complemento Nominal"], ans:0, exp:"Complementa o verbo transitivo direto 'abordou' sem a exigência de preposição."},
+  {t:"A vírgula foi empregada de forma INCORRETA em:", o:["O comandante, assinou o documento oficial.","João, apresente-se ao setor de instrução.","A viatura patrulhou a zona sul, ontem à noite.","Terminada a ocorrência, a equipe retornou."], ans:0, exp:"Não se deve separar o sujeito ('O comandante') do predicado ('assinou o documento') por vírgula."},
+  {t:"A palavra 'iminente' significa:", o:["Preststes a acontecer","Algo que já foi cancelado","Muito distante","Sem qualquer importância"], ans:0, exp:"'Iminente' refere-se a algo prestes a ocorrer. Não confundir com 'eminente', que significa ilustre ou elevado."},
+  {t:"Assinale o plural correto da palavra 'cidadão':", o:["Cidadões","Cidadãos","Cidadães","Cidadãos e cidadões"], ans:1, exp:"O plural correto e único de 'cidadão' é 'cidadãos'."},
+  {t:"Assinale o sinônimo adequado para a palavra 'idôneo':", o:["Confiável e honesto","Suspeito","Incompetente","Negligente"], ans:0, exp:"'Idôneo' refere-se a uma pessoa íntegra, honesta e adequada para o exercício de uma função."},
+  {t:"A oração que expressa uma ideia de contraste ou oposição é coordenada:", o:["Adversativa","Aditiva","Explicativa","Conclusiva"], ans:0, exp:"Orações adversativas expressam oposição (ex: mas, porém, todavia, contudo)."},
+  {t:"Assinale a opção com o pronome demonstrativo correto:", o:["Aquele","Alguém","Meu","Quem"], ans:0, exp:"'Aquele' é um pronome demonstrativo. 'Meu' é possessivo e 'alguém' é indefinido."},
+  {t:"Assinale a alternativa onde a colocação pronominal respeita a norma-padrão:", o:["Falou-me sobre o novo regulamento.","Me dê o relatório imediatamente.","Não entregaram-me os documentos.","Me disseram a verdade."], ans:0, exp:"Não se inicia frase com pronome oblíquo átono (ênclise correta em 'Falou-me')."},
+  {t:"O antônimo correto da palavra 'prudente' é:", o:["Imprudente","Consciente","Cauteloso","Atento"], ans:0, exp:"'Imprudente' é o oposto direto de prudente (aquele que não age com cautela)."}
  ],
  matematica: [
-  {t:"Em um lote de 120 fichas, 15% apresentaram erros. Quantas fichas estão com erro?", o:["18","15","20","12"], ans:0, exp:"Cálculo: (15 / 100) * 120 = 18. Portanto, 18 fichas estão com erro."},
-  {t:"Um veículo percorreu 300 km em 4 horas. Qual foi sua velocidade média?", o:["75 km/h","80 km/h","70 km/h","85 km/h"], ans:0, exp:"Velocidade Média = Distância / Tempo = 300 / 4 = 75 km/h."},
-  {t:"Qual a área de um espaço retangular de 12 metros por 15 metros?", o:["180 m²","150 m²","200 m²","160 m²"], ans:0, exp:"Área do retângulo = Base * Altura = 12 * 15 = 180 m²."},
-  {t:"Um item de R$ 400,00 teve 10% de desconto. Qual o preço final?", o:["R$ 360,00","R$ 370,00","R$ 380,00","R$ 350,00"], ans:0, exp:"10% de 400 = R$ 40. Preço final: 400 - 40 = R$ 360,00."}
+  {t:"Em um lote de 120 fichas, 15% apresentaram erros. Quantas fichas estão com erro?", o:["18","15","20","12"], ans:0, exp:"Cálculo: (15 / 100) * 120 = 18 fichas com erro."},
+  {t:"Um veículo da guarda percorreu 300 km em 4 horas. Qual foi a sua velocidade média?", o:["75 km/h","80 km/h","70 km/h","85 km/h"], ans:0, exp:"Velocidade Média = Distância / Tempo = 300 / 4 = 75 km/h."},
+  {t:"Qual é a área de um terreno retangular que mede 12 metros de largura por 15 metros de comprimento?", o:["180 m²","150 m²","200 m²","160 m²"], ans:0, exp:"Área = Base * Altura = 12 * 15 = 180 m²."},
+  {t:"Um equipamento de segurança que custava R$ 400,00 recebeu um desconto de 10%. Qual o preço final?", o:["R$ 360,00","R$ 370,00","R$ 380,00","R$ 350,00"], ans:0, exp:"10% de 400 = R$ 40. Preço final: 400 - 40 = R$ 360,00."},
+  {t:"Resolva a equação de 1º grau: 2x + 8 = 24. O valor de x é:", o:["8","10","6","12"], ans:0, exp:"2x = 24 - 8 => 2x = 16 => x = 8."},
+  {t:"Em 4 dias de patrulhamento foram registradas 20, 14, 8 e 18 ocorrências. Qual a média diária?", o:["15","14","16","13"], ans:0, exp:"Soma = 20 + 14 + 8 + 18 = 60. Média = 60 / 4 = 15 ocorrências/dia."},
+  {t:"Se 30% do efetivo de um batalhão corresponde a 45 guardas, qual é o total do efetivo?", o:["150 guardas","135 guardas","120 guardas","160 guardas"], ans:0, exp:"Regra de três: 30% -> 45 | 100% -> x. x = (45 * 100) / 30 = 150 guardas."},
+  {t:"Um terreno quadrado tem perímetro igual a 40 metros. Qual é a sua área?", o:["100 m²","160 m²","80 m²","120 m²"], ans:0, exp:"Lado = 40 / 4 = 10m. Área = 10 * 10 = 100 m²."},
+  {t:"Uma equipe realiza 6 vistorias a cada 2 horas. Mantendo o ritmo, quantas vistorias fará em 8 horas?", o:["24 vistorias","18 vistorias","20 vistorias","30 vistorias"], ans:0, exp:"Taxa = 6 / 2 = 3 vistorias/hora. Em 8 horas: 3 * 8 = 24 vistorias."},
+  {t:"Três guardas dividiram 90 relatórios em partes iguais. Quantos relatórios cada um analisou?", o:["30","25","35","40"], ans:0, exp:"Divisão simples: 90 / 3 = 30 relatórios para cada."},
+  {t:"Qual é o valor de 25% de 200?", o:["50","40","60","25"], ans:0, exp:"25% equivale a um quarto do total: 200 / 4 = 50."},
+  {t:"Se um mapa utiliza a escala de 1cm para cada 5km, qual a distância real representada por 4cm?", o:["20 km","15 km","25 km","10 km"], ans:0, exp:"Multiplicação direta: 4 cm * 5 km/cm = 20 km."}
  ],
  legislacao: [
-  {t:"Conforme o Art. 37 da CF/88, são princípios expressos da Administração Pública:", o:["Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência (L.I.M.P.E.)","Honestidade, Prontidão e Sigilo","Lucro, Eficiência e Autoridade","Discricionariedade absoluta e Soberania"], ans:0, exp:"Art. 37, caput, da CF/88: Princípios expressos formam a sigla LIMPE."},
-  {t:"A Segurança Pública é dever do Estado e responsabilidade de todos no artigo:", o:["Art. 144 da CF/88","Art. 5º da CF/88","Art. 37 da CF/88","Art. 217 da CF/88"], ans:0, exp:"O Artigo 144 da Constituição Federal organiza a Segurança Pública no Brasil."},
-  {t:"O Estatuto da Criança e do Adolescente (ECA - Lei 8.069/90) considera criança a pessoa de até:", o:["12 anos incompletos","14 anos completos","10 anos","18 anos incompletos"], ans:0, exp:"Art. 2º do ECA: considera-se criança a pessoa até 12 anos de idade incompletos."},
-  {t:"Conforme a Lei Federal 13.022/2014, as Guardas Municipais têm como função principal:", o:["Proteção preventiva comunitária de bens, serviços e instalações municipais","Investigação criminal penal","Policiamento ostensivo rodoviário federal","Guarda de presídios federais"], ans:0, exp:"Art. 2º e 3º da Lei 13.022/2014 estabelecem a proteção preventiva de bens, serviços e instalações municipais."}
- ]
-};
-
-let currentSimQuestions = [];
-let userAnswers = {};
-
-function showView(viewId, btn) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.getElementById(viewId).classList.add('active');
-  if(btn) {
-    document.querySelectorAll('.sidebar .nav button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }
-  document.getElementById('breadcrumb').textContent = document.querySelector(`[data-view="${viewId}"]`).textContent.trim();
-}
-
-function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
-
-function toggleTheme() {
-  let html = document.documentElement;
-  let current = html.getAttribute("data-theme");
-  let next = current === "dark" ? "light" : "dark";
-  html.setAttribute("data-theme", next);
-}
-
-// ESTUDO POR MATÉRIA COM VERDE/VERMELHO E GABARITO COMENTADO
-function startSubjectStudy(subjectKey) {
-  let list = qgDatabase[subjectKey] || [];
-  let container = document.getElementById('subject-active-container');
-  container.classList.remove('hidden');
-  
-  let titles = { portugues: "Língua Portuguesa", matematica: "Matemática", legislacao: "Legislação & Direitos" };
-  
-  let html = `<div class="panel"><h2>Treino Direcionado — ${titles[subjectKey]}</h2><p class="muted">Clique na alternativa para ver a correção em tempo real.</p>`;
-  
-  list.forEach((q, idx) => {
-    html += `
-      <div class="question-card" id="card_${idx}">
-        <div class="question-meta"><span>Questão ${idx+1} de ${list.length}</span></div>
-        <h2>${q.t}</h2>
-        <div class="options">
-    `;
-    q.o.forEach((optText, oIdx) => {
-      let letter = String.fromCharCode(65 + oIdx);
-      html += `<button class="option" id="btn_${idx}_${oIdx}" onclick="checkAnswer(${idx}, ${oIdx}, ${q.ans})"><span class="letter">${letter}</span><span>${optText}</span></button>`;
-    });
-    html += `</div>
-      <div class="feedback-box" id="feed_${idx}"></div>
-    </div>`;
-  });
-  
-  html += `</div>`;
-  container.innerHTML = html;
-}
-
-function checkAnswer(qIdx, selectedIdx, correctIdx) {
-  let card = document.getElementById(`card_${qIdx}`);
-  let buttons = card.querySelectorAll('.option');
-  
-  // Desabilita botões após clicar
-  buttons.forEach(b => b.disabled = true);
-  
-  let selectedBtn = document.getElementById(`btn_${qIdx}_${selectedIdx}`);
-  let correctBtn = document.getElementById(`btn_${qIdx}_${correctIdx}`);
-  let feedBox = document.getElementById(`feed_${qIdx}`);
-  
-  let currentList = qgDatabase.portugues.concat(qgDatabase.matematica, qgDatabase.legislacao);
-  let qData = currentList[qIdx] || {};
-
-  if(selectedIdx === correctIdx) {
-    selectedBtn.classList.add('correct');
-    feedBox.className = "feedback-box show good";
-    feedBox.innerHTML = `<strong>Resposta Correta! ✅</strong><br>${qData.exp || 'Parabéns, você acertou a questão.'}`;
-  } else {
-    selectedBtn.classList.add('wrong');
-    correctBtn.classList.add('correct');
-    feedBox.className = "feedback-box show bad";
-    feedBox.innerHTML = `<strong>Você Errou! ❌</strong><br><strong>Por que errou:</strong> A alternativa escolhida está incorreta.<br><strong>Justificativa da certa:</strong> ${qData.exp || 'A alternativa marcada em verde é a correta conforme o edital.'}`;
-  }
-}
-
-// SIMULADO 50 QUESTÕES
-function startVunespSimulation() {
-  let pPort = shuffle(qgDatabase.portugues);
-  let pMat  = shuffle(qgDatabase.matematica);
-  let pLeg  = shuffle(qgDatabase.legislacao);
-
-  currentSimQuestions = [...pPort, ...pMat, ...pLeg];
-  userAnswers = {};
-
-  document.getElementById('sim-setup-panel').classList.add('hidden');
-  let container = document.getElementById('sim-active-container');
-  container.classList.remove('hidden');
-
-  let html = `
-    <div class="panel">
-      <div style="margin-bottom:12px"><strong>Simulado VUNESP</strong> · Responda todas as 50 questões</div>
-      <div class="progress-line"><div id="sim-bar" style="width:0%"></div></div>
-  `;
-
-  currentSimQuestions.forEach((q, idx) => {
-    html += `
-      <div class="question-card">
-        <div class="question-meta"><span>Questão ${idx+1}</span></div>
-        <h2>${q.t}</h2>
-        <div class="options">
-    `;
-    q.o.forEach((optText, optIdx) => {
-      let letter = String.fromCharCode(65 + optIdx);
-      html += `
-        <button class="option" id="q_${idx}_opt_${optIdx}" onclick="selectSimOpt(${idx}, ${optIdx})">
-          <span class="letter">${letter}</span>
-          <span>${optText}</span>
-        </button>
-      `;
-    });
-    html += `</div></div>`;
-  });
-
-  html += `<button class="primary" style="width:100%;margin-top:14px" onclick="finishSim()">Finalizar Simulado</button></div>`;
-  container.innerHTML = html;
-  window.scrollTo(0,0);
-}
-
-function selectSimOpt(qIdx, optIdx) {
-  let card = document.getElementById(`q_${qIdx}_opt_${optIdx}`).parentElement;
-  card.querySelectorAll('.option').forEach(b => b.classList.remove('selected'));
-  document.getElementById(`q_${qIdx}_opt_${optIdx}`).classList.add('selected');
-  userAnswers[qIdx] = optIdx;
-}
-
-function finishSim() {
-  let correct = 0;
-  currentSimQuestions.forEach((q, idx) => {
-    if(userAnswers[idx] === q.ans) correct++;
-  });
-  let isApproved = correct >= 26;
-  alert(isApproved ? `PARABÉNS! Você foi aprovado com ${correct} acertos!` : `Você fez ${correct} acertos. O mínimo para aprovação é 26.`);
-}
-</script>
-</body>
-</html>
+  {t:"Conforme o Art. 37 da CF/88, os princípios expressos da Administração Pública são:", o:["Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência (L.I.M.P.E.)","Honestidade, Prontidão e Sigilo","Lucro, Eficiência e Autoridade","Discricionariedade e Soberania"], ans:0, exp:"Art. 37, caput, da CF/88: Princípios expressos formam o mnemônico LIMPE."},
+  {t:"O Artigo 144 da Constituição Federal de 1988 trata de qual tema?", o:["Da Segurança Pública","Dos Direitos Sociais","Da Ordem Econômica","Da Organização dos Municípios"], ans:0, exp:"O Art. 144 trata da Segurança Pública e estabelece a competência dos órgãos de segurança."},
+  {t:"Conforme o Art. 144, § 8º da CF/88, as Guardas Municipais destinam-se à proteção de:", o:["Seus bens, serviços e instalações","Fronteiras federais marítimas","Rodovias estaduais privatizadas","Embaixadas e consulados estrangeiros"], ans:0, exp:"Texto constitucional: os Municípios poderão criar guardas municipais para proteção de seus bens, serviços e instalações."},
+  {t:"O Estatuto da Criança e do Adolescente (ECA - Lei 8.069/90) considera criança a pessoa até:", o:["12 anos de idade incompletos","14 anos de idade completos","10 anos de idade","18 anos incompletos"], ans:0, exp:"Art. 2º do ECA: Considera-se criança a pessoa até doze anos de idade incompletos."},
+  {t:"Conforme o ECA (Lei 8.069/90), considera-se adolescente a pessoa entre:", o:["12 e 18 anos de idade","10 e 16 anos de idade","14 e 21 anos de idade","12 e 21 anos de idade"], ans:0, exp:"Art. 2º do ECA: considera-se adolescente aquela entre doze e dezoito anos de idade."},
+  {t:"Conforme a Lei Federal 13.022/2014 (Estatuto das Guardas Municipais), a função das GCMs é essencialmente:", o:["Preventiva e comunitária","Exclusivamente repressiva e judiciária","Investigativa penal secreta","Militarizada de defesa nacional"], ans:0, exp:"A Lei 13.022/2014 estabelece o caráter preventivo, comunitário e de proteção aos direitos humanos."},
+  {t:"Segundo o Art. 5º da CF/88, todos são iguais perante a lei, sem distinção de qualquer natureza, garantindo-se o direito à:", o:["Vida, liberdade, igualdade, segurança e propriedade","Propriedade privada irrestrita sem função social","Isenção total de impostos residenciais","Prisão sem fundamentação judicial"], ans:0, exp:"Art. 5º, caput, da CF/88 garante a inviolabilidade do direito à vida, à liberdade, à igualdade, à segurança e à propriedade."},
+  {t:"É garantia fundamental do cidadão preso a comunicação imediata do local de prisão ao:", o:["Juiz competente e à família do preso (ou pessoa por ele indicada)","Público geral via imprensa local","Comandante da guarda do estado vizinho","Prefeito do município de origem"], ans:0, exp:"Art. 5º, LXII da CF/88: A prisão e o local onde se encontra o preso serão comunicados imediatamente ao juiz competente e à família do preso."},
+  {t:"O princípio que exige que a Administração Pública atue estritamente dentro da lei é o princípio da:", o:["Legalidade","Impessoalidade","Eficiência","Moralidade"], ans:0, exp:"Pelo princípio da legalidade, o administrador público só pode fazer o que a lei expressamente autoriza."},
+  {t:"Assinale o órgão competente para julgar crimes comuns do Prefeito Municipal:", o:["Tribunal de Justiça do Estado (TJ)","Câmara Municipal de Vereadores","Supremo Tribunal Federal (STF)","Conselho Tutelar"], ans:0, exp:"Os Prefeitos Municipais possuem foro por prerrogativa de função perante o Tribunal de Justiça (TJ) de seu Estado."},
+  {t:"O direito de petição aos Poderes Públicos em defesa de direitos é assegurado a todos:", o:["Independentemente do pagamento de taxas","Somente mediante pagamento de taxa judiciária","Apenas por intermédio de advogado contrat
