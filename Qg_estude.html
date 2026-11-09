@@ -1,218 +1,320 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QG ESTUDE - Preparatório PMESP e GCM-SP</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Supabase JS SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            dark: '#0B0F19',
-                            card: '#111827',
-                            accent: '#2563EB',
-                            hover: '#1D4ED8',
-                            success: '#10B981',
-                            warning: '#F59E0B'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101d32">
+<title>QG ESTUDE | PMESP e GCM-SP</title>
+<meta name="description" content="Plataforma demonstrativa gratuita de preparação para PMESP e GCM-SP.">
+<style>
+:root{--navy:#101d32;--blue:#244c78;--gold:#d4ad63;--bg:#f3f5f8;--card:#fff;--ink:#172235;--muted:#687589;--line:#e3e8ef;--green:#198754;--red:#c34444}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif}
+button,input{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:grid;grid-template-columns:245px 1fr}
+.sidebar{background:var(--navy);color:#fff;padding:24px 16px;display:flex;flex-direction:column;gap:22px}
+.brand{display:flex;align-items:center;gap:12px;padding:0 8px}.brand-mark{width:42px;height:42px;border:1px solid var(--gold);border-radius:12px;display:grid;place-items:center;color:var(--gold);font-size:22px;font-weight:800}.brand strong{display:block}.brand small{color:#aab8ca;font-size:11px}
+.nav-label{font-size:10px;letter-spacing:1.4px;color:#8393a9;padding:0 10px;margin-bottom:7px}.nav button{width:100%;border:0;background:transparent;color:#c8d2df;text-align:left;padding:11px;border-radius:9px;margin:2px 0;font-size:14px}.nav button.active,.nav button:hover{background:#203653;color:#fff}.nav button span{display:inline-block;width:27px;color:var(--gold)}
+.sidebar-note{margin-top:auto;border:1px solid #31445e;border-radius:12px;padding:13px;color:#b8c5d5;font-size:12px;line-height:1.5}
+main{min-width:0}.topbar{height:64px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px}.topbar small{color:var(--muted)}.profile{font-size:13px;color:var(--muted)}
+.content{max-width:1200px;margin:auto;padding:28px}.eyebrow{color:var(--blue);font-size:11px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase}.welcome{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:22px}.welcome h1{margin:7px 0 5px;font-size:29px}.welcome p{margin:0;color:var(--muted)}
+.primary,.secondary{padding:11px 15px;border-radius:9px;font-weight:700}.primary{border:0;background:var(--navy);color:#fff}.primary:hover{background:var(--blue)}.secondary{border:1px solid var(--line);background:#fff;color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}.stat,.panel,.exam-card,.question-card{background:var(--card);border:1px solid var(--line);border-radius:14px}.stat{padding:16px}.stat .label{font-size:12px;color:var(--muted)}.stat strong{display:block;font-size:25px;margin:7px 0}.stat small{font-size:11px;color:var(--muted)}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:26px 0 12px}.section-head h2{font-size:18px;margin:0}.section-head p{font-size:12px;color:var(--muted);margin:4px 0 0}
+.exams{display:grid;grid-template-columns:1fr 1fr;gap:14px}.exam-card{padding:18px}.exam-card h3{margin:0 0 4px}.exam-card p,.muted{color:var(--muted);font-size:13px}.desc{font-size:13px;line-height:1.5;color:#536176;margin:14px 0}
+.panel{padding:18px}.notice{font-size:12px;color:#77613c;background:#fff8e9;border:1px solid #f0dfb8;padding:12px 14px;border-radius:10px;line-height:1.5;margin:14px 0}
+.hidden{display:none!important}.view{display:none}.view.active{display:block}.chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.chip{border:1px solid var(--line);background:#fff;border-radius:30px;padding:8px 12px;font-size:12px;color:#536176}.chip.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.question-layout{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:14px}.question-card{padding:22px}.question-meta{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:12px;margin-bottom:16px}.question-card h2{font-size:18px;line-height:1.5;margin:0 0 18px}.options{display:grid;gap:9px}.option{display:flex;gap:11px;align-items:flex-start;text-align:left;width:100%;padding:13px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);line-height:1.45}.option.selected{border-color:var(--blue);background:#f1f5fa}.option.correct{border-color:var(--green);background:#e5f6eb;color:#145c35}.option.wrong{border-color:var(--red);background:#fff0f0;color:#8f2929}.option:disabled{cursor:default;opacity:1}.letter{flex:0 0 25px;height:25px;border-radius:7px;background:#eef2f6;display:grid;place-items:center;font-size:12px;font-weight:800}
+.feedback{display:none;margin-top:15px;padding:14px;border-radius:10px;font-size:13px;line-height:1.55}.feedback.show{display:block}.feedback.good{background:#eff9f3;color:#17683f}.feedback.bad{background:#fff3f3;color:#913636}.feedback strong{display:block;margin-bottom:6px}.question-actions{display:flex;justify-content:space-between;gap:9px;margin-top:18px}.subject-list{display:grid;gap:7px}.subject-list button{text-align:left;background:#f7f9fb;border:1px solid var(--line);padding:10px;border-radius:9px;font-size:12px;color:#334258}
+.empty{padding:28px;text-align:center;color:var(--muted)}.empty strong{display:block;color:var(--ink);margin-bottom:7px}.progress-line{height:8px;background:#edf0f4;border-radius:20px;overflow:hidden;margin:10px 0}.progress-line div{height:100%;background:var(--gold);width:0}
+footer{text-align:center;color:#8a95a5;font-size:11px;padding:24px}
+
+.pass-celebration{position:relative;overflow:hidden;text-align:center;padding:30px 18px;background:linear-gradient(135deg,#f0fff5,#fff);border:1px solid #b9e8c9;border-radius:16px}
+.pass-celebration h2{font-size:clamp(25px,5vw,36px);color:#17683f;margin:8px 0}
+.pass-celebration p{color:#345b46;line-height:1.5}
+.pass-icon{font-size:48px;line-height:1.2;animation:pop-in .65s ease both}
+.pass-tag{display:inline-block;background:#d8f5e2;color:#17683f;border-radius:30px;padding:7px 13px;font-size:12px;font-weight:800;letter-spacing:.5px}
+.confetti-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.confetti-piece{position:absolute;top:-18px;width:9px;height:15px;opacity:.9;animation:confetti-fall 2.8s ease-in forwards}
+@keyframes confetti-fall{to{transform:translate3d(var(--drift),110vh,0) rotate(760deg);opacity:.15}}
+@keyframes pop-in{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+.fail-result{padding:22px;border:1px solid var(--line);border-radius:14px;background:#fff}
+
+@media(max-width:850px){.app{grid-template-columns:1fr}.sidebar{padding:12px 14px;gap:10px}.brand{padding:0}.nav{display:flex;overflow:auto;gap:3px}.nav-label,.sidebar-note{display:none}.nav button{white-space:nowrap;width:auto;padding:9px}.nav button span{width:auto;margin-right:4px}.topbar{height:54px;padding:0 15px}.content{padding:20px 14px}.question-layout{grid-template-columns:1fr}.side-panel{order:-1}.subject-list{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.welcome{align-items:flex-start;flex-direction:column}.welcome h1{font-size:24px}.exams{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr);gap:8px}.stat{padding:12px}.stat strong{font-size:22px}.content{padding:17px 12px}.question-card{padding:16px}.question-actions{flex-wrap:wrap}.question-actions button{flex:1}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* SUPABASE: preencher URL e chave anon/publishable do projeto. Nunca usar service_role. */
+const QG_SUPABASE_URL="https://nacalwxpvfbjisyosboz.supabase.co";
+const QG_SUPABASE_ANON_KEY="sb_publishable_OjIWYiN3KE47ymE_bn1fSQ_7CWo0g54";
+let qgAdminDb=null,qgAdminData={candidates:[],access:[],attempts:[]};
+function qgAdminConfigured(){return QG_SUPABASE_URL.startsWith("https://")&&QG_SUPABASE_ANON_KEY.length>20&&(QG_SUPABASE_ANON_KEY.startsWith("sb_publishable_")||QG_SUPABASE_ANON_KEY.startsWith("ey"));}
+function qgOpenAdmin(){document.getElementById("qgAdminLayer").classList.remove("hidden");document.getElementById("qgAdminLogin").classList.remove("hidden");document.getElementById("qgAdminDashboard").classList.add("hidden");if(!qgAdminConfigured())document.getElementById("qgAdminLoginMsg").textContent="Configuração pendente: inserir URL e chave pública do Supabase neste arquivo.";}
+function abrirModalAdmin(){qgOpenAdmin();}
+function qgCloseAdmin(){document.getElementById("qgAdminLayer").classList.add("hidden");}
+function qgAdminEsc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function qgAdminDate(v){return v?new Date(v).toLocaleString("pt-BR"):"—";}
+function qgAdminPct(n,d){return d?Math.round(Number(n||0)/Number(d)*100):0;}
+function qgAdminTable(head,rows){if(!rows.length)return '<div class="emptyAdmin">Nenhum registro encontrado.</div>';return '<div class="tableScroll"><table><thead><tr>'+head.map(x=>'<th>'+x+'</th>').join("")+'</tr></thead><tbody>'+rows.join("")+'</tbody></table></div>';}
+async function qgAdminLogin(){
+ const msg=document.getElementById("qgAdminLoginMsg");
+ if(!qgAdminConfigured()){msg.textContent="Configure a conexão com o Supabase antes de entrar.";return;}
+ try{
+  if(!qgAdminDb)qgAdminDb=window.supabase.createClient(QG_SUPABASE_URL,QG_SUPABASE_ANON_KEY);
+  msg.textContent="Validando...";
+  const {data,error}=await qgAdminDb.auth.signInWithPassword({email:document.getElementById("qgAdminEmail").value.trim(),password:document.getElementById("qgAdminPassword").value});
+  if(error)throw error;
+  const {data:profile,error:profileError}=await qgAdminDb.from("admin_profiles").select("role").eq("user_id",data.user.id).maybeSingle();
+  if(profileError)throw profileError;
+  if(!profile||profile.role!=="admin"){await qgAdminDb.auth.signOut();throw new Error("Esta conta não tem autorização administrativa.");}
+  document.getElementById("qgAdminLogin").classList.add("hidden");
+  document.getElementById("qgAdminDashboard").classList.remove("hidden");
+  document.getElementById("qgAdminWho").textContent=data.user.email||"Administrador";
+  await qgAdminRefresh();
+ }catch(e){msg.textContent="Não foi possível entrar: "+e.message;}
+}
+async function qgAdminLogout(){if(qgAdminDb)await qgAdminDb.auth.signOut();document.getElementById("qgAdminDashboard").classList.add("hidden");document.getElementById("qgAdminLogin").classList.remove("hidden");document.getElementById("qgAdminPassword").value="";}
+function qgAdminTab(tab,button){document.querySelectorAll("#qgAdminTabs .chip").forEach(b=>b.classList.remove("active"));button.classList.add("active");document.querySelectorAll("#qgAdminLayer .qgAdminPanel").forEach(p=>p.classList.add("hidden"));document.getElementById("qgAdmin"+tab[0].toUpperCase()+tab.slice(1)).classList.remove("hidden");}
+async function qgAdminSafe(query){const {data,error}=await query;if(error){console.error(error);return [];}return data||[];}
+async function qgAdminRefresh(){
+ if(!qgAdminDb)return;
+ const [candidates,access,attempts]=await Promise.all([
+  qgAdminSafe(qgAdminDb.from("candidates").select("id,display_name,public_code,created_at").order("created_at",{ascending:false}).limit(1000)),
+  qgAdminSafe(qgAdminDb.from("access_events").select("id,candidate_id,event_type,created_at,candidates(display_name,public_code)").order("created_at",{ascending:false}).limit(1000)),
+  qgAdminSafe(qgAdminDb.from("exam_attempts").select("id,candidate_id,exam_id,mode,submitted_at,total_questions,correct_count,elapsed_seconds,status,candidates(display_name,public_code),exams(code,title)").order("submitted_at",{ascending:false}).limit(2000))
+ ]);
+ qgAdminData={candidates,access,attempts};qgAdminRender();
+}
+function qgAdminRender(){
+ const done=qgAdminData.attempts.filter(a=>a.status==="submitted"||a.submitted_at);
+ document.getElementById("qgKCandidates").textContent=qgAdminData.candidates.length;
+ document.getElementById("qgKAccess").textContent=qgAdminData.access.length;
+ document.getElementById("qgKMocks").textContent=done.filter(a=>a.mode==="full_mock").length;
+ const avg=done.length?Math.round(done.reduce((s,a)=>s+qgAdminPct(a.correct_count,a.total_questions),0)/done.length):0;
+ document.getElementById("qgKAverage").textContent=done.length?avg+"%":"—";
+ document.getElementById("qgRecent").innerHTML=qgAdminTable(["Aluno","Evento","Data"],qgAdminData.access.slice(0,8).map(a=>`<tr><td>${qgAdminEsc(a.candidates?.display_name||"Aluno")}</td><td>${qgAdminEsc(a.event_type)}</td><td>${qgAdminDate(a.created_at)}</td></tr>`));
+ qgAdminRenderAccess();
+ const best=new Map();for(const a of done){const old=best.get(a.candidate_id);if(!old||qgAdminPct(a.correct_count,a.total_questions)>qgAdminPct(old.correct_count,old.total_questions))best.set(a.candidate_id,a);}
+ const ranking=[...best.values()].sort((a,b)=>qgAdminPct(b.correct_count,b.total_questions)-qgAdminPct(a.correct_count,a.total_questions)||b.correct_count-a.correct_count);
+ document.getElementById("qgRankingTable").innerHTML=qgAdminTable(["Posição","Aluno","Concurso","Acertos","Aproveitamento"],ranking.map((a,i)=>`<tr><td>${i+1}º</td><td>${qgAdminEsc(a.candidates?.display_name||"—")}</td><td>${qgAdminEsc(a.exams?.code||"—")}</td><td>${a.correct_count}/${a.total_questions}</td><td><b>${qgAdminPct(a.correct_count,a.total_questions)}%</b></td></tr>`));
+ document.getElementById("qgPerformanceTable").innerHTML=qgAdminTable(["Aluno","Tentativas","Questões","Aproveitamento"],qgAdminData.candidates.map(c=>{const aa=done.filter(a=>a.candidate_id===c.id),n=aa.reduce((s,a)=>s+Number(a.total_questions||0),0),ok=aa.reduce((s,a)=>s+Number(a.correct_count||0),0);return `<tr><td>${qgAdminEsc(c.display_name)}</td><td>${aa.length}</td><td>${ok}/${n}</td><td>${n?qgAdminPct(ok,n)+"%":"—"}</td></tr>`;}));
+ document.getElementById("qgSimTable").innerHTML=qgAdminTable(["Aluno","Concurso","Tipo","Resultado","Data"],done.map(a=>`<tr><td>${qgAdminEsc(a.candidates?.display_name||"—")}</td><td>${qgAdminEsc(a.exams?.code||"—")}</td><td>${a.mode==="full_mock"?"Simulado geral":"Prova por matéria"}</td><td>${a.correct_count}/${a.total_questions} (${qgAdminPct(a.correct_count,a.total_questions)}%)</td><td>${qgAdminDate(a.submitted_at)}</td></tr>`));
+ document.getElementById("qgCandidateTable").innerHTML=qgAdminTable(["Aluno","Código público","Cadastro"],qgAdminData.candidates.map(c=>`<tr><td>${qgAdminEsc(c.display_name)}</td><td>${qgAdminEsc(c.public_code||"—")}</td><td>${qgAdminDate(c.created_at)}</td></tr>`));
+}
+function qgRenderAccess(){const q=(document.getElementById("qgAccessFilter").value||"").toLowerCase();const rows=qgAdminData.access.filter(a=>(String(a.candidates?.display_name||"")+" "+String(a.event_type||"")).toLowerCase().includes(q));document.getElementById("qgAccessTable").innerHTML=qgAdminTable(["Aluno","Código","Evento","Data e hora"],rows.map(a=>`<tr><td>${qgAdminEsc(a.candidates?.display_name||"—")}</td><td>${qgAdminEsc(a.candidates?.public_code||"—")}</td><td>${qgAdminEsc(a.event_type)}</td><td>${qgAdminDate(a.created_at)}</td></tr>`));}
+
+
+/* Identificação simples do aluno: sem autenticação, somente apelido neste dispositivo. */
+(function qgInitStudentNickname(){
+ const saved=localStorage.getItem("qg_estude_student_nickname");
+ if(saved){document.getElementById("qgStudentWelcome").style.display="none";const el=document.getElementById("qgStudentDisplay");if(el)el.textContent=saved;}
+ else {const field=document.getElementById("qgStudentNickname");if(field){field.value="";field.focus();}}
+})();
+function qgSaveStudentNickname(){
+ const field=document.getElementById("qgStudentNickname");
+ const nickname=(field.value||"").trim().replace(/\s+/g," ");
+ const msg=document.getElementById("qgNicknameMessage");
+ if(nickname.length<2){msg.textContent="Digite um apelido com pelo menos 2 caracteres.";return;}
+ if(nickname.length>24){msg.textContent="Use no máximo 24 caracteres.";return;}
+ localStorage.setItem("qg_estude_student_nickname",nickname);
+ const display=document.getElementById("qgStudentDisplay");if(display)display.textContent=nickname;
+ document.getElementById("qgStudentWelcome").style.display="none";
+}
+
+
+/* Atalho administrativo não exibido aos alunos. A autenticação continua obrigatória. */
+(function qgAdminPrivateEntry(){
+ const params=new URLSearchParams(window.location.search);
+ if(params.get("adm")==="1"){qgOpenAdmin();}
+})();
+
+</script>
 </head>
-<body class="bg-brand-dark text-gray-100 min-h-screen flex flex-col font-sans">
+<body>
 
-    <!-- HEADER / NAVBAR -->
-    <header class="bg-brand-card border-b border-gray-800 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="bg-blue-600 text-white p-2 rounded-lg font-bold">
-                    <i class="fa-solid fa-shield-halved"></i>
-                </div>
-                <div>
-                    <h1 class="font-extrabold text-lg tracking-wider text-white">QG ESTUDE</h1>
-                    <p class="text-xs text-gray-400">Preparatório PMESP & GCM-SP</p>
-                </div>
-            </div>
+<!-- IDENTIFICAÇÃO SIMPLES DO ALUNO: SEM E-MAIL OU SENHA -->
+<div id="qgStudentWelcome" style="position:fixed;inset:0;z-index:9998;background:#101d32ee;display:grid;place-items:center;padding:18px">
+ <div style="background:#fff;color:#172235;width:min(420px,100%);padding:26px;border-radius:18px;box-shadow:0 20px 60px #0005">
+  <div class="eyebrow">BEM-VINDO AO QG ESTUDE</div>
+  <h2 style="margin:8px 0">Como quer aparecer no ranking?</h2>
+  <p class="muted">Não precisa criar conta, informar e-mail ou cadastrar senha. Escolha apenas um apelido.</p>
+  <label for="qgStudentNickname" style="display:block;font-size:12px;font-weight:700;margin:15px 0 6px">Seu apelido</label>
+  <input id="qgStudentNickname" maxlength="24" placeholder="Ex.: FocoNaAprovação" style="width:100%;padding:12px;border:1px solid #e3e8ef;border-radius:9px">
+  <button onclick="qgSaveStudentNickname()" class="primary" style="width:100%;margin-top:14px">Entrar no QG ESTUDE</button>
+  <div id="qgNicknameMessage" class="muted" style="color:#b33;margin-top:10px"></div>
+  <p class="small" style="margin-top:14px">Use sempre o mesmo apelido neste aparelho para manter seu histórico local. O ranking global só ficará disponível após a conexão do banco de dados.</p>
+ </div>
+</div>
 
-            <div class="flex items-center space-x-4">
-                <div id="userInfoHeader" class="hidden items-center space-x-2 bg-gray-800 px-3 py-1.5 rounded-full border border-gray-700">
-                    <span id="displayUserNickname" class="text-sm font-medium text-blue-400"></span>
-                    <button onclick="fazerLogout()" class="text-xs text-red-400 hover:text-red-300 ml-2" title="Sair"><i class="fa-solid fa-right-from-bracket"></i></button>
-                </div>
-                <!-- Botão Área ADM -->
-                <button type="button" onclick="abrirModalAdmin()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg text-sm border border-gray-700 flex items-center space-x-2 transition cursor-pointer">
-                    <i class="fa-solid fa-lock text-yellow-500"></i>
-                    <span>Área ADM</span>
-                </button>
-            </div>
-        </div>
-    </header>
+<div class="app">
+<aside class="sidebar">
+ <div class="brand"><div class="brand-mark">Q</div><div><strong>QG ESTUDE</strong><small>Preparação para concursos</small></div></div>
+ <div><div class="nav-label">ÁREA DO CANDIDATO</div><nav class="nav">
+  <button class="active" data-view="inicio"><span>⌂</span>Meu painel</button><button data-view="concursos"><span>♢</span>Concursos</button><button data-view="questoes"><span>☷</span>Provas por matéria</button><button data-view="materias"><span>▤</span>Plano de matérias</button><button data-view="simulado"><span>◷</span>Simulados</button><button data-view="progresso"><span>▥</span>Meu desempenho</button><button data-view="ranking"><span>🏆</span>Ranking</button>
+ </nav></div>
+ <div class="sidebar-note"><strong style="color:white">QG ESTUDE · Gratuito</strong><br>Versão demonstrativa. Banco de questões em expansão.</div>
+</aside>
+<main><header class="topbar"><small>Área de estudos / <strong id="breadcrumb">Meu painel</strong></small><div style="display:flex;align-items:center;gap:12px"><button class="secondary" style="padding:8px 11px;font-size:12px" onclick="abrirModalAdmin()">Área ADM</button><div class="profile" id="qgStudentDisplay">Visitante</div></div></header><div class="content">
+<section class="view active" id="inicio">
+ <div class="welcome"><div><div class="eyebrow">Sua preparação começa aqui</div><h1>Bem-vindo ao QG ESTUDE</h1><p>Organize seus estudos para a PMESP e a GCM de São Paulo.</p></div><button class="primary" onclick="showView('concursos')">Escolher concurso →</button></div>
+ <div class="notice"><strong>Versão demonstrativa:</strong> contém 5 questões por concurso. O ranking global e provas completas de 50 questões ainda dependem de banco de dados e ampliação do conteúdo.</div>
+ <div class="grid"><div class="stat"><div class="label">Questões respondidas</div><strong id="stat-answered">0</strong><small>Na sua preparação</small></div><div class="stat"><div class="label">Acertos</div><strong id="stat-correct">0%</strong><small>Aproveitamento geral</small></div><div class="stat"><div class="label">Simulados concluídos</div><strong id="stat-sims">0</strong><small>Neste navegador</small></div><div class="stat"><div class="label">Sequência de estudos</div><strong>—</strong><small>Em desenvolvimento</small></div></div>
+ <div class="section-head"><div><h2>Escolha sua preparação</h2><p>Comece pelo concurso que deseja estudar.</p></div></div>
+ <div class="exams"><article class="exam-card"><h3>Polícia Militar de São Paulo</h3><p>PMESP · Soldado PM</p><div class="desc">Estude por disciplinas, pratique questões e acompanhe seu desempenho.</div><button class="primary" onclick="selectExam('PMESP')">Estudar para PMESP</button></article><article class="exam-card"><h3>Guarda Civil Metropolitana</h3><p>GCM · São Paulo</p><div class="desc">Prepare-se com questões organizadas por matéria e simulados.</div><button class="primary" onclick="selectExam('GCM')">Estudar para GCM</button></article></div>
+ <div class="notice">A competição é opcional. A declaração de honestidade é um compromisso pessoal; esta versão não detecta uso de ferramentas externas.</div>
+</section>
+<section class="view" id="concursos"><div class="welcome"><div><div class="eyebrow">Concursos disponíveis</div><h1>Escolha seu objetivo</h1><p>O conteúdo deve ser conferido conforme o edital vigente.</p></div></div><div class="exams"><article class="exam-card"><h3>PMESP</h3><p>Polícia Militar do Estado de São Paulo</p><button class="primary" onclick="selectExam('PMESP')">Acessar preparação</button></article><article class="exam-card"><h3>GCM São Paulo</h3><p>Guarda Civil Metropolitana</p><button class="primary" onclick="selectExam('GCM')">Acessar preparação</button></article></div></section>
+<section class="view" id="questoes"><div class="welcome"><div><div class="eyebrow">Prática e aprendizagem</div><h1>Provas por matéria</h1><p>As perguntas e alternativas mudam de posição a cada nova tentativa.</p></div></div>
+ <div class="chips" id="exam-chips"><button class="chip active" onclick="setExamFilter('TODOS',this)">Todos</button><button class="chip" onclick="setExamFilter('PMESP',this)">PMESP</button><button class="chip" onclick="setExamFilter('GCM',this)">GCM São Paulo</button></div>
+ <div class="question-layout"><div class="question-card" id="question-area"></div><aside class="panel side-panel"><h3>Disciplinas</h3><p class="muted">Filtre as questões pela matéria.</p><div class="subject-list" id="subject-list"></div></aside></div>
+</section>
+<section class="view" id="simulado"><div class="welcome"><div><div class="eyebrow">Treino de prova</div><h1>Simulados</h1><p>Uma nova ordem de questões e alternativas em cada tentativa.</p></div></div>
+ <div class="panel"><h2 style="margin-top:0">Simulado demonstrativo</h2><p class="muted">Este simulado usa as 5 questões demonstrativas disponíveis para o concurso selecionado. Ainda não representa uma prova oficial.</p><div class="chips"><button class="chip active" id="sim-pm" onclick="setSimExam('PMESP')">PMESP</button><button class="chip" id="sim-gcm" onclick="setSimExam('GCM')">GCM São Paulo</button></div><p id="sim-status">5 questões demonstrativas · Resultado ao finalizar</p><button class="primary" onclick="startSimulation()">Iniciar / refazer simulado</button></div><div id="sim-area" style="margin-top:15px"></div>
+</section>
+<section class="view" id="materias"><div class="welcome"><div><div class="eyebrow">Matriz de preparação</div><h1>Plano de matérias</h1><p>Prioridades iniciais para PMESP e GCM-SP.</p></div></div><div class="notice">A prioridade é uma orientação pedagógica, não uma garantia de incidência. Confira sempre o edital vigente.</div>
+ <div class="exams"><article class="exam-card"><h3>Língua Portuguesa</h3><div class="desc">Interpretação, crase, pontuação, concordância, regência, classes de palavras e colocação pronominal.</div><button class="primary" onclick="openSubject('Língua Portuguesa')">Estudar questões</button></article><article class="exam-card"><h3>Matemática e Raciocínio Lógico</h3><div class="desc">Porcentagem, juros simples, regra de três, razão, proporção, equações, médias, geometria e lógica.</div><button class="primary" onclick="openSubject('Matemática')">Estudar questões</button></article><article class="exam-card"><h3>Legislação e Direito</h3><div class="desc">Constituição Federal, princípios administrativos, direitos fundamentais e segurança pública.</div><button class="primary" onclick="openSubject('Noções de Direito')">Estudar questões</button></article><article class="exam-card"><h3>Informática</h3><div class="desc">Windows, arquivos, Word, Excel, ferramentas colaborativas e segurança digital.</div><button class="primary" onclick="openSubject('Informática')">Estudar questões</button></article></div>
+ <div class="section-head"><h2>Trilhas específicas</h2></div><div class="panel"><p>GCM: Lei 13.022/2014, Código Penal, Processo Penal, ECA, Lei Maria da Penha, Estatuto do Desarmamento, Abuso de Autoridade e Direitos Humanos.</p><p>PMESP: História Geral e do Brasil, Geografia, Atualidades, Constituição Estadual e Lei de Acesso à Informação.</p><p>Redação: planejamento, tese, argumentação, coesão, coerência e norma-padrão.</p></div>
+</section>
+<section class="view" id="progresso"><div class="welcome"><div><div class="eyebrow">Acompanhamento</div><h1>Meu desempenho</h1><p>Resultados registrados neste navegador.</p></div></div><div class="grid"><div class="stat"><div class="label">Respondidas</div><strong id="p-answered">0</strong></div><div class="stat"><div class="label">Acertos</div><strong id="p-correct">0</strong></div><div class="stat"><div class="label">Erros</div><strong id="p-wrong">0</strong></div><div class="stat"><div class="label">Aproveitamento</div><strong id="p-rate">0%</strong></div></div><div class="panel"><h3>Seu histórico</h3><p id="history-text" class="muted">Você ainda não respondeu.</p><div class="progress-line"><div id="progress-bar"></div></div></div><div class="notice">O histórico é local e fica neste navegador. As tentativas são registradas separadamente.</div></section>
+<section class="view" id="ranking"><div class="welcome"><div><div class="eyebrow">Classificação</div><h1>Ranking QG ESTUDE</h1><p>O ranking global ainda não está conectado.</p></div></div><div class="panel"><p>Esta versão não envia nome, e-mail ou resultado para um servidor. A participação global será disponibilizada somente após a implantação do banco online.</p></div></section>
 
-    <!-- MAIN CONTAINER -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-6 flex flex-col">
-
-        <!-- TELA 1: IDENTIFICAÇÃO DO ALUNO -->
-        <div id="viewAlunoLogin" class="max-w-md mx-auto w-full bg-brand-card p-8 rounded-2xl border border-gray-800 shadow-xl my-auto">
-            <div class="text-center mb-6">
-                <div class="inline-flex bg-blue-600/10 text-blue-500 p-4 rounded-full text-3xl mb-3">
-                    <i class="fa-solid fa-user-graduate"></i>
-                </div>
-                <h2 class="text-2xl font-bold text-white">Bem-vindo ao QG Estude</h2>
-                <p class="text-gray-400 text-sm mt-1">Insira seu apelido para acessar os simulados e acompanhar seu progresso.</p>
-            </div>
-
-            <form id="formAlunoLogin" onsubmit="entrarComoAluno(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold text-gray-400 uppercase mb-2">Seu Apelido / Nome</label>
-                    <input type="text" id="inputNickname" required placeholder="Ex: Guerreiro_PM" 
-                        class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-600 transition">
-                </div>
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-blue-600/20">
-                    Acessar Plataforma
-                </button>
-            </form>
-        </div>
-
-        <!-- TELA 2: PAINEL PRINCIPAL DO ALUNO (Oculto inicialmente) -->
-        <div id="viewDashboard" class="hidden space-y-6">
-            <div class="bg-gradient-to-r from-blue-900/40 to-brand-card border border-blue-800/40 p-6 rounded-2xl flex flex-col md:flex-row justify-between items-center shadow-lg">
-                <div>
-                    <h2 class="text-2xl sm:text-3xl font-bold text-white" id="saudacaoAluno">Olá, Guerreiro!</h2>
-                    <p class="text-gray-300 text-sm mt-1">Escolha um simulado abaixo para iniciar sua preparação focada.</p>
-                </div>
-                <div class="mt-4 md:mt-0">
-                    <button onclick="carregarRanking()" class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-yellow-400 px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center space-x-2 transition">
-                        <i class="fa-solid fa-trophy"></i>
-                        <span>Ver Ranking Geral</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Grade de Simulados -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Card PMESP -->
-                <div class="bg-brand-card border border-gray-800 p-6 rounded-2xl hover:border-blue-600/50 transition flex flex-col justify-between">
-                    <div>
-                        <span class="bg-blue-600/10 text-blue-400 text-xs px-3 py-1 rounded-full font-semibold">Concurso Estadual</span>
-                        <h3 class="text-xl font-bold text-white mt-3">Simulado PMESP - Soldado</h3>
-                        <p class="text-gray-400 text-sm mt-2">Questões focadas no padrão Vunesp: Língua Portuguesa, Matemática, História, Geografia, Atualidades e Informática.</p>
-                    </div>
-                    <div class="mt-6">
-                        <button onclick="iniciarSimulado('PMESP')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl transition">
-                            Iniciar Simulado PMESP
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Card GCM-SP -->
-                <div class="bg-brand-card border border-gray-800 p-6 rounded-2xl hover:border-purple-600/50 transition flex flex-col justify-between">
-                    <div>
-                        <span class="bg-purple-600/10 text-purple-400 text-xs px-3 py-1 rounded-full font-semibold">Concurso Municipal</span>
-                        <h3 class="text-xl font-bold text-white mt-3">Simulado GCM - Guarda Civil</h3>
-                        <p class="text-gray-400 text-sm mt-2">Foco em Legislação Municipal, Estatuto da Criança e do Adolescente (ECA), Constituição Federal e Direitos Humanos.</p>
-                    </div>
-                    <div class="mt-6">
-                        <button onclick="iniciarSimulado('GCM')" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2.5 rounded-xl transition">
-                            Iniciar Simulado GCM-SP
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- MODAL DE LOGIN ADMIN -->
-    <div id="modalAdmin" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-brand-card border border-gray-800 max-w-sm w-full p-6 rounded-2xl relative shadow-2xl">
-            <button type="button" onclick="fecharModalAdmin()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <h3 class="text-lg font-bold text-white mb-2"><i class="fa-solid fa-lock text-yellow-500 mr-2"></i>Painel do Administrador</h3>
-            <p class="text-xs text-gray-400 mb-4">Acesso restrito para gestão de conteúdos e questões.</p>
-            
-            <form id="formAdminLogin" onsubmit="fazerLoginAdmin(event)" class="space-y-3">
-                <input type="email" id="adminEmail" required placeholder="E-mail do Administrador" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-yellow-500">
-                <input type="password" id="adminSenha" required placeholder="Senha" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-yellow-500">
-                <button type="submit" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2.5 rounded-xl text-sm transition">Entrar como ADM</button>
-            </form>
-        </div>
+<!-- ÁREA ADMINISTRATIVA INTEGRADA AO MESMO APP -->
+<div id="qgAdminLayer" class="hidden" style="position:fixed;inset:0;z-index:9999;background:#f3f5f8;overflow:auto;color:#172235">
+ <div style="min-height:100vh">
+  <header style="position:sticky;top:0;z-index:2;background:#101d32;color:white;padding:13px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px">
+   <strong>QG ESTUDE · ÁREA ADMINISTRATIVA</strong>
+   <div style="display:flex;gap:8px"><button class="secondary" onclick="qgAdminRefresh()">Atualizar</button><button class="secondary" onclick="qgCloseAdmin()">Voltar ao app</button></div>
+  </header>
+  <section id="qgAdminLogin" style="min-height:80vh;display:grid;place-items:center;padding:20px">
+   <div class="panel" style="width:min(420px,100%);padding:26px">
+    <div class="eyebrow">ACESSO RESTRITO</div><h2 style="margin:8px 0">Login do administrador</h2>
+    <p class="muted">Entre com o e-mail e a senha da conta administrativa cadastrada no Supabase.</p>
+    <label style="display:block;font-size:12px;font-weight:700;margin:15px 0 6px">E-mail</label>
+    <input id="qgAdminEmail" type="email" autocomplete="username" placeholder="Seu e-mail" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:9px">
+    <label style="display:block;font-size:12px;font-weight:700;margin:13px 0 6px">Senha</label>
+    <input id="qgAdminPassword" type="password" autocomplete="current-password" placeholder="Sua senha" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:9px">
+    <button class="primary" style="width:100%;margin-top:16px" onclick="qgAdminLogin()">Entrar na administração</button>
+    <div id="qgAdminLoginMsg" class="muted" style="margin-top:12px;color:#b33"></div>
+    <div class="notice">A senha não fica salva no HTML. O acesso é validado pelo Supabase e pela permissão de administrador no banco.</div>
+   </div>
+  </section>
+  <section id="qgAdminDashboard" class="hidden" style="max-width:1300px;margin:auto;padding:20px">
+   <div class="welcome"><div><div class="eyebrow">CENTRAL DE CONTROLE</div><h1 style="margin:6px 0">Painel ADM</h1><p>Indicadores e acompanhamento dos alunos.</p></div><span id="qgAdminWho" class="muted"></span></div>
+   <div class="chips" id="qgAdminTabs">
+    <button class="chip active" onclick="qgAdminTab('overview',this)">Visão geral</button>
+    <button class="chip" onclick="qgAdminTab('access',this)">Acessos</button>
+    <button class="chip" onclick="qgAdminTab('ranking',this)">Ranking</button>
+    <button class="chip" onclick="qgAdminTab('performance',this)">Desempenho</button>
+    <button class="chip" onclick="qgAdminTab('simulations',this)">Simulados</button>
+    <button class="chip" onclick="qgAdminTab('candidates',this)">Cadastros</button>
+   </div>
+   <div id="qgAdminOverview" class="qgAdminPanel">
+    <div class="grid">
+     <div class="stat"><div class="label">Alunos cadastrados</div><strong id="qgKCandidates">—</strong></div>
+     <div class="stat"><div class="label">Acessos registrados</div><strong id="qgKAccess">—</strong></div>
+     <div class="stat"><div class="label">Simulados concluídos</div><strong id="qgKMocks">—</strong></div>
+     <div class="stat"><div class="label">Média de aproveitamento</div><strong id="qgKAverage">—</strong></div>
     </div>
+    <div class="panel"><h3>Atividade recente</h3><div id="qgRecent">Carregando...</div></div>
+   </div>
+   <div id="qgAdminAccess" class="qgAdminPanel hidden"><div class="panel"><h3>Registro de acessos</h3><input id="qgAccessFilter" placeholder="Buscar aluno ou evento" oninput="qgRenderAccess()" style="padding:10px;border:1px solid var(--line);border-radius:8px"><div id="qgAccessTable" style="margin-top:12px"></div></div></div>
+   <div id="qgAdminRanking" class="qgAdminPanel hidden"><div class="panel"><h3>Ranking geral</h3><div id="qgRankingTable"></div></div></div>
+   <div id="qgAdminPerformance" class="qgAdminPanel hidden"><div class="panel"><h3>Desempenho dos alunos</h3><div id="qgPerformanceTable"></div></div></div>
+   <div id="qgAdminSimulations" class="qgAdminPanel hidden"><div class="panel"><h3>Histórico de simulados</h3><div id="qgSimTable"></div></div></div>
+   <div id="qgAdminCandidates" class="qgAdminPanel hidden"><div class="panel"><h3>Alunos cadastrados</h3><div id="qgCandidateTable"></div></div></div>
+   <div class="notice">Os dados serão exibidos quando cadastro, login e resultados dos alunos estiverem integrados ao banco. Esta primeira versão administrativa é de consulta; não altera nem exclui contas ou notas.</div>
+   <button class="secondary" onclick="qgAdminLogout()">Sair da conta administrativa</button>
+  </section>
+ </div>
+</div>
+<style>
+#qgAdminLayer .qgAdminPanel{display:block}#qgAdminLayer .qgAdminPanel.hidden{display:none!important}
+#qgAdminLayer table{width:100%;border-collapse:collapse;font-size:12px;min-width:560px}
+#qgAdminLayer th,#qgAdminLayer td{text-align:left;padding:11px 9px;border-bottom:1px solid var(--line)}
+#qgAdminLayer th{color:var(--muted);background:#fafbfd}
+#qgAdminLayer .tableScroll{overflow:auto}
+#qgAdminLayer .emptyAdmin{padding:22px;text-align:center;color:var(--muted);font-size:13px}
+#qgAdminLayer .adminBadge{display:inline-block;border-radius:20px;padding:4px 8px;background:#edf3fa;color:#244c78;font-size:10px;font-weight:800}
+@media(max-width:560px){#qgAdminLayer #qgAdminDashboard{padding:12px}#qgAdminLayer .grid{grid-template-columns:repeat(2,1fr)}}
+</style>
 
-    <!-- SCRIPT DE CONFIGURAÇÃO DO SUPABASE E LÓGICA -->
-    <script>
-        // Configuração do Supabase
-        const SUPABASE_URL = 'https://nacalwxpvfbjisyosboz.supabase.co';
-        const SUPABASE_ANON_KEY = 'Sb_publishable_OjIWYiN3KE47ymE_bn1fSQ_7CWo0g54';
-        
-        let supabaseClient;
-        
-        // Inicialização com tratamento de erro
-        try {
-            if (window.supabase) {
-                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            }
-        } catch (err) {
-            console.error("Erro ao inicializar Supabase:", err);
-        }
-
-        // Funções do Modal Admin
-        function abrirModalAdmin() {
-            const modal = document.getElementById('modalAdmin');
-            if (modal) {
-                modal.classList.remove('hidden');
-            }
-        }
-
-        function fecharModalAdmin() {
-            const modal = document.getElementById('modalAdmin');
-            if (modal) {
-                modal.classList.add('hidden');
-            }
-        }
-
-        // Login do Administrador
-        async function fazerLoginAdmin(e) {
-            e.preventDefault();
-            const email = document.getElementById('adminEmail').value;
-            const senha = document.getElementById('adminSenha').value;
-
-            if (!supabaseClient) {
-                alert("Erro: O cliente do Supabase não foi carregado corretamente.");
-                return;
-            }
-
-            const { data, error } = await supabaseClient.auth.signInWithPassword({
-                email: email,
-                password: senha
-            });
-
-            if (error) {
-                alert("Erro ao entrar: " + error.message);
-            } else {
-                alert("Login de Administrador efetuado com sucesso!");
-                fecharModalAdmin();
-            }
-        }
-
-        // Funções de navegação do aluno
-        function entrarComoAluno(e) {
-            e.preventDefault();
-            const nickname = document.getElementById('inputNickname').value.trim();
-            if (!nickname) return;
-            
-            localStorage.setItem('qg_usuario', nickname);
-            atualizarInterfaceAluno();
-        }
-
-        function atualizarInterfaceAluno() {
-            const usuario = localStorage.getItem('qg_usuario');
-            if (usuario) {
-                document.getElementById('view
+<footer>QG ESTUDE · Projeto gratuito e demonstrativo · Banco de questões em expansão</footer>
+</div></main></div>
+<script>
+const questions=[
+{exam:"PMESP",subject:"Língua Portuguesa",level:"Básico",text:"Assinale a alternativa em que a concordância verbal está de acordo com a norma-padrão.",options:["Houveram muitas inscrições no concurso.","Fazem dois anos que ele estuda.","Existem bons motivos para revisar o conteúdo.","A equipe de candidatos chegaram cedo.","Os candidato chegou cedo."],answer:2,explain:"O verbo “existir” concorda com o sujeito “bons motivos”, por isso a forma “existem” está correta. “Haver”, no sentido de existir, e “fazer”, indicando tempo decorrido, são impessoais."},
+{exam:"PMESP",subject:"Matemática",level:"Básico",text:"Uma turma tem 40 candidatos. Se 25% foram aprovados em uma etapa, quantos candidatos foram aprovados?",options:["5","8","10","12","15"],answer:2,explain:"25% corresponde a 0,25. Assim, 40 × 0,25 = 10 candidatos."},
+{exam:"PMESP",subject:"Raciocínio Lógico",level:"Básico",text:"Considere a sequência: 3, 6, 12, 24, __. Qual é o próximo termo?",options:["30","36","42","48","54"],answer:3,explain:"Cada termo é o dobro do anterior: 24 × 2 = 48."},
+{exam:"PMESP",subject:"Noções de Direito",level:"Básico",text:"De acordo com o princípio da legalidade na Administração Pública, o agente público deve:",options:["Fazer tudo o que não estiver expressamente proibido.","Atuar conforme a lei e o ordenamento jurídico.","Agir exclusivamente segundo sua vontade.","Priorizar interesses particulares quando convenientes.","Atuar sem observar os princípios administrativos."],answer:1,explain:"Na Administração Pública, a atuação deve observar a lei e o ordenamento jurídico."},
+{exam:"PMESP",subject:"Informática",level:"Básico",text:"Qual destas opções é um exemplo de navegador de internet?",options:["LibreOffice Calc","Mozilla Firefox","Windows Defender","Adobe Acrobat Reader","Microsoft Excel"],answer:1,explain:"Mozilla Firefox é um navegador utilizado para acessar páginas e serviços na internet."},
+{exam:"GCM",subject:"Língua Portuguesa",level:"Básico",text:"Assinale a alternativa em que todas as palavras estão grafadas corretamente.",options:["Excessão, análise, pesquisa.","Exceção, análise, pesquisa.","Exceção, análize, pesquiza.","Esceção, análise, pesquisa.","Excessão, análize, pesquiza."],answer:1,explain:"As grafias corretas são “exceção”, “análise” e “pesquisa”."},
+{exam:"GCM",subject:"Matemática",level:"Básico",text:"Um equipamento custa R$ 200,00 e recebeu desconto de 15%. Qual é o preço após o desconto?",options:["R$ 160,00","R$ 165,00","R$ 170,00","R$ 185,00","R$ 190,00"],answer:2,explain:"15% de R$ 200,00 corresponde a R$ 30,00. O preço final é R$ 170,00."},
+{exam:"GCM",subject:"Raciocínio Lógico",level:"Básico",text:"Se todo guarda municipal é servidor público e Ana é guarda municipal, então:",options:["Ana não é servidora pública.","Ana é servidora pública.","Todo servidor público é guarda municipal.","Não é possível concluir nada.","Ana é necessariamente prefeita."],answer:1,explain:"Se todo guarda municipal é servidor público e Ana é guarda municipal, conclui-se que Ana é servidora pública."},
+{exam:"GCM",subject:"Noções de Direito",level:"Básico",text:"A Constituição Federal de 1988 estabelece que a segurança pública é:",options:["Dever exclusivo das Forças Armadas.","Dever do Estado, direito e responsabilidade de todos.","Responsabilidade exclusiva dos municípios.","Atividade privada sem participação estatal.","Dever exclusivo das guardas municipais."],answer:1,explain:"O artigo 144 da Constituição Federal define a segurança pública como dever do Estado, direito e responsabilidade de todos."},
+{exam:"GCM",subject:"Informática",level:"Básico",text:"Em segurança digital, qual prática ajuda a proteger uma conta?",options:["Reutilizar a mesma senha em todos os serviços.","Compartilhar códigos de verificação.","Ativar a autenticação em dois fatores.","Anotar a senha em local público.","Desativar atualizações de segurança."],answer:2,explain:"A autenticação em dois fatores acrescenta uma segunda etapa de verificação e dificulta o acesso indevido."}
+];
+const shuffle=a=>{const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;};
+let stats={answered:0,correct:0,wrong:0,simulations:0};
+try{const old=JSON.parse(localStorage.getItem("qgEstudeStatsV2")||"null");if(old)stats={...stats,...old};}catch(e){}
+let examFilter="TODOS",subjectFilter="Todas",practiceList=[],practiceIndex=0,practiceAttempt=[],simExam="PMESP",simList=[],simIndex=0,simAnswers=[];
+const letters="ABCDE";
+function showView(id){document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===id));document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.view===id));const labels={inicio:"Meu painel",concursos:"Concursos",questoes:"Provas por matéria",materias:"Plano de matérias",simulado:"Simulados",progresso:"Meu desempenho",ranking:"Ranking"};document.getElementById("breadcrumb").textContent=labels[id]||"QG ESTUDE";if(id==="progresso")updateStats();if(id==="questoes"&&!practiceList.length)beginPractice();window.scrollTo(0,0);}
+document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.view)));
+function selectExam(exam){examFilter=exam;subjectFilter="Todas";document.querySelectorAll("#exam-chips .chip").forEach(b=>b.classList.toggle("active",b.textContent.includes(exam)));beginPractice();showView("questoes");}
+function setExamFilter(exam,el){examFilter=exam;subjectFilter="Todas";document.querySelectorAll("#exam-chips .chip").forEach(b=>b.classList.remove("active"));el.classList.add("active");beginPractice();}
+function filtered(){return questions.filter(q=>(examFilter==="TODOS"||q.exam===examFilter)&&(subjectFilter==="Todas"||q.subject===subjectFilter));}
+function openSubject(subject){examFilter="TODOS";subjectFilter=subject;beginPractice();showView("questoes");}
+function setSubject(subject){subjectFilter=subject;beginPractice();}
+function beginPractice(){practiceList=shuffle(filtered().map((q)=>({q,optionOrder:shuffle(q.options.map((_,i)=>i))})));practiceIndex=0;practiceAttempt=[];renderPractice();}
+function renderPractice(){
+ const area=document.getElementById("question-area");if(!area)return;
+ const subjects=[...new Set(questions.filter(q=>examFilter==="TODOS"||q.exam===examFilter).map(q=>q.subject))];
+ document.getElementById("subject-list").innerHTML='<button onclick="setSubject(&quot;Todas&quot;)">Todas as disciplinas</button>'+subjects.map(s=>`<button onclick="setSubject('${s.replace(/'/g,"")}')">${s}</button>`).join("");
+ if(!practiceList.length){area.innerHTML='<div class="empty"><strong>Nenhuma questão encontrada</strong>Selecione outro filtro.</div>';return;}
+ const item=practiceList[practiceIndex],q=item.q,answer=practiceAttempt[practiceIndex];
+ const opts=item.optionOrder.map((originalIndex,displayIndex)=>{let cls="option";if(answer!==undefined){if(originalIndex===q.answer)cls+=" correct";else if(originalIndex===answer)cls+=" wrong";}else if(originalIndex===answer)cls+=" selected";return `<button class="${cls}" ${answer!==undefined?"disabled":""} onclick="answerPractice(${displayIndex})"><span class="letter">${letters[displayIndex]}</span><span>${q.options[originalIndex]}</span></button>`;}).join("");
+ let feedback="";if(answer!==undefined){const selectedLetter=letters[item.optionOrder.indexOf(answer)],correctLetter=letters[item.optionOrder.indexOf(q.answer)];feedback=`<strong>${answer===q.answer?"Resposta correta!":"Resposta incorreta. Veja a correção."}</strong><div><b>Sua resposta:</b> ${selectedLetter}) ${q.options[answer]}</div>${answer!==q.answer?`<div style="margin-top:6px"><b>Resposta correta:</b> ${correctLetter}) ${q.options[q.answer]}</div>`:""}<div style="margin-top:8px"><b>Explicação:</b> ${q.explain}</div>${q.subject==="Noções de Direito"?'<div style="margin-top:7px"><b>Fundamento:</b> Constituição Federal, art. 37 ou art. 144, conforme o enunciado.</div>':""}`;}
+ area.innerHTML=`<div class="question-meta"><span>${q.exam} · ${q.subject}</span><span>Questão ${practiceIndex+1} de ${practiceList.length}</span></div><h2>${q.text}</h2><div class="options">${opts}</div><div class="feedback ${answer!==undefined?"show "+(answer===q.answer?"good":"bad"):""}">${feedback}</div><div class="question-actions"><button class="secondary" onclick="movePractice(-1)" ${practiceIndex===0?"disabled":""}>Anterior</button><button class="primary" onclick="movePractice(1)" ${practiceIndex===practiceList.length-1?"disabled":""}>Próxima →</button><button class="secondary" onclick="beginPractice()">Nova tentativa (sortear novamente)</button></div>`;
+}
+function answerPractice(displayIndex){if(practiceAttempt[practiceIndex]!==undefined)return;const item=practiceList[practiceIndex],originalIndex=item.optionOrder[displayIndex],q=item.q;practiceAttempt[practiceIndex]=originalIndex;stats.answered++;if(originalIndex===q.answer)stats.correct++;else stats.wrong++;persistStats();renderPractice();}
+function movePractice(dir){const next=practiceIndex+dir;if(next<0||next>=practiceList.length)return;practiceIndex=next;renderPractice();}
+function setSimExam(exam){simExam=exam;document.getElementById("sim-pm").classList.toggle("active",exam==="PMESP");document.getElementById("sim-gcm").classList.toggle("active",exam==="GCM");document.getElementById("sim-area").innerHTML="";}
+function startSimulation(){simList=shuffle(questions.filter(q=>q.exam===simExam).map(q=>({q,optionOrder:shuffle(q.options.map((_,i)=>i))})));simIndex=0;simAnswers=[];renderSim();}
+function renderSim(){const area=document.getElementById("sim-area");if(simIndex>=simList.length){const correct=simAnswers.filter((a,i)=>a===simList[i].q.answer).length;stats.simulations++;persistStats();area.innerHTML=`<div class="panel"><div class="eyebrow">Simulado finalizado</div><h2>Resultado: ${correct} de ${simList.length} acertos</h2><p>Seu aproveitamento foi de ${Math.round(correct/simList.length*100)}%.</p><button class="primary" onclick="startSimulation()">Refazer com novas questões e alternativas</button></div>`;updateStats();return;}
+ const item=simList[simIndex],q=item.q,chosen=simAnswers[simIndex];const opts=item.optionOrder.map((originalIndex,displayIndex)=>`<button class="option ${chosen===originalIndex?"selected":""}" onclick="chooseSim(${originalIndex})"><span class="letter">${letters[displayIndex]}</span><span>${q.options[originalIndex]}</span></button>`).join("");
+ area.innerHTML=`<div class="question-card"><div class="question-meta"><span>Questão ${simIndex+1} de ${simList.length}</span><span>${q.subject}</span></div><h2>${q.text}</h2><div class="options">${opts}</div><div class="question-actions"><button class="secondary" onclick="simIndex=Math.max(0,simIndex-1);renderSim()" ${simIndex===0?"disabled":""}>Anterior</button><button class="primary" onclick="nextSim()">${simIndex===simList.length-1?"Finalizar":"Próxima →"}</button></div></div>`;
+}
+function chooseSim(originalIndex){simAnswers[simIndex]=originalIndex;renderSim();}
+function nextSim(){if(simAnswers[simIndex]===undefined){alert("Escolha uma alternativa antes de continuar.");return;}if(simIndex===simList.length-1){renderSimFinal();return;}simIndex++;renderSim();}
+function renderSimFinal(){
+ const correct=simAnswers.filter((a,i)=>a===simList[i].q.answer).length;
+ const rate=Math.round(correct/simList.length*100);
+ const passed=rate>=52;
+ stats.simulations++;persistStats();
+ const area=document.getElementById("sim-area");
+ if(passed){
+   area.innerHTML=`<div class="pass-celebration"><div class="confetti-layer" id="confetti-layer"></div><div class="pass-icon">🏆</div><span class="pass-tag">SIMULADO CONCLUÍDO COM APROVEITAMENTO</span><h2>PARABÉNS!</h2><p>Você atingiu o critério de aprovação deste treino. Continue estudando e mantenha a evolução!</p><h3>${correct} de ${simList.length} acertos · ${rate}%</h3><p><small>Critério interno demonstrativo: 52% de aproveitamento. Não representa a nota de corte oficial de um concurso.</small></p><button class="primary" onclick="startSimulation()">Fazer outro simulado</button></div>`;
+   launchConfetti();
+ }else{
+   area.innerHTML=`<div class="fail-result"><div class="eyebrow">Simulado finalizado</div><h2>Continue treinando!</h2><p>Você acertou <strong>${correct} de ${simList.length}</strong> questões (${rate}%). Ainda não atingiu o critério interno de 52% deste treino.</p><p>Revise os assuntos e tente novamente. Cada tentativa terá uma nova ordem de questões e alternativas.</p><button class="primary" onclick="startSimulation()">Tentar novamente</button></div>`;
+ }
+ updateStats();
+}
+function launchConfetti(){
+ const layer=document.getElementById("confetti-layer");if(!layer)return;
+ const colors=["#d4ad63","#198754","#244c78","#e56b6f","#8b6bd6"];
+ for(let i=0;i<65;i++){
+   const piece=document.createElement("span");piece.className="confetti-piece";
+   piece.style.left=(Math.random()*100)+"%";
+   piece.style.background=colors[i%colors.length];
+   piece.style.animationDelay=(Math.random()*0.9)+"s";
+   piece.style.setProperty("--drift",((Math.random()-.5)*180)+"px");
+   piece.style.transform="rotate("+Math.floor(Math.random()*180)+"deg)";
+   layer.appendChild(piece);
+ }
+}
+function persistStats(){localStorage.setItem("qgEstudeStatsV2",JSON.stringify(stats));updateStats();}
+function updateStats(){const rate=stats.answered?Math.round(stats.correct/stats.answered*100):0;document.getElementById("stat-answered").textContent=stats.answered;document.getElementById("stat-correct").textContent=rate+"%";document.getElementById("stat-sims").textContent=stats.simulations;document.getElementById("p-answered").textContent=stats.answered;document.getElementById("p-correct").textContent=stats.correct;document.getElementById("p-wrong").textContent=stats.wrong;document.getElementById("p-rate").textContent=rate+"%";document.getElementById("progress-bar").style.width=rate+"%";document.getElementById("history-text").textContent=stats.answered?`${stats.correct} acertos e ${stats.wrong} erros em ${stats.answered} respostas acumuladas.`:"Você ainda não respondeu a nenhuma questão.";}
+updateStats();beginPractice();
+</script>
+</body>
+</html>
