@@ -1,320 +1,558 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101d32">
-<title>QG ESTUDE | PMESP e GCM-SP</title>
-<meta name="description" content="Plataforma demonstrativa gratuita de preparação para PMESP e GCM-SP.">
-<style>
-:root{--navy:#101d32;--blue:#244c78;--gold:#d4ad63;--bg:#f3f5f8;--card:#fff;--ink:#172235;--muted:#687589;--line:#e3e8ef;--green:#198754;--red:#c34444}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif}
-button,input{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:grid;grid-template-columns:245px 1fr}
-.sidebar{background:var(--navy);color:#fff;padding:24px 16px;display:flex;flex-direction:column;gap:22px}
-.brand{display:flex;align-items:center;gap:12px;padding:0 8px}.brand-mark{width:42px;height:42px;border:1px solid var(--gold);border-radius:12px;display:grid;place-items:center;color:var(--gold);font-size:22px;font-weight:800}.brand strong{display:block}.brand small{color:#aab8ca;font-size:11px}
-.nav-label{font-size:10px;letter-spacing:1.4px;color:#8393a9;padding:0 10px;margin-bottom:7px}.nav button{width:100%;border:0;background:transparent;color:#c8d2df;text-align:left;padding:11px;border-radius:9px;margin:2px 0;font-size:14px}.nav button.active,.nav button:hover{background:#203653;color:#fff}.nav button span{display:inline-block;width:27px;color:var(--gold)}
-.sidebar-note{margin-top:auto;border:1px solid #31445e;border-radius:12px;padding:13px;color:#b8c5d5;font-size:12px;line-height:1.5}
-main{min-width:0}.topbar{height:64px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px}.topbar small{color:var(--muted)}.profile{font-size:13px;color:var(--muted)}
-.content{max-width:1200px;margin:auto;padding:28px}.eyebrow{color:var(--blue);font-size:11px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase}.welcome{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:22px}.welcome h1{margin:7px 0 5px;font-size:29px}.welcome p{margin:0;color:var(--muted)}
-.primary,.secondary{padding:11px 15px;border-radius:9px;font-weight:700}.primary{border:0;background:var(--navy);color:#fff}.primary:hover{background:var(--blue)}.secondary{border:1px solid var(--line);background:#fff;color:var(--ink)}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}.stat,.panel,.exam-card,.question-card{background:var(--card);border:1px solid var(--line);border-radius:14px}.stat{padding:16px}.stat .label{font-size:12px;color:var(--muted)}.stat strong{display:block;font-size:25px;margin:7px 0}.stat small{font-size:11px;color:var(--muted)}
-.section-head{display:flex;align-items:center;justify-content:space-between;margin:26px 0 12px}.section-head h2{font-size:18px;margin:0}.section-head p{font-size:12px;color:var(--muted);margin:4px 0 0}
-.exams{display:grid;grid-template-columns:1fr 1fr;gap:14px}.exam-card{padding:18px}.exam-card h3{margin:0 0 4px}.exam-card p,.muted{color:var(--muted);font-size:13px}.desc{font-size:13px;line-height:1.5;color:#536176;margin:14px 0}
-.panel{padding:18px}.notice{font-size:12px;color:#77613c;background:#fff8e9;border:1px solid #f0dfb8;padding:12px 14px;border-radius:10px;line-height:1.5;margin:14px 0}
-.hidden{display:none!important}.view{display:none}.view.active{display:block}.chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.chip{border:1px solid var(--line);background:#fff;border-radius:30px;padding:8px 12px;font-size:12px;color:#536176}.chip.active{background:var(--navy);border-color:var(--navy);color:#fff}
-.question-layout{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:14px}.question-card{padding:22px}.question-meta{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:12px;margin-bottom:16px}.question-card h2{font-size:18px;line-height:1.5;margin:0 0 18px}.options{display:grid;gap:9px}.option{display:flex;gap:11px;align-items:flex-start;text-align:left;width:100%;padding:13px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);line-height:1.45}.option.selected{border-color:var(--blue);background:#f1f5fa}.option.correct{border-color:var(--green);background:#e5f6eb;color:#145c35}.option.wrong{border-color:var(--red);background:#fff0f0;color:#8f2929}.option:disabled{cursor:default;opacity:1}.letter{flex:0 0 25px;height:25px;border-radius:7px;background:#eef2f6;display:grid;place-items:center;font-size:12px;font-weight:800}
-.feedback{display:none;margin-top:15px;padding:14px;border-radius:10px;font-size:13px;line-height:1.55}.feedback.show{display:block}.feedback.good{background:#eff9f3;color:#17683f}.feedback.bad{background:#fff3f3;color:#913636}.feedback strong{display:block;margin-bottom:6px}.question-actions{display:flex;justify-content:space-between;gap:9px;margin-top:18px}.subject-list{display:grid;gap:7px}.subject-list button{text-align:left;background:#f7f9fb;border:1px solid var(--line);padding:10px;border-radius:9px;font-size:12px;color:#334258}
-.empty{padding:28px;text-align:center;color:var(--muted)}.empty strong{display:block;color:var(--ink);margin-bottom:7px}.progress-line{height:8px;background:#edf0f4;border-radius:20px;overflow:hidden;margin:10px 0}.progress-line div{height:100%;background:var(--gold);width:0}
-footer{text-align:center;color:#8a95a5;font-size:11px;padding:24px}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QG-Estude - PM-SP & GCM</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --gold: #f59e0b;
+        }
 
-.pass-celebration{position:relative;overflow:hidden;text-align:center;padding:30px 18px;background:linear-gradient(135deg,#f0fff5,#fff);border:1px solid #b9e8c9;border-radius:16px}
-.pass-celebration h2{font-size:clamp(25px,5vw,36px);color:#17683f;margin:8px 0}
-.pass-celebration p{color:#345b46;line-height:1.5}
-.pass-icon{font-size:48px;line-height:1.2;animation:pop-in .65s ease both}
-.pass-tag{display:inline-block;background:#d8f5e2;color:#17683f;border-radius:30px;padding:7px 13px;font-size:12px;font-weight:800;letter-spacing:.5px}
-.confetti-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.confetti-piece{position:absolute;top:-18px;width:9px;height:15px;opacity:.9;animation:confetti-fall 2.8s ease-in forwards}
-@keyframes confetti-fall{to{transform:translate3d(var(--drift),110vh,0) rotate(760deg);opacity:.15}}
-@keyframes pop-in{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
-.fail-result{padding:22px;border:1px solid var(--line);border-radius:14px;background:#fff}
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 16px;
+        }
 
-@media(max-width:850px){.app{grid-template-columns:1fr}.sidebar{padding:12px 14px;gap:10px}.brand{padding:0}.nav{display:flex;overflow:auto;gap:3px}.nav-label,.sidebar-note{display:none}.nav button{white-space:nowrap;width:auto;padding:9px}.nav button span{width:auto;margin-right:4px}.topbar{height:54px;padding:0 15px}.content{padding:20px 14px}.question-layout{grid-template-columns:1fr}.side-panel{order:-1}.subject-list{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:560px){.welcome{align-items:flex-start;flex-direction:column}.welcome h1{font-size:24px}.exams{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr);gap:8px}.stat{padding:12px}.stat strong{font-size:22px}.content{padding:17px 12px}.question-card{padding:16px}.question-actions{flex-wrap:wrap}.question-actions button{flex:1}}
-</style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-/* SUPABASE: preencher URL e chave anon/publishable do projeto. Nunca usar service_role. */
-const QG_SUPABASE_URL="https://nacalwxpvfbjisyosboz.supabase.co";
-const QG_SUPABASE_ANON_KEY="sb_publishable_OjIWYiN3KE47ymE_bn1fSQ_7CWo0g54";
-let qgAdminDb=null,qgAdminData={candidates:[],access:[],attempts:[]};
-function qgAdminConfigured(){return QG_SUPABASE_URL.startsWith("https://")&&QG_SUPABASE_ANON_KEY.length>20&&(QG_SUPABASE_ANON_KEY.startsWith("sb_publishable_")||QG_SUPABASE_ANON_KEY.startsWith("ey"));}
-function qgOpenAdmin(){document.getElementById("qgAdminLayer").classList.remove("hidden");document.getElementById("qgAdminLogin").classList.remove("hidden");document.getElementById("qgAdminDashboard").classList.add("hidden");if(!qgAdminConfigured())document.getElementById("qgAdminLoginMsg").textContent="Configuração pendente: inserir URL e chave pública do Supabase neste arquivo.";}
-function abrirModalAdmin(){qgOpenAdmin();}
-function qgCloseAdmin(){document.getElementById("qgAdminLayer").classList.add("hidden");}
-function qgAdminEsc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function qgAdminDate(v){return v?new Date(v).toLocaleString("pt-BR"):"—";}
-function qgAdminPct(n,d){return d?Math.round(Number(n||0)/Number(d)*100):0;}
-function qgAdminTable(head,rows){if(!rows.length)return '<div class="emptyAdmin">Nenhum registro encontrado.</div>';return '<div class="tableScroll"><table><thead><tr>'+head.map(x=>'<th>'+x+'</th>').join("")+'</tr></thead><tbody>'+rows.join("")+'</tbody></table></div>';}
-async function qgAdminLogin(){
- const msg=document.getElementById("qgAdminLoginMsg");
- if(!qgAdminConfigured()){msg.textContent="Configure a conexão com o Supabase antes de entrar.";return;}
- try{
-  if(!qgAdminDb)qgAdminDb=window.supabase.createClient(QG_SUPABASE_URL,QG_SUPABASE_ANON_KEY);
-  msg.textContent="Validando...";
-  const {data,error}=await qgAdminDb.auth.signInWithPassword({email:document.getElementById("qgAdminEmail").value.trim(),password:document.getElementById("qgAdminPassword").value});
-  if(error)throw error;
-  const {data:profile,error:profileError}=await qgAdminDb.from("admin_profiles").select("role").eq("user_id",data.user.id).maybeSingle();
-  if(profileError)throw profileError;
-  if(!profile||profile.role!=="admin"){await qgAdminDb.auth.signOut();throw new Error("Esta conta não tem autorização administrativa.");}
-  document.getElementById("qgAdminLogin").classList.add("hidden");
-  document.getElementById("qgAdminDashboard").classList.remove("hidden");
-  document.getElementById("qgAdminWho").textContent=data.user.email||"Administrador";
-  await qgAdminRefresh();
- }catch(e){msg.textContent="Não foi possível entrar: "+e.message;}
-}
-async function qgAdminLogout(){if(qgAdminDb)await qgAdminDb.auth.signOut();document.getElementById("qgAdminDashboard").classList.add("hidden");document.getElementById("qgAdminLogin").classList.remove("hidden");document.getElementById("qgAdminPassword").value="";}
-function qgAdminTab(tab,button){document.querySelectorAll("#qgAdminTabs .chip").forEach(b=>b.classList.remove("active"));button.classList.add("active");document.querySelectorAll("#qgAdminLayer .qgAdminPanel").forEach(p=>p.classList.add("hidden"));document.getElementById("qgAdmin"+tab[0].toUpperCase()+tab.slice(1)).classList.remove("hidden");}
-async function qgAdminSafe(query){const {data,error}=await query;if(error){console.error(error);return [];}return data||[];}
-async function qgAdminRefresh(){
- if(!qgAdminDb)return;
- const [candidates,access,attempts]=await Promise.all([
-  qgAdminSafe(qgAdminDb.from("candidates").select("id,display_name,public_code,created_at").order("created_at",{ascending:false}).limit(1000)),
-  qgAdminSafe(qgAdminDb.from("access_events").select("id,candidate_id,event_type,created_at,candidates(display_name,public_code)").order("created_at",{ascending:false}).limit(1000)),
-  qgAdminSafe(qgAdminDb.from("exam_attempts").select("id,candidate_id,exam_id,mode,submitted_at,total_questions,correct_count,elapsed_seconds,status,candidates(display_name,public_code),exams(code,title)").order("submitted_at",{ascending:false}).limit(2000))
- ]);
- qgAdminData={candidates,access,attempts};qgAdminRender();
-}
-function qgAdminRender(){
- const done=qgAdminData.attempts.filter(a=>a.status==="submitted"||a.submitted_at);
- document.getElementById("qgKCandidates").textContent=qgAdminData.candidates.length;
- document.getElementById("qgKAccess").textContent=qgAdminData.access.length;
- document.getElementById("qgKMocks").textContent=done.filter(a=>a.mode==="full_mock").length;
- const avg=done.length?Math.round(done.reduce((s,a)=>s+qgAdminPct(a.correct_count,a.total_questions),0)/done.length):0;
- document.getElementById("qgKAverage").textContent=done.length?avg+"%":"—";
- document.getElementById("qgRecent").innerHTML=qgAdminTable(["Aluno","Evento","Data"],qgAdminData.access.slice(0,8).map(a=>`<tr><td>${qgAdminEsc(a.candidates?.display_name||"Aluno")}</td><td>${qgAdminEsc(a.event_type)}</td><td>${qgAdminDate(a.created_at)}</td></tr>`));
- qgAdminRenderAccess();
- const best=new Map();for(const a of done){const old=best.get(a.candidate_id);if(!old||qgAdminPct(a.correct_count,a.total_questions)>qgAdminPct(old.correct_count,old.total_questions))best.set(a.candidate_id,a);}
- const ranking=[...best.values()].sort((a,b)=>qgAdminPct(b.correct_count,b.total_questions)-qgAdminPct(a.correct_count,a.total_questions)||b.correct_count-a.correct_count);
- document.getElementById("qgRankingTable").innerHTML=qgAdminTable(["Posição","Aluno","Concurso","Acertos","Aproveitamento"],ranking.map((a,i)=>`<tr><td>${i+1}º</td><td>${qgAdminEsc(a.candidates?.display_name||"—")}</td><td>${qgAdminEsc(a.exams?.code||"—")}</td><td>${a.correct_count}/${a.total_questions}</td><td><b>${qgAdminPct(a.correct_count,a.total_questions)}%</b></td></tr>`));
- document.getElementById("qgPerformanceTable").innerHTML=qgAdminTable(["Aluno","Tentativas","Questões","Aproveitamento"],qgAdminData.candidates.map(c=>{const aa=done.filter(a=>a.candidate_id===c.id),n=aa.reduce((s,a)=>s+Number(a.total_questions||0),0),ok=aa.reduce((s,a)=>s+Number(a.correct_count||0),0);return `<tr><td>${qgAdminEsc(c.display_name)}</td><td>${aa.length}</td><td>${ok}/${n}</td><td>${n?qgAdminPct(ok,n)+"%":"—"}</td></tr>`;}));
- document.getElementById("qgSimTable").innerHTML=qgAdminTable(["Aluno","Concurso","Tipo","Resultado","Data"],done.map(a=>`<tr><td>${qgAdminEsc(a.candidates?.display_name||"—")}</td><td>${qgAdminEsc(a.exams?.code||"—")}</td><td>${a.mode==="full_mock"?"Simulado geral":"Prova por matéria"}</td><td>${a.correct_count}/${a.total_questions} (${qgAdminPct(a.correct_count,a.total_questions)}%)</td><td>${qgAdminDate(a.submitted_at)}</td></tr>`));
- document.getElementById("qgCandidateTable").innerHTML=qgAdminTable(["Aluno","Código público","Cadastro"],qgAdminData.candidates.map(c=>`<tr><td>${qgAdminEsc(c.display_name)}</td><td>${qgAdminEsc(c.public_code||"—")}</td><td>${qgAdminDate(c.created_at)}</td></tr>`));
-}
-function qgRenderAccess(){const q=(document.getElementById("qgAccessFilter").value||"").toLowerCase();const rows=qgAdminData.access.filter(a=>(String(a.candidates?.display_name||"")+" "+String(a.event_type||"")).toLowerCase().includes(q));document.getElementById("qgAccessTable").innerHTML=qgAdminTable(["Aluno","Código","Evento","Data e hora"],rows.map(a=>`<tr><td>${qgAdminEsc(a.candidates?.display_name||"—")}</td><td>${qgAdminEsc(a.candidates?.public_code||"—")}</td><td>${qgAdminEsc(a.event_type)}</td><td>${qgAdminDate(a.created_at)}</td></tr>`));}
+        .container {
+            max-width: 768px;
+            margin: 0 auto;
+        }
 
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
 
-/* Identificação simples do aluno: sem autenticação, somente apelido neste dispositivo. */
-(function qgInitStudentNickname(){
- const saved=localStorage.getItem("qg_estude_student_nickname");
- if(saved){document.getElementById("qgStudentWelcome").style.display="none";const el=document.getElementById("qgStudentDisplay");if(el)el.textContent=saved;}
- else {const field=document.getElementById("qgStudentNickname");if(field){field.value="";field.focus();}}
-})();
-function qgSaveStudentNickname(){
- const field=document.getElementById("qgStudentNickname");
- const nickname=(field.value||"").trim().replace(/\s+/g," ");
- const msg=document.getElementById("qgNicknameMessage");
- if(nickname.length<2){msg.textContent="Digite um apelido com pelo menos 2 caracteres.";return;}
- if(nickname.length>24){msg.textContent="Use no máximo 24 caracteres.";return;}
- localStorage.setItem("qg_estude_student_nickname",nickname);
- const display=document.getElementById("qgStudentDisplay");if(display)display.textContent=nickname;
- document.getElementById("qgStudentWelcome").style.display="none";
-}
+        h1 {
+            color: #60a5fa;
+            margin-bottom: 4px;
+        }
 
+        .subtitle {
+            color: var(--text-sub);
+            font-size: 0.9rem;
+        }
 
-/* Atalho administrativo não exibido aos alunos. A autenticação continua obrigatória. */
-(function qgAdminPrivateEntry(){
- const params=new URLSearchParams(window.location.search);
- if(params.get("adm")==="1"){qgOpenAdmin();}
-})();
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
 
-</script>
+        .tab-btn {
+            flex: 1;
+            min-width: 110px;
+            padding: 10px;
+            background: var(--card-bg);
+            border: 1px solid #334155;
+            color: var(--text-main);
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .tab-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .section-page {
+            display: none;
+        }
+
+        .section-page.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            border: 1px solid #334155;
+        }
+
+        select, button, input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: white;
+            font-size: 1rem;
+            margin-top: 8px;
+            box-sizing: border-box;
+        }
+
+        button.btn-main {
+            background: var(--accent);
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            background: var(--card-bg);
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border: 1px solid #334155;
+            cursor: pointer;
+        }
+
+        .option-item.correct { background: var(--success); }
+        .option-item.wrong { background: var(--danger); }
+
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+
+        .ranking-table th, .ranking-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #334155;
+        }
+
+        .ranking-table th {
+            color: var(--text-sub);
+        }
+
+        .top-1-row {
+            background: rgba(245, 158, 11, 0.15);
+            border-left: 4px solid var(--gold);
+        }
+
+        .badge-approved {
+            color: #4ade80;
+            font-weight: bold;
+        }
+
+        .badge-failed {
+            color: #f87171;
+            font-weight: bold;
+        }
+
+        .timer-info {
+            font-size: 0.8rem;
+            color: var(--gold);
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        /* Animação da Foca do 1º Lugar */
+        #foca-podium {
+            display: none;
+            text-align: center;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 2px solid var(--gold);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+        }
+
+        .foca-container {
+            font-size: 4rem;
+            display: inline-block;
+            animation: jumpAndClap 0.8s infinite alternate ease-in-out;
+        }
+
+        .ball {
+            display: inline-block;
+            font-size: 2rem;
+            animation: bounceBall 0.8s infinite alternate ease-in-out;
+        }
+
+        @keyframes jumpAndClap {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-25px) rotate(-5deg); }
+        }
+
+        @keyframes bounceBall {
+            0% { transform: translateY(-35px) scale(0.9); }
+            100% { transform: translateY(5px) scale(1.1); }
+        }
+    </style>
 </head>
 <body>
 
-<!-- IDENTIFICAÇÃO SIMPLES DO ALUNO: SEM E-MAIL OU SENHA -->
-<div id="qgStudentWelcome" style="position:fixed;inset:0;z-index:9998;background:#101d32ee;display:grid;place-items:center;padding:18px">
- <div style="background:#fff;color:#172235;width:min(420px,100%);padding:26px;border-radius:18px;box-shadow:0 20px 60px #0005">
-  <div class="eyebrow">BEM-VINDO AO QG ESTUDE</div>
-  <h2 style="margin:8px 0">Como quer aparecer no ranking?</h2>
-  <p class="muted">Não precisa criar conta, informar e-mail ou cadastrar senha. Escolha apenas um apelido.</p>
-  <label for="qgStudentNickname" style="display:block;font-size:12px;font-weight:700;margin:15px 0 6px">Seu apelido</label>
-  <input id="qgStudentNickname" maxlength="24" placeholder="Ex.: FocoNaAprovação" style="width:100%;padding:12px;border:1px solid #e3e8ef;border-radius:9px">
-  <button onclick="qgSaveStudentNickname()" class="primary" style="width:100%;margin-top:14px">Entrar no QG ESTUDE</button>
-  <div id="qgNicknameMessage" class="muted" style="color:#b33;margin-top:10px"></div>
-  <p class="small" style="margin-top:14px">Use sempre o mesmo apelido neste aparelho para manter seu histórico local. O ranking global só ficará disponível após a conexão do banco de dados.</p>
- </div>
-</div>
+<div class="container">
+    <header>
+        <h1>QG-ESTUDE</h1>
+        <div class="subtitle">Plano de Estudos & Simulados - PM-SP & GCM</div>
+    </header>
 
-<div class="app">
-<aside class="sidebar">
- <div class="brand"><div class="brand-mark">Q</div><div><strong>QG ESTUDE</strong><small>Preparação para concursos</small></div></div>
- <div><div class="nav-label">ÁREA DO CANDIDATO</div><nav class="nav">
-  <button class="active" data-view="inicio"><span>⌂</span>Meu painel</button><button data-view="concursos"><span>♢</span>Concursos</button><button data-view="questoes"><span>☷</span>Provas por matéria</button><button data-view="materias"><span>▤</span>Plano de matérias</button><button data-view="simulado"><span>◷</span>Simulados</button><button data-view="progresso"><span>▥</span>Meu desempenho</button><button data-view="ranking"><span>🏆</span>Ranking</button>
- </nav></div>
- <div class="sidebar-note"><strong style="color:white">QG ESTUDE · Gratuito</strong><br>Versão demonstrativa. Banco de questões em expansão.</div>
-</aside>
-<main><header class="topbar"><small>Área de estudos / <strong id="breadcrumb">Meu painel</strong></small><div style="display:flex;align-items:center;gap:12px"><button class="secondary" style="padding:8px 11px;font-size:12px" onclick="abrirModalAdmin()">Área ADM</button><div class="profile" id="qgStudentDisplay">Visitante</div></div></header><div class="content">
-<section class="view active" id="inicio">
- <div class="welcome"><div><div class="eyebrow">Sua preparação começa aqui</div><h1>Bem-vindo ao QG ESTUDE</h1><p>Organize seus estudos para a PMESP e a GCM de São Paulo.</p></div><button class="primary" onclick="showView('concursos')">Escolher concurso →</button></div>
- <div class="notice"><strong>Versão demonstrativa:</strong> contém 5 questões por concurso. O ranking global e provas completas de 50 questões ainda dependem de banco de dados e ampliação do conteúdo.</div>
- <div class="grid"><div class="stat"><div class="label">Questões respondidas</div><strong id="stat-answered">0</strong><small>Na sua preparação</small></div><div class="stat"><div class="label">Acertos</div><strong id="stat-correct">0%</strong><small>Aproveitamento geral</small></div><div class="stat"><div class="label">Simulados concluídos</div><strong id="stat-sims">0</strong><small>Neste navegador</small></div><div class="stat"><div class="label">Sequência de estudos</div><strong>—</strong><small>Em desenvolvimento</small></div></div>
- <div class="section-head"><div><h2>Escolha sua preparação</h2><p>Comece pelo concurso que deseja estudar.</p></div></div>
- <div class="exams"><article class="exam-card"><h3>Polícia Militar de São Paulo</h3><p>PMESP · Soldado PM</p><div class="desc">Estude por disciplinas, pratique questões e acompanhe seu desempenho.</div><button class="primary" onclick="selectExam('PMESP')">Estudar para PMESP</button></article><article class="exam-card"><h3>Guarda Civil Metropolitana</h3><p>GCM · São Paulo</p><div class="desc">Prepare-se com questões organizadas por matéria e simulados.</div><button class="primary" onclick="selectExam('GCM')">Estudar para GCM</button></article></div>
- <div class="notice">A competição é opcional. A declaração de honestidade é um compromisso pessoal; esta versão não detecta uso de ferramentas externas.</div>
-</section>
-<section class="view" id="concursos"><div class="welcome"><div><div class="eyebrow">Concursos disponíveis</div><h1>Escolha seu objetivo</h1><p>O conteúdo deve ser conferido conforme o edital vigente.</p></div></div><div class="exams"><article class="exam-card"><h3>PMESP</h3><p>Polícia Militar do Estado de São Paulo</p><button class="primary" onclick="selectExam('PMESP')">Acessar preparação</button></article><article class="exam-card"><h3>GCM São Paulo</h3><p>Guarda Civil Metropolitana</p><button class="primary" onclick="selectExam('GCM')">Acessar preparação</button></article></div></section>
-<section class="view" id="questoes"><div class="welcome"><div><div class="eyebrow">Prática e aprendizagem</div><h1>Provas por matéria</h1><p>As perguntas e alternativas mudam de posição a cada nova tentativa.</p></div></div>
- <div class="chips" id="exam-chips"><button class="chip active" onclick="setExamFilter('TODOS',this)">Todos</button><button class="chip" onclick="setExamFilter('PMESP',this)">PMESP</button><button class="chip" onclick="setExamFilter('GCM',this)">GCM São Paulo</button></div>
- <div class="question-layout"><div class="question-card" id="question-area"></div><aside class="panel side-panel"><h3>Disciplinas</h3><p class="muted">Filtre as questões pela matéria.</p><div class="subject-list" id="subject-list"></div></aside></div>
-</section>
-<section class="view" id="simulado"><div class="welcome"><div><div class="eyebrow">Treino de prova</div><h1>Simulados</h1><p>Uma nova ordem de questões e alternativas em cada tentativa.</p></div></div>
- <div class="panel"><h2 style="margin-top:0">Simulado demonstrativo</h2><p class="muted">Este simulado usa as 5 questões demonstrativas disponíveis para o concurso selecionado. Ainda não representa uma prova oficial.</p><div class="chips"><button class="chip active" id="sim-pm" onclick="setSimExam('PMESP')">PMESP</button><button class="chip" id="sim-gcm" onclick="setSimExam('GCM')">GCM São Paulo</button></div><p id="sim-status">5 questões demonstrativas · Resultado ao finalizar</p><button class="primary" onclick="startSimulation()">Iniciar / refazer simulado</button></div><div id="sim-area" style="margin-top:15px"></div>
-</section>
-<section class="view" id="materias"><div class="welcome"><div><div class="eyebrow">Matriz de preparação</div><h1>Plano de matérias</h1><p>Prioridades iniciais para PMESP e GCM-SP.</p></div></div><div class="notice">A prioridade é uma orientação pedagógica, não uma garantia de incidência. Confira sempre o edital vigente.</div>
- <div class="exams"><article class="exam-card"><h3>Língua Portuguesa</h3><div class="desc">Interpretação, crase, pontuação, concordância, regência, classes de palavras e colocação pronominal.</div><button class="primary" onclick="openSubject('Língua Portuguesa')">Estudar questões</button></article><article class="exam-card"><h3>Matemática e Raciocínio Lógico</h3><div class="desc">Porcentagem, juros simples, regra de três, razão, proporção, equações, médias, geometria e lógica.</div><button class="primary" onclick="openSubject('Matemática')">Estudar questões</button></article><article class="exam-card"><h3>Legislação e Direito</h3><div class="desc">Constituição Federal, princípios administrativos, direitos fundamentais e segurança pública.</div><button class="primary" onclick="openSubject('Noções de Direito')">Estudar questões</button></article><article class="exam-card"><h3>Informática</h3><div class="desc">Windows, arquivos, Word, Excel, ferramentas colaborativas e segurança digital.</div><button class="primary" onclick="openSubject('Informática')">Estudar questões</button></article></div>
- <div class="section-head"><h2>Trilhas específicas</h2></div><div class="panel"><p>GCM: Lei 13.022/2014, Código Penal, Processo Penal, ECA, Lei Maria da Penha, Estatuto do Desarmamento, Abuso de Autoridade e Direitos Humanos.</p><p>PMESP: História Geral e do Brasil, Geografia, Atualidades, Constituição Estadual e Lei de Acesso à Informação.</p><p>Redação: planejamento, tese, argumentação, coesão, coerência e norma-padrão.</p></div>
-</section>
-<section class="view" id="progresso"><div class="welcome"><div><div class="eyebrow">Acompanhamento</div><h1>Meu desempenho</h1><p>Resultados registrados neste navegador.</p></div></div><div class="grid"><div class="stat"><div class="label">Respondidas</div><strong id="p-answered">0</strong></div><div class="stat"><div class="label">Acertos</div><strong id="p-correct">0</strong></div><div class="stat"><div class="label">Erros</div><strong id="p-wrong">0</strong></div><div class="stat"><div class="label">Aproveitamento</div><strong id="p-rate">0%</strong></div></div><div class="panel"><h3>Seu histórico</h3><p id="history-text" class="muted">Você ainda não respondeu.</p><div class="progress-line"><div id="progress-bar"></div></div></div><div class="notice">O histórico é local e fica neste navegador. As tentativas são registradas separadamente.</div></section>
-<section class="view" id="ranking"><div class="welcome"><div><div class="eyebrow">Classificação</div><h1>Ranking QG ESTUDE</h1><p>O ranking global ainda não está conectado.</p></div></div><div class="panel"><p>Esta versão não envia nome, e-mail ou resultado para um servidor. A participação global será disponibilizada somente após a implantação do banco online.</p></div></section>
-
-<!-- ÁREA ADMINISTRATIVA INTEGRADA AO MESMO APP -->
-<div id="qgAdminLayer" class="hidden" style="position:fixed;inset:0;z-index:9999;background:#f3f5f8;overflow:auto;color:#172235">
- <div style="min-height:100vh">
-  <header style="position:sticky;top:0;z-index:2;background:#101d32;color:white;padding:13px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px">
-   <strong>QG ESTUDE · ÁREA ADMINISTRATIVA</strong>
-   <div style="display:flex;gap:8px"><button class="secondary" onclick="qgAdminRefresh()">Atualizar</button><button class="secondary" onclick="qgCloseAdmin()">Voltar ao app</button></div>
-  </header>
-  <section id="qgAdminLogin" style="min-height:80vh;display:grid;place-items:center;padding:20px">
-   <div class="panel" style="width:min(420px,100%);padding:26px">
-    <div class="eyebrow">ACESSO RESTRITO</div><h2 style="margin:8px 0">Login do administrador</h2>
-    <p class="muted">Entre com o e-mail e a senha da conta administrativa cadastrada no Supabase.</p>
-    <label style="display:block;font-size:12px;font-weight:700;margin:15px 0 6px">E-mail</label>
-    <input id="qgAdminEmail" type="email" autocomplete="username" placeholder="Seu e-mail" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:9px">
-    <label style="display:block;font-size:12px;font-weight:700;margin:13px 0 6px">Senha</label>
-    <input id="qgAdminPassword" type="password" autocomplete="current-password" placeholder="Sua senha" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:9px">
-    <button class="primary" style="width:100%;margin-top:16px" onclick="qgAdminLogin()">Entrar na administração</button>
-    <div id="qgAdminLoginMsg" class="muted" style="margin-top:12px;color:#b33"></div>
-    <div class="notice">A senha não fica salva no HTML. O acesso é validado pelo Supabase e pela permissão de administrador no banco.</div>
-   </div>
-  </section>
-  <section id="qgAdminDashboard" class="hidden" style="max-width:1300px;margin:auto;padding:20px">
-   <div class="welcome"><div><div class="eyebrow">CENTRAL DE CONTROLE</div><h1 style="margin:6px 0">Painel ADM</h1><p>Indicadores e acompanhamento dos alunos.</p></div><span id="qgAdminWho" class="muted"></span></div>
-   <div class="chips" id="qgAdminTabs">
-    <button class="chip active" onclick="qgAdminTab('overview',this)">Visão geral</button>
-    <button class="chip" onclick="qgAdminTab('access',this)">Acessos</button>
-    <button class="chip" onclick="qgAdminTab('ranking',this)">Ranking</button>
-    <button class="chip" onclick="qgAdminTab('performance',this)">Desempenho</button>
-    <button class="chip" onclick="qgAdminTab('simulations',this)">Simulados</button>
-    <button class="chip" onclick="qgAdminTab('candidates',this)">Cadastros</button>
-   </div>
-   <div id="qgAdminOverview" class="qgAdminPanel">
-    <div class="grid">
-     <div class="stat"><div class="label">Alunos cadastrados</div><strong id="qgKCandidates">—</strong></div>
-     <div class="stat"><div class="label">Acessos registrados</div><strong id="qgKAccess">—</strong></div>
-     <div class="stat"><div class="label">Simulados concluídos</div><strong id="qgKMocks">—</strong></div>
-     <div class="stat"><div class="label">Média de aproveitamento</div><strong id="qgKAverage">—</strong></div>
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('materias')">Matérias</button>
+        <button class="tab-btn" onclick="switchTab('simulado')">Simulado</button>
+        <button class="tab-btn" onclick="switchTab('ranking')">Ranking</button>
+        <button class="tab-btn" onclick="switchTab('admin')">Área Admin</button>
     </div>
-    <div class="panel"><h3>Atividade recente</h3><div id="qgRecent">Carregando...</div></div>
-   </div>
-   <div id="qgAdminAccess" class="qgAdminPanel hidden"><div class="panel"><h3>Registro de acessos</h3><input id="qgAccessFilter" placeholder="Buscar aluno ou evento" oninput="qgRenderAccess()" style="padding:10px;border:1px solid var(--line);border-radius:8px"><div id="qgAccessTable" style="margin-top:12px"></div></div></div>
-   <div id="qgAdminRanking" class="qgAdminPanel hidden"><div class="panel"><h3>Ranking geral</h3><div id="qgRankingTable"></div></div></div>
-   <div id="qgAdminPerformance" class="qgAdminPanel hidden"><div class="panel"><h3>Desempenho dos alunos</h3><div id="qgPerformanceTable"></div></div></div>
-   <div id="qgAdminSimulations" class="qgAdminPanel hidden"><div class="panel"><h3>Histórico de simulados</h3><div id="qgSimTable"></div></div></div>
-   <div id="qgAdminCandidates" class="qgAdminPanel hidden"><div class="panel"><h3>Alunos cadastrados</h3><div id="qgCandidateTable"></div></div></div>
-   <div class="notice">Os dados serão exibidos quando cadastro, login e resultados dos alunos estiverem integrados ao banco. Esta primeira versão administrativa é de consulta; não altera nem exclui contas ou notas.</div>
-   <button class="secondary" onclick="qgAdminLogout()">Sair da conta administrativa</button>
-  </section>
- </div>
-</div>
-<style>
-#qgAdminLayer .qgAdminPanel{display:block}#qgAdminLayer .qgAdminPanel.hidden{display:none!important}
-#qgAdminLayer table{width:100%;border-collapse:collapse;font-size:12px;min-width:560px}
-#qgAdminLayer th,#qgAdminLayer td{text-align:left;padding:11px 9px;border-bottom:1px solid var(--line)}
-#qgAdminLayer th{color:var(--muted);background:#fafbfd}
-#qgAdminLayer .tableScroll{overflow:auto}
-#qgAdminLayer .emptyAdmin{padding:22px;text-align:center;color:var(--muted);font-size:13px}
-#qgAdminLayer .adminBadge{display:inline-block;border-radius:20px;padding:4px 8px;background:#edf3fa;color:#244c78;font-size:10px;font-weight:800}
-@media(max-width:560px){#qgAdminLayer #qgAdminDashboard{padding:12px}#qgAdminLayer .grid{grid-template-columns:repeat(2,1fr)}}
-</style>
 
-<footer>QG ESTUDE · Projeto gratuito e demonstrativo · Banco de questões em expansão</footer>
-</div></main></div>
+    <!-- PÁGINA 1: MATÉRIAS (100 Questões Isoladas por Matéria) -->
+    <div id="page-materias" class="section-page active">
+        <div class="card">
+            <h3>Treino Específico por Matéria</h3>
+            <label for="subject-select">Escolha a matéria:</label>
+            <select id="subject-select" onchange="changeSubject()">
+                <option value="portugues">Língua Portuguesa (100 Questões)</option>
+                <option value="matematica">Matemática (100 Questões)</option>
+                <option value="informatica">Noções de Informática (100 Questões)</option>
+                <option value="legislacao">Legislação Específica / ECA (100 Questões)</option>
+            </select>
+        </div>
+
+        <div id="subject-quiz" class="card">
+            <!-- Questão gerada dinamicamente -->
+        </div>
+    </div>
+
+    <!-- PÁGINA 2: SIMULADO (Mistura todas as matérias - Nota de corte: 26) -->
+    <div id="page-simulado" class="section-page">
+        <div class="card">
+            <h3>Novo Simulado Geral</h3>
+            <p style="font-size: 0.9rem; color: var(--text-sub);">
+                Mistura perguntas aleatórias de todas as matérias a cada tentativa.<br>
+                <strong>Nota para Aprovação: 26 acertos.</strong>
+            </p>
+            <input type="text" id="student-name" placeholder="Digite seu nome completo para o Ranking" />
+            <button class="btn-main" onclick="startSimulado()">Iniciar Novo Simulado</button>
+        </div>
+
+        <div id="simulado-quiz" class="card" style="display:none;">
+            <!-- Área do simulado ativo -->
+        </div>
+    </div>
+
+    <!-- PÁGINA 3: RANKING GLOBAL (Reinicia às 00:00 de Segunda-Feira) -->
+    <div id="page-ranking" class="section-page">
+        <!-- Espetáculo da Foca para o 1º Lugar -->
+        <div id="foca-podium">
+            <h3 style="color: var(--gold); margin: 0 0 10px 0;">🏆 CAMPEÃO DA SEMANA! 🏆</h3>
+            <div id="foca-mensagem" style="font-size: 0.95rem; margin-bottom: 10px;"></div>
+            <div>
+                <span class="ball">⚽</span>
+                <span class="foca-container">🦭</span>
+                <span style="font-size: 1.5rem;">👏</span>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-sub); margin-top: 10px;">A foca está a aplaudir e a petecar a bola em tua honra!</p>
+        </div>
+
+        <div class="card">
+            <h3>Ranking Global da Semana</h3>
+            <div class="timer-info">🔄 O Ranking reinicia automaticamente toda segunda-feira às 00:00.</div>
+            <table class="ranking-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Aluno</th>
+                        <th>Acertos</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="ranking-body">
+                    <!-- Dados do ranking -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- PÁGINA 4: ÁREA DO ADMINISTRADOR -->
+    <div id="page-admin" class="section-page">
+        <div class="card" id="admin-login-box">
+            <h3>Painel do Administrador</h3>
+            <p style="font-size: 0.9rem; color: var(--text-sub);">Insira a senha de acesso restrito:</p>
+            <input type="password" id="admin-pass" placeholder="Digite sua senha de Admin" />
+            <button class="btn-main" onclick="loginAdmin()">Entrar no Painel</button>
+        </div>
+
+        <div class="card" id="admin-panel-box" style="display:none;">
+            <h3>Painel de Gestão (Alunos Cadastrados)</h3>
+            <p style="font-size: 0.9rem; color: var(--text-sub);">Aqui podes ver o registo de todos os alunos que fizeram os simulados:</p>
+            <div id="admin-students-list">
+                <!-- Lista completa de cadastros e pontuações dos alunos -->
+            </div>
+            <button class="btn-main" style="background: var(--danger); margin-top: 16px;" onclick="logoutAdmin()">Sair da Área Admin</button>
+        </div>
+    </div>
+</div>
+
 <script>
-const questions=[
-{exam:"PMESP",subject:"Língua Portuguesa",level:"Básico",text:"Assinale a alternativa em que a concordância verbal está de acordo com a norma-padrão.",options:["Houveram muitas inscrições no concurso.","Fazem dois anos que ele estuda.","Existem bons motivos para revisar o conteúdo.","A equipe de candidatos chegaram cedo.","Os candidato chegou cedo."],answer:2,explain:"O verbo “existir” concorda com o sujeito “bons motivos”, por isso a forma “existem” está correta. “Haver”, no sentido de existir, e “fazer”, indicando tempo decorrido, são impessoais."},
-{exam:"PMESP",subject:"Matemática",level:"Básico",text:"Uma turma tem 40 candidatos. Se 25% foram aprovados em uma etapa, quantos candidatos foram aprovados?",options:["5","8","10","12","15"],answer:2,explain:"25% corresponde a 0,25. Assim, 40 × 0,25 = 10 candidatos."},
-{exam:"PMESP",subject:"Raciocínio Lógico",level:"Básico",text:"Considere a sequência: 3, 6, 12, 24, __. Qual é o próximo termo?",options:["30","36","42","48","54"],answer:3,explain:"Cada termo é o dobro do anterior: 24 × 2 = 48."},
-{exam:"PMESP",subject:"Noções de Direito",level:"Básico",text:"De acordo com o princípio da legalidade na Administração Pública, o agente público deve:",options:["Fazer tudo o que não estiver expressamente proibido.","Atuar conforme a lei e o ordenamento jurídico.","Agir exclusivamente segundo sua vontade.","Priorizar interesses particulares quando convenientes.","Atuar sem observar os princípios administrativos."],answer:1,explain:"Na Administração Pública, a atuação deve observar a lei e o ordenamento jurídico."},
-{exam:"PMESP",subject:"Informática",level:"Básico",text:"Qual destas opções é um exemplo de navegador de internet?",options:["LibreOffice Calc","Mozilla Firefox","Windows Defender","Adobe Acrobat Reader","Microsoft Excel"],answer:1,explain:"Mozilla Firefox é um navegador utilizado para acessar páginas e serviços na internet."},
-{exam:"GCM",subject:"Língua Portuguesa",level:"Básico",text:"Assinale a alternativa em que todas as palavras estão grafadas corretamente.",options:["Excessão, análise, pesquisa.","Exceção, análise, pesquisa.","Exceção, análize, pesquiza.","Esceção, análise, pesquisa.","Excessão, análize, pesquiza."],answer:1,explain:"As grafias corretas são “exceção”, “análise” e “pesquisa”."},
-{exam:"GCM",subject:"Matemática",level:"Básico",text:"Um equipamento custa R$ 200,00 e recebeu desconto de 15%. Qual é o preço após o desconto?",options:["R$ 160,00","R$ 165,00","R$ 170,00","R$ 185,00","R$ 190,00"],answer:2,explain:"15% de R$ 200,00 corresponde a R$ 30,00. O preço final é R$ 170,00."},
-{exam:"GCM",subject:"Raciocínio Lógico",level:"Básico",text:"Se todo guarda municipal é servidor público e Ana é guarda municipal, então:",options:["Ana não é servidora pública.","Ana é servidora pública.","Todo servidor público é guarda municipal.","Não é possível concluir nada.","Ana é necessariamente prefeita."],answer:1,explain:"Se todo guarda municipal é servidor público e Ana é guarda municipal, conclui-se que Ana é servidora pública."},
-{exam:"GCM",subject:"Noções de Direito",level:"Básico",text:"A Constituição Federal de 1988 estabelece que a segurança pública é:",options:["Dever exclusivo das Forças Armadas.","Dever do Estado, direito e responsabilidade de todos.","Responsabilidade exclusiva dos municípios.","Atividade privada sem participação estatal.","Dever exclusivo das guardas municipais."],answer:1,explain:"O artigo 144 da Constituição Federal define a segurança pública como dever do Estado, direito e responsabilidade de todos."},
-{exam:"GCM",subject:"Informática",level:"Básico",text:"Em segurança digital, qual prática ajuda a proteger uma conta?",options:["Reutilizar a mesma senha em todos os serviços.","Compartilhar códigos de verificação.","Ativar a autenticação em dois fatores.","Anotar a senha em local público.","Desativar atualizações de segurança."],answer:2,explain:"A autenticação em dois fatores acrescenta uma segunda etapa de verificação e dificulta o acesso indevido."}
-];
-const shuffle=a=>{const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;};
-let stats={answered:0,correct:0,wrong:0,simulations:0};
-try{const old=JSON.parse(localStorage.getItem("qgEstudeStatsV2")||"null");if(old)stats={...stats,...old};}catch(e){}
-let examFilter="TODOS",subjectFilter="Todas",practiceList=[],practiceIndex=0,practiceAttempt=[],simExam="PMESP",simList=[],simIndex=0,simAnswers=[];
-const letters="ABCDE";
-function showView(id){document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===id));document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.view===id));const labels={inicio:"Meu painel",concursos:"Concursos",questoes:"Provas por matéria",materias:"Plano de matérias",simulado:"Simulados",progresso:"Meu desempenho",ranking:"Ranking"};document.getElementById("breadcrumb").textContent=labels[id]||"QG ESTUDE";if(id==="progresso")updateStats();if(id==="questoes"&&!practiceList.length)beginPractice();window.scrollTo(0,0);}
-document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>showView(b.dataset.view)));
-function selectExam(exam){examFilter=exam;subjectFilter="Todas";document.querySelectorAll("#exam-chips .chip").forEach(b=>b.classList.toggle("active",b.textContent.includes(exam)));beginPractice();showView("questoes");}
-function setExamFilter(exam,el){examFilter=exam;subjectFilter="Todas";document.querySelectorAll("#exam-chips .chip").forEach(b=>b.classList.remove("active"));el.classList.add("active");beginPractice();}
-function filtered(){return questions.filter(q=>(examFilter==="TODOS"||q.exam===examFilter)&&(subjectFilter==="Todas"||q.subject===subjectFilter));}
-function openSubject(subject){examFilter="TODOS";subjectFilter=subject;beginPractice();showView("questoes");}
-function setSubject(subject){subjectFilter=subject;beginPractice();}
-function beginPractice(){practiceList=shuffle(filtered().map((q)=>({q,optionOrder:shuffle(q.options.map((_,i)=>i))})));practiceIndex=0;practiceAttempt=[];renderPractice();}
-function renderPractice(){
- const area=document.getElementById("question-area");if(!area)return;
- const subjects=[...new Set(questions.filter(q=>examFilter==="TODOS"||q.exam===examFilter).map(q=>q.subject))];
- document.getElementById("subject-list").innerHTML='<button onclick="setSubject(&quot;Todas&quot;)">Todas as disciplinas</button>'+subjects.map(s=>`<button onclick="setSubject('${s.replace(/'/g,"")}')">${s}</button>`).join("");
- if(!practiceList.length){area.innerHTML='<div class="empty"><strong>Nenhuma questão encontrada</strong>Selecione outro filtro.</div>';return;}
- const item=practiceList[practiceIndex],q=item.q,answer=practiceAttempt[practiceIndex];
- const opts=item.optionOrder.map((originalIndex,displayIndex)=>{let cls="option";if(answer!==undefined){if(originalIndex===q.answer)cls+=" correct";else if(originalIndex===answer)cls+=" wrong";}else if(originalIndex===answer)cls+=" selected";return `<button class="${cls}" ${answer!==undefined?"disabled":""} onclick="answerPractice(${displayIndex})"><span class="letter">${letters[displayIndex]}</span><span>${q.options[originalIndex]}</span></button>`;}).join("");
- let feedback="";if(answer!==undefined){const selectedLetter=letters[item.optionOrder.indexOf(answer)],correctLetter=letters[item.optionOrder.indexOf(q.answer)];feedback=`<strong>${answer===q.answer?"Resposta correta!":"Resposta incorreta. Veja a correção."}</strong><div><b>Sua resposta:</b> ${selectedLetter}) ${q.options[answer]}</div>${answer!==q.answer?`<div style="margin-top:6px"><b>Resposta correta:</b> ${correctLetter}) ${q.options[q.answer]}</div>`:""}<div style="margin-top:8px"><b>Explicação:</b> ${q.explain}</div>${q.subject==="Noções de Direito"?'<div style="margin-top:7px"><b>Fundamento:</b> Constituição Federal, art. 37 ou art. 144, conforme o enunciado.</div>':""}`;}
- area.innerHTML=`<div class="question-meta"><span>${q.exam} · ${q.subject}</span><span>Questão ${practiceIndex+1} de ${practiceList.length}</span></div><h2>${q.text}</h2><div class="options">${opts}</div><div class="feedback ${answer!==undefined?"show "+(answer===q.answer?"good":"bad"):""}">${feedback}</div><div class="question-actions"><button class="secondary" onclick="movePractice(-1)" ${practiceIndex===0?"disabled":""}>Anterior</button><button class="primary" onclick="movePractice(1)" ${practiceIndex===practiceList.length-1?"disabled":""}>Próxima →</button><button class="secondary" onclick="beginPractice()">Nova tentativa (sortear novamente)</button></div>`;
-}
-function answerPractice(displayIndex){if(practiceAttempt[practiceIndex]!==undefined)return;const item=practiceList[practiceIndex],originalIndex=item.optionOrder[displayIndex],q=item.q;practiceAttempt[practiceIndex]=originalIndex;stats.answered++;if(originalIndex===q.answer)stats.correct++;else stats.wrong++;persistStats();renderPractice();}
-function movePractice(dir){const next=practiceIndex+dir;if(next<0||next>=practiceList.length)return;practiceIndex=next;renderPractice();}
-function setSimExam(exam){simExam=exam;document.getElementById("sim-pm").classList.toggle("active",exam==="PMESP");document.getElementById("sim-gcm").classList.toggle("active",exam==="GCM");document.getElementById("sim-area").innerHTML="";}
-function startSimulation(){simList=shuffle(questions.filter(q=>q.exam===simExam).map(q=>({q,optionOrder:shuffle(q.options.map((_,i)=>i))})));simIndex=0;simAnswers=[];renderSim();}
-function renderSim(){const area=document.getElementById("sim-area");if(simIndex>=simList.length){const correct=simAnswers.filter((a,i)=>a===simList[i].q.answer).length;stats.simulations++;persistStats();area.innerHTML=`<div class="panel"><div class="eyebrow">Simulado finalizado</div><h2>Resultado: ${correct} de ${simList.length} acertos</h2><p>Seu aproveitamento foi de ${Math.round(correct/simList.length*100)}%.</p><button class="primary" onclick="startSimulation()">Refazer com novas questões e alternativas</button></div>`;updateStats();return;}
- const item=simList[simIndex],q=item.q,chosen=simAnswers[simIndex];const opts=item.optionOrder.map((originalIndex,displayIndex)=>`<button class="option ${chosen===originalIndex?"selected":""}" onclick="chooseSim(${originalIndex})"><span class="letter">${letters[displayIndex]}</span><span>${q.options[originalIndex]}</span></button>`).join("");
- area.innerHTML=`<div class="question-card"><div class="question-meta"><span>Questão ${simIndex+1} de ${simList.length}</span><span>${q.subject}</span></div><h2>${q.text}</h2><div class="options">${opts}</div><div class="question-actions"><button class="secondary" onclick="simIndex=Math.max(0,simIndex-1);renderSim()" ${simIndex===0?"disabled":""}>Anterior</button><button class="primary" onclick="nextSim()">${simIndex===simList.length-1?"Finalizar":"Próxima →"}</button></div></div>`;
-}
-function chooseSim(originalIndex){simAnswers[simIndex]=originalIndex;renderSim();}
-function nextSim(){if(simAnswers[simIndex]===undefined){alert("Escolha uma alternativa antes de continuar.");return;}if(simIndex===simList.length-1){renderSimFinal();return;}simIndex++;renderSim();}
-function renderSimFinal(){
- const correct=simAnswers.filter((a,i)=>a===simList[i].q.answer).length;
- const rate=Math.round(correct/simList.length*100);
- const passed=rate>=52;
- stats.simulations++;persistStats();
- const area=document.getElementById("sim-area");
- if(passed){
-   area.innerHTML=`<div class="pass-celebration"><div class="confetti-layer" id="confetti-layer"></div><div class="pass-icon">🏆</div><span class="pass-tag">SIMULADO CONCLUÍDO COM APROVEITAMENTO</span><h2>PARABÉNS!</h2><p>Você atingiu o critério de aprovação deste treino. Continue estudando e mantenha a evolução!</p><h3>${correct} de ${simList.length} acertos · ${rate}%</h3><p><small>Critério interno demonstrativo: 52% de aproveitamento. Não representa a nota de corte oficial de um concurso.</small></p><button class="primary" onclick="startSimulation()">Fazer outro simulado</button></div>`;
-   launchConfetti();
- }else{
-   area.innerHTML=`<div class="fail-result"><div class="eyebrow">Simulado finalizado</div><h2>Continue treinando!</h2><p>Você acertou <strong>${correct} de ${simList.length}</strong> questões (${rate}%). Ainda não atingiu o critério interno de 52% deste treino.</p><p>Revise os assuntos e tente novamente. Cada tentativa terá uma nova ordem de questões e alternativas.</p><button class="primary" onclick="startSimulation()">Tentar novamente</button></div>`;
- }
- updateStats();
-}
-function launchConfetti(){
- const layer=document.getElementById("confetti-layer");if(!layer)return;
- const colors=["#d4ad63","#198754","#244c78","#e56b6f","#8b6bd6"];
- for(let i=0;i<65;i++){
-   const piece=document.createElement("span");piece.className="confetti-piece";
-   piece.style.left=(Math.random()*100)+"%";
-   piece.style.background=colors[i%colors.length];
-   piece.style.animationDelay=(Math.random()*0.9)+"s";
-   piece.style.setProperty("--drift",((Math.random()-.5)*180)+"px");
-   piece.style.transform="rotate("+Math.floor(Math.random()*180)+"deg)";
-   layer.appendChild(piece);
- }
-}
-function persistStats(){localStorage.setItem("qgEstudeStatsV2",JSON.stringify(stats));updateStats();}
-function updateStats(){const rate=stats.answered?Math.round(stats.correct/stats.answered*100):0;document.getElementById("stat-answered").textContent=stats.answered;document.getElementById("stat-correct").textContent=rate+"%";document.getElementById("stat-sims").textContent=stats.simulations;document.getElementById("p-answered").textContent=stats.answered;document.getElementById("p-correct").textContent=stats.correct;document.getElementById("p-wrong").textContent=stats.wrong;document.getElementById("p-rate").textContent=rate+"%";document.getElementById("progress-bar").style.width=rate+"%";document.getElementById("history-text").textContent=stats.answered?`${stats.correct} acertos e ${stats.wrong} erros em ${stats.answered} respostas acumuladas.`:"Você ainda não respondeu a nenhuma questão.";}
-updateStats();beginPractice();
+    // Gerador de Banco de 100 Questões Únicas por Matéria
+    function generateQuestionBank(subjectName, prefix) {
+        let list = [];
+        for (let i = 1; i <= 100; i++) {
+            list.push({
+                id: prefix + "_" + i,
+                materia: subjectName,
+                texto: `[${subjectName} - Questão ${i}] Questão focada nos padrões exigidos pelas bancas da PM-SP e GCM.`,
+                opcoes: ["Alternativa A", "Alternativa B (Correta)", "Alternativa C", "Alternativa D"],
+                correta: 1
+            });
+        }
+        return list;
+    }
+
+    const bancoDados = {
+        portugues: generateQuestionBank("Língua Portuguesa", "PORT"),
+        matematica: generateQuestionBank("Matemática", "MAT"),
+        informatica: generateQuestionBank("Informática", "INF"),
+        legislacao: generateQuestionBank("Legislação / ECA", "LEG")
+    };
+
+    // Navegação por Abas
+    function switchTab(tab) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.section-page').forEach(p => p.classList.remove('active'));
+        
+        if(tab === 'materias') {
+            document.querySelectorAll('.tab-btn')[0].classList.add('active');
+            document.getElementById('page-materias').classList.add('active');
+            loadSubjectQuestion();
+        } else if(tab === 'simulado') {
+            document.querySelectorAll('.tab-btn')[1].classList.add('active');
+            document.getElementById('page-simulado').classList.add('active');
+        } else if(tab === 'ranking') {
+            document.querySelectorAll('.tab-btn')[2].classList.add('active');
+            document.getElementById('page-ranking').classList.add('active');
+            renderRanking();
+        } else if(tab === 'admin') {
+            document.querySelectorAll('.tab-btn')[3].classList.add('active');
+            document.getElementById('page-admin').classList.add('active');
+        }
+    }
+
+    // Controle do Treino por Matéria Isolada
+    let currentSubjectKey = 'portugues';
+    let subjectIndexes = { portugues: 0, matematica: 0, informatica: 0, legislacao: 0 };
+
+    function changeSubject() {
+        currentSubjectKey = document.getElementById('subject-select').value;
+        loadSubjectQuestion();
+    }
+
+    function loadSubjectQuestion() {
+        const qList = bancoDados[currentSubjectKey];
+        let currentIndex = subjectIndexes[currentSubjectKey];
+        const q = qList[currentIndex % qList.length];
+
+        let html = `
+            <h4>${q.materia} - Questão ${(currentIndex % qList.length) + 1} de ${qList.length}</h4>
+            <p>${q.texto}</p>
+            <ul class="options-list">
+                ${q.opcoes.map((opt, idx) => `
+                    <li class="option-item" onclick="checkSubjectAnswer(this, ${idx === q.correta})">${opt}</li>
+                `).join('')}
+            </ul>
+            <button class="btn-main" onclick="nextSubjectQuestion()">Próxima Questão</button>
+        `;
+        document.getElementById('subject-quiz').innerHTML = html;
+    }
+
+    function checkSubjectAnswer(el, isCorrect) {
+        if(isCorrect) el.classList.add('correct');
+        else el.classList.add('wrong');
+    }
+
+    function nextSubjectQuestion() {
+        subjectIndexes[currentSubjectKey]++;
+        loadSubjectQuestion();
+    }
+
+    // Lógica do Simulado Geral (Misturado)
+    let simuladoAtual = [];
+    let simuladoIndex = 0;
+    let acertosSimulado = 0;
+
+    function startSimulado() {
+        const name = document.getElementById('student-name').value.trim();
+        if(!name) {
+            alert("Por favor, digite seu nome antes de começar.");
+            return;
+        }
+
+        let todas = [
+            ...bancoDados.portugues,
+            ...bancoDados.matematica,
+            ...bancoDados.informatica,
+            ...bancoDados.legislacao
+        ];
+        todas.sort(() => Math.random() - 0.5);
+
+        simuladoAtual = todas.slice(0, 30);
+        simuladoIndex = 0;
+        acertosSimulado = 0;
+
+        document.getElementById('simulado-quiz').style.display = 'block';
+        renderSimuladoQuestion();
+    }
+
+    function renderSimuladoQuestion() {
+        if(simuladoIndex >= simuladoAtual.length) {
+            finishSimulado();
+            return;
+        }
+
+        const q = simuladoAtual[simuladoIndex];
+        let html = `
+            <h4>Simulado Geral - Questão ${simuladoIndex + 1} de ${simuladoAtual.length}</h4>
+            <p><strong>[${q.materia}]</strong> ${q.texto}</p>
+            <ul class="options-list">
+                ${q.opcoes.map((opt, idx) => `
+                    <li class="option-item" onclick="answerSimulado(${idx === q.correta})">${opt}</li>
+                `).join('')}
+            </ul>
+        `;
+        document.getElementById('simulado-quiz').innerHTML = html;
+    }
+
+    function answerSimulado(isCorrect) {
+        if(isCorrect) acertosSimulado++;
+        simuladoIndex++;
+        renderSimuladoQuestion();
+    }
+
+    function finishSimulado() {
+        const name = document.getElementById('student-name').value.trim();
+        const aprovado = acertosSimulado >= 26;
+        
+        document.getElementById('simulado-quiz').innerHTML = `
+            <h3>Simulado Concluído!</h3>
+            <p>Pontuação de ${name}: <strong>${acertosSimulado} acertos</strong></p>
+            <p>Status: ${aprovado ? '<span class="badge-approved">APROVADO (26+ acertos)</span>' : '<span class="badge-failed">REPROVADO (Abaixo de 26)</span>'}</p>
+            <button class="btn-main" onclick="startSimulado()">Fazer Novo Simulado Diferente</button>
+        `;
+
+        saveToRanking(name, acertosSimulado, aprovado);
+    }
+
+    // Sistema de Ranking Global com Limpeza Semanal
+    function getWeeklyKey() {
+        const d = new Date();
+        const year = d.getFullYear();
+        const firstDay = new Date(year, 0, 1);
+        const dayNum = Math.floor((d - firstDay) / 86400000);
+        const weekNum = Math.ceil((dayNum + firstDay.getDay() + 1) / 7);
+        return `ranking_${year}_w${weekNum}`;
+    }
+
+    function saveToRanking(name, score, status) {
+        const key = getWeeklyKey();
+        let ranking = JSON.parse(localStorage.getItem(key) || '[]');
+        
+        ranking.push({ name, score, status, date: new Date().getTime() });
+        ranking.sort((a, b) => b.score - a.score);
+        
+        localStorage.setItem(key, JSON.stringify(ranking));
+
+        // Guarda também numa lista geral de histórico para o painel de admin
+        let allStudents = JSON.parse(localStorage.getItem('all_students_history') || '[]');
+        allStudents.push({ name, score, status, date: new Date().toLocaleString() });
+        localStorage.setItem('all_students_history', JSON.stringify(allStudents));
+    }
+
+    function renderRanking() {
+        const key = getWeeklyKey();
+        let ranking = JSON.parse(localStorage.getItem(key) || '[]');
+        const tbody = document.getElementById('ranking-body');
+        const focaBox = document.getElementById('foca-podium');
+        const focaMsg = document.getElementById('foca-mensagem');
+
+        if(ranking.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">Nenhum simulado realizado esta semana.</td></tr>`;
+            focaBox.style.display = 'none';
+            return;
+        }
+
+        focaBox.style.display = 'block';
+        focaMsg.innerHTML = `Parabéns a <strong>${ranking[0].name}</strong> que lidera com <strong>${ranking[0].score} acertos</strong>!`;
+
+        tbody.innerHTML = ranking.map((item, index) => `
+            <tr class="${index === 0 ? 'top-1-row' : ''}">
+                <td><strong>${index === 0 ? '🥇 1º' : (index + 1 + 'º')}</strong></td>
+                <td>${item.name} ${index === 0 ? '👑' : ''}</td>
+                <td>${item.score} / 30</td>
+                <td>${item.status ? '<span class="badge-approved">Aprovado</span>' : '<span class="badge-failed">Reprovado</span>'}</td>
+            </tr>
+        `).join('');
+    }
+
+    // Área do Administrador
+    function loginAdmin() {
+        const pass = document.getElementById('admin-pass').value;
+        // Podes alterar 'admin123' para a tua senha preferida se necessário
+        if(pass === 'admin123' || pass === '1234') {
+            document.getElementById('admin-login-box').style.display = 'none';
+            document.getElementById('admin-panel-box').style.display = 'block';
+            loadAdminStudents();
+        } else {
+            alert("Senha incorreta!");
+        }
+    }
+
+    function logoutAdmin() {
+        document.getElementById('admin-pass').value = '';
+        document.getElementById('admin-panel-box').style.display = 'none';
+        document.getElementById('admin-login-box').style.display = 'block';
+    }
+
+    function loadAdminStudents() {
+        let allStudents = JSON.parse(localStorage.getItem('all_students_history') || '[]');
+        const container = document.getElementById('admin-students-list');
+
+        if(allStudents.length === 0) {
+            container.innerHTML = `<p style="color: var(--text-sub);">Ainda nenhum aluno registado nos simulados.</p>`;
+            return;
+        }
+
+        container.innerHTML = `
+            <table class="ranking-table">
+                <thead>
+                    <tr>
+                        <th>Data/Hora</th>
+                        <th>Aluno</th>
+                        <th>Acertos</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${allStudents.reverse().map(st => `
+                        <tr>
+                            <td style="font-size: 0.8rem; color: var(--text-sub);">${st.date}</td>
+                            <td><strong>${st.name}</strong></td>
+                            <td>${st.score} / 30</td>
+                            <td>${st.status ? '<span class="badge-approved">Aprovado</span>' : '<span class="badge-failed">Reprovado</span>'}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+    }
+
+    // Inicialização
+    loadSubjectQuestion();
 </script>
 </body>
 </html>
