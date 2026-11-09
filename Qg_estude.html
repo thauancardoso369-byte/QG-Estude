@@ -1,172 +1,148 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#101d32">
-<title>QG ESTUDE | Prova Mista 50 Questões</title>
-<meta name="description" content="Simulado oficial com 50 questões estilo VUNESP, padrão 26 acertos para aprovação.">
+<title>QG ESTUDE | Preparatório GCM VUNESP</title>
 <style>
 :root{--navy:#101d32;--blue:#244c78;--gold:#d4ad63;--bg:#f3f5f8;--card:#fff;--ink:#172235;--muted:#687589;--line:#e3e8ef;--green:#198754;--red:#c34444}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif}
-button,input{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:grid;grid-template-columns:245px 1fr}
-.sidebar{background:var(--navy);color:#fff;padding:24px 16px;display:flex;flex-direction:column;gap:22px}
-.brand{display:flex;align-items:center;gap:12px;padding:0 8px}.brand-mark{width:42px;height:42px;border:1px solid var(--gold);border-radius:12px;display:grid;place-items:center;color:var(--gold);font-size:22px;font-weight:800}.brand strong{display:block}.brand small{color:#aab8ca;font-size:11px}
-.nav-label{font-size:10px;letter-spacing:1.4px;color:#8393a9;padding:0 10px;margin-bottom:7px}.nav button{width:100%;border:0;background:transparent;color:#c8d2df;text-align:left;padding:11px;border-radius:9px;margin:2px 0;font-size:14px}.nav button.active,.nav button:hover{background:#203653;color:#fff}.nav button span{display:inline-block;width:27px;color:var(--gold)}
-.sidebar-note{margin-top:auto;border:1px solid #31445e;border-radius:12px;padding:13px;color:#b8c5d5;font-size:12px;line-height:1.5}
-main{min-width:0}.topbar{height:64px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px}.topbar small{color:var(--muted)}.profile{font-size:13px;color:var(--muted)}
-.content{max-width:1200px;margin:auto;padding:28px}.eyebrow{color:var(--blue);font-size:11px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase}.welcome{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:22px}.welcome h1{margin:7px 0 5px;font-size:29px}.welcome p{margin:0;color:var(--muted)}
-.primary,.secondary{padding:11px 15px;border-radius:9px;font-weight:700}.primary{border:0;background:var(--navy);color:#fff}.primary:hover{background:var(--blue)}.secondary{border:1px solid var(--line);background:#fff;color:var(--ink)}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}.stat,.panel,.exam-card,.question-card{background:var(--card);border:1px solid var(--line);border-radius:14px}.stat{padding:16px}.stat .label{font-size:12px;color:var(--muted)}.stat strong{display:block;font-size:25px;margin:7px 0}.stat small{font-size:11px;color:var(--muted)}
-.section-head{display:flex;align-items:center;justify-content:space-between;margin:26px 0 12px}.section-head h2{font-size:18px;margin:0}.section-head p{font-size:12px;color:var(--muted);margin:4px 0 0}
-.exams{display:grid;grid-template-columns:1fr 1fr;gap:14px}.exam-card{padding:18px}.exam-card h3{margin:0 0 4px}.exam-card p,.muted{color:var(--muted);font-size:13px}.desc{font-size:13px;line-height:1.5;color:#536176;margin:14px 0}
-.panel{padding:18px}.notice{font-size:12px;color:#77613c;background:#fff8e9;border:1px solid #f0dfb8;padding:12px 14px;border-radius:10px;line-height:1.5;margin:14px 0}
-.hidden{display:none!important}.view{display:none}.view.active{display:block}.chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.chip{border:1px solid var(--line);background:#fff;border-radius:30px;padding:8px 12px;font-size:12px;color:#536176}.chip.active{background:var(--navy);border-color:var(--navy);color:#fff}
-.question-layout{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:14px}.question-card{padding:22px}.question-meta{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:12px;margin-bottom:16px}.question-card h2{font-size:18px;line-height:1.5;margin:0 0 18px}.options{display:grid;gap:9px}.option{display:flex;gap:11px;align-items:flex-start;text-align:left;width:100%;padding:13px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);line-height:1.45}.option.selected{border-color:var(--blue);background:#f1f5fa}.option.correct{border-color:var(--green);background:#e5f6eb;color:#145c35}.option.wrong{border-color:var(--red);background:#fff0f0;color:#8f2929}.option:disabled{cursor:default;opacity:1}.letter{flex:0 0 25px;height:25px;border-radius:7px;background:#eef2f6;display:grid;place-items:center;font-size:12px;font-weight:800}
-.feedback{display:none;margin-top:15px;padding:14px;border-radius:10px;font-size:13px;line-height:1.55}.feedback.show{display:block}.feedback.good{background:#eff9f3;color:#17683f}.feedback.bad{background:#fff3f3;color:#913636}.feedback strong{display:block;margin-bottom:6px}.question-actions{display:flex;justify-content:space-between;gap:9px;margin-top:18px}.subject-list{display:grid;gap:7px}.subject-list button{text-align:left;background:#f7f9fb;border:1px solid var(--line);padding:10px;border-radius:9px;font-size:12px;color:#334258}
-.empty{padding:28px;text-align:center;color:var(--muted)}.empty strong{display:block;color:var(--ink);margin-bottom:7px}.progress-line{height:8px;background:#edf0f4;border-radius:20px;overflow:hidden;margin:10px 0}.progress-line div{height:100%;background:var(--gold);width:0}
-footer{text-align:center;color:#8a95a5;font-size:11px;padding:24px}
+[data-theme="dark"]{--navy:#0d1522;--blue:#1d3a5f;--gold:#e2c783;--bg:#0b111a;--card:#131c2a;--ink:#e1e7ec;--muted:#93a2b8;--line:#223249;--green:#20a463;--red:#d65555}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,sans-serif;transition:background .3s,color .3s}
+button,input{font:inherit}button{cursor:pointer}
+.app{min-height:100vh;display:flex;flex-direction:row}
+.sidebar{width:250px;background:var(--navy);color:#fff;padding:20px 14px;display:flex;flex-direction:column;gap:18px;flex-shrink:0}
+.brand{display:flex;align-items:center;gap:10px;padding:0 6px}
+.brand-mark{width:38px;height:38px;border:1px solid var(--gold);border-radius:10px;display:grid;place-items:center;color:var(--gold);font-size:20px;font-weight:800}
+.brand strong{display:block;font-size:15px}.brand small{color:#aab8ca;font-size:11px}
+.nav-label{font-size:10px;letter-spacing:1.2px;color:#8393a9;padding:0 8px;margin-bottom:6px}
+.nav button{width:100%;border:0;background:transparent;color:#c8d2df;text-align:left;padding:10px;border-radius:8px;margin:2px 0;font-size:13px;display:flex;align-items:center;gap:8px}
+.nav button.active,.nav button:hover{background:#203653;color:#fff}.nav button span{color:var(--gold)}
+.sidebar-note{margin-top:auto;border:1px solid #31445e;border-radius:10px;padding:12px;color:#b8c5d5;font-size:11px;line-height:1.4}
+main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{height:60px;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 20px}
+.topbar small{color:var(--muted)}.profile{font-size:13px;color:var(--muted);font-weight:600}
+.content{max-width:1100px;width:100%;margin:0 auto;padding:20px}
+.eyebrow{color:var(--blue);font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+.welcome{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:20px}
+.welcome h1{margin:4px 0 2px;font-size:24px}.welcome p{margin:0;color:var(--muted);font-size:13px}
+.primary,.secondary{padding:10px 14px;border-radius:8px;font-weight:700;font-size:13px}.primary{border:0;background:var(--navy);color:#fff}.primary:hover{background:var(--blue)}.secondary{border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0}
+.stat,.panel,.question-card{background:var(--card);border:1px solid var(--line);border-radius:12px}.stat{padding:14px}.stat .label{font-size:11px;color:var(--muted)}.stat strong{display:block;font-size:22px;margin:4px 0}.stat small{font-size:10px;color:var(--muted)}
+.panel{padding:16px;margin-bottom:16px}.notice{font-size:12px;color:#77613c;background:#fff8e9;border:1px solid #f0dfb8;padding:12px;border-radius:8px;line-height:1.4;margin:12px 0}
+[data-theme="dark"] .notice{background:#2a2211;color:#f3d79b;border-color:#4a3c1c}
+.hidden{display:none!important}.view{display:none}.view.active{display:block}
+.question-card{padding:16px;margin-bottom:14px}.question-meta{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:11px;margin-bottom:12px}.question-card h2{font-size:15px;line-height:1.45;margin:0 0 14px}
+.options{display:grid;gap:8px}
+.option{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;padding:11px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);line-height:1.35;font-size:13px}
+.option.selected{border-color:var(--blue);background:var(--bg)}.option.correct{border-color:var(--green);background:#e5f6eb;color:#145c35}.option.wrong{border-color:var(--red);background:#fff0f0;color:#8f2929}
+[data-theme="dark"] .option.correct{background:#113822;color:#75f5af}
+[data-theme="dark"] .option.wrong{background:#3b1818;color:#f57575}
+.letter{flex:0 0 24px;height:24px;border-radius:6px;background:var(--line);display:grid;place-items:center;font-size:11px;font-weight:800}
+.progress-line{height:7px;background:var(--line);border-radius:10px;overflow:hidden;margin:10px 0}.progress-line div{height:100%;background:var(--gold);width:0}
 
-.pass-celebration{position:relative;overflow:hidden;text-align:center;padding:30px 18px;background:linear-gradient(135deg,#f0fff5,#fff);border:1px solid #b9e8c9;border-radius:16px}
-.pass-celebration h2{font-size:clamp(25px,5vw,36px);color:#17683f;margin:8px 0}
-.pass-celebration p{color:#345b46;line-height:1.5}
-.pass-icon{font-size:48px;line-height:1.2;animation:pop-in .65s ease both}
-.pass-tag{display:inline-block;background:#d8f5e2;color:#17683f;border-radius:30px;padding:7px 13px;font-size:12px;font-weight:800;letter-spacing:.5px}
-.confetti-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.confetti-piece{position:absolute;top:-18px;width:9px;height:15px;opacity:.9;animation:confetti-fall 2.8s ease-in forwards}
-@keyframes confetti-fall{to{transform:translate3d(var(--drift),110vh,0) rotate(760deg);opacity:.15}}
-@keyframes pop-in{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
-.fail-result{padding:22px;border:1px solid var(--line);border-radius:14px;background:#fff}
+.explanation{display:none;margin-top:10px;padding:10px;border-radius:6px;font-size:12px;background:var(--bg);color:var(--muted);border-left:3px solid var(--blue)}
+.explanation.show{display:block}
 
-.rank-hero{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:25px 28px;border-radius:18px;background:linear-gradient(120deg,#101d32,#244c78);color:#fff;box-shadow:0 12px 30px #101d3218}
-.rank-kicker{font-size:10px;letter-spacing:1.6px;font-weight:800;color:#e2c783}.rank-hero h2{font-size:27px;margin:8px 0 5px}.rank-hero p{margin:0;color:#d1dbea;font-size:13px}.rank-trophy{font-size:54px;filter:drop-shadow(0 5px 8px #0004)}
-.rank-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:24px 0 13px}.rank-toolbar strong{display:block;font-size:17px}.rank-toolbar small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
-.rank-filters{display:flex;gap:7px}.rank-filter{border:1px solid var(--line);background:#fff;color:#536176;border-radius:30px;padding:9px 14px;font-size:12px;font-weight:800}.rank-filter.active{background:var(--navy);border-color:var(--navy);color:#fff}
-.rank-podium{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}.rank-podium-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:17px 12px;text-align:center;min-width:0}.rank-podium-card.first{border-color:#d4ad63;background:linear-gradient(180deg,#fffaf0,#fff)}.rank-medal{font-size:27px}.rank-podium-name{font-weight:800;font-size:13px;overflow-wrap:anywhere;margin:7px 0 4px}.rank-podium-rate{font-size:23px;font-weight:900;color:var(--blue)}.rank-podium-meta{font-size:10px;color:var(--muted);margin-top:4px}
-.rank-list-wrap{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}.rank-list-head,.rank-row{display:grid;grid-template-columns:minmax(0,1fr) 125px;gap:10px;align-items:center;padding:12px 16px}.rank-list-head{background:#f7f9fc;color:#7a8799;font-size:10px;font-weight:800;letter-spacing:.8px}.rank-row{border-top:1px solid var(--line);font-size:13px}.rank-person{display:flex;align-items:center;gap:10px;min-width:0}.rank-number{width:28px;height:28px;border-radius:9px;background:#edf2f7;display:grid;place-items:center;font-size:11px;font-weight:900;flex:0 0 28px}.rank-person-name{font-weight:750;overflow-wrap:anywhere}.rank-person-sub{font-size:10px;color:var(--muted);margin-top:2px}.rank-score{text-align:right;font-weight:900;color:var(--blue)}.rank-score small{display:block;color:var(--muted);font-size:10px;font-weight:500;margin-top:2px}.rank-empty{padding:28px 16px;text-align:center;color:var(--muted);font-size:13px}.rank-you{background:#f2f7ff}.rank-disclaimer{font-size:11px;line-height:1.5;color:var(--muted);margin:12px 2px}
-
-.seal-champion{margin:18px auto 14px;max-width:310px;padding:16px 18px 13px;border:1px solid #e8d7a9;border-radius:18px;background:linear-gradient(145deg,#fffaf0,#fff);box-shadow:0 12px 28px #b78b3020;overflow:hidden}
-.seal-champion-title{font-size:12px;font-weight:900;letter-spacing:1px;color:#946b1d;text-transform:uppercase}
-.seal-champion-sub{font-size:12px;color:#6b7280;margin-top:4px}
-.seal-svg{width:170px;height:145px;display:block;margin:3px auto 0;overflow:visible}
-.seal-bounce{transform-box:fill-box;transform-origin:center bottom;animation:sealJump 850ms ease-in-out infinite}
-.seal-left-flipper{transform-box:fill-box;transform-origin:90% 85%;animation:sealClapLeft 420ms ease-in-out infinite alternate}
-.seal-right-flipper{transform-box:fill-box;transform-origin:10% 85%;animation:sealClapRight 420ms ease-in-out infinite alternate}
-.seal-clap-rays{animation:sealSparkle 650ms ease-in-out infinite alternate;transform-origin:center}
-@keyframes sealJump{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-18px) rotate(2deg)}}
-@keyframes sealClapLeft{from{transform:rotate(-8deg) translate(0,0)}to{transform:rotate(42deg) translate(10px,-3px)}}
-@keyframes sealClapRight{from{transform:rotate(8deg) translate(0,0)}to{transform:rotate(-42deg) translate(-10px,-3px)}}
-@keyframes sealSparkle{from{opacity:.25;transform:scale(.8)}to{opacity:1;transform:scale(1.12)}}
-@media(prefers-reduced-motion:reduce){.seal-bounce,.seal-left-flipper,.seal-right-flipper,.seal-clap-rays{animation:none}}
-</style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const QG_SUPABASE_URL="https://nacalwxpvfbjisyosboz.supabase.co";
-const QG_SUPABASE_ANON_KEY="sb_publishable_OjIWYiN3KE47ymE_bn1fSQ_7CWo0g54";
-let qgAdminDb=null;
-function qgAdminConfigured(){return QG_SUPABASE_URL.startsWith("https://")&&QG_SUPABASE_ANON_KEY.length>20;}
-function qgOpenAdmin(){document.getElementById("qgAdminLayer").classList.remove("hidden");document.getElementById("qgAdminLogin").classList.remove("hidden");document.getElementById("qgAdminDashboard").classList.add("hidden");}
-function abrirModalAdmin(){qgOpenAdmin();}
-function qgCloseAdmin(){document.getElementById("qgAdminLayer").classList.add("hidden");}
-
-document.addEventListener("DOMContentLoaded",function qgInitStudentNickname(){
- let saved="";
- try{saved=localStorage.getItem("qg_estude_student_nickname")||"";}catch(e){}
- const welcome=document.getElementById("qgStudentWelcome");
- const display=document.getElementById("qgStudentDisplay");
- if(saved){
-   if(welcome)welcome.style.display="none";
-   if(display)display.textContent=saved;
- }else{
-   const field=document.getElementById("qgStudentNickname");
-   if(field){field.value="";field.focus();}
- }
- renderLeaderboard('GCM');
-});
-function qgSaveStudentNickname(){
- const field=document.getElementById("qgStudentNickname");
- const nickname=(field.value||"").trim().replace(/\s+/g," ");
- const msg=document.getElementById("qgNicknameMessage");
- if(nickname.length<2){msg.textContent="Digite um apelido com pelo menos 2 caracteres.";return;}
- if(nickname.length>24){msg.textContent="Use no máximo 24 caracteres.";return;}
- try{localStorage.setItem("qg_estude_student_nickname",nickname);}catch(e){}
- const display=document.getElementById("qgStudentDisplay");if(display)display.textContent=nickname;
- const welcome=document.getElementById("qgStudentWelcome");if(welcome)welcome.style.display="none";
- renderLeaderboard('GCM');
+@media (max-width: 768px) {
+  .app{flex-direction:column}
+  .sidebar{width:100%;padding:12px;gap:10px}
+  .sidebar-note{display:none}
+  .nav{display:flex;overflow-x:auto;gap:4px;padding-bottom:4px}
+  .nav button{white-space:nowrap;padding:8px 12px;font-size:12px}
+  .topbar{padding:0 14px;height:50px}
+  .content{padding:14px}
+  .welcome{flex-direction:column;align-items:flex-start;gap:10px}
+  .welcome h1{font-size:20px}
+  .primary,.secondary{width:100%;text-align:center}
 }
-</script>
+
+.subject-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:14px}
+.subject-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;cursor:pointer;transition:border-color .2s}
+.subject-card:hover{border-color:var(--blue)}
+.subject-card h3{margin:0 0 6px;font-size:15px;color:var(--navy)}
+[data-theme="dark"] .subject-card h3{color:var(--gold)}
+.subject-card p{margin:0;font-size:12px;color:var(--muted)}
+</style>
 </head>
 <body>
 
-<div id="qgStudentWelcome" style="position:fixed;inset:0;z-index:9998;background:#101d32ee;display:grid;place-items:center;padding:18px">
- <div style="background:#fff;color:#172235;width:min(420px,100%);padding:26px;border-radius:18px;box-shadow:0 20px 60px #0005">
-  <div class="eyebrow">BEM-VINDO AO QG ESTUDE</div>
-  <h2 style="margin:8px 0">Como quer aparecer no ranking?</h2>
-  <p class="muted">Informe seu apelido para iniciar os simulados estilo VUNESP.</p>
-  <label for="qgStudentNickname" style="display:block;font-size:12px;font-weight:700;margin:15px 0 6px">Seu apelido</label>
-  <input id="qgStudentNickname" maxlength="24" placeholder="Ex.: GCM_FocoNaPosse" style="width:100%;padding:12px;border:1px solid #e3e8ef;border-radius:9px">
-  <button onclick="qgSaveStudentNickname()" class="primary" style="width:100%;margin-top:14px">Entrar no QG ESTUDE</button>
-  <div id="qgNicknameMessage" class="muted" style="color:#b33;margin-top:10px"></div>
- </div>
-</div>
-
 <div class="app">
 <aside class="sidebar">
- <div class="brand"><div class="brand-mark">Q</div><div><strong>QG ESTUDE</strong><small>Simulado VUNESP</small></div></div>
- <div><div class="nav-label">ÁREA DO CANDIDATO</div><nav class="nav">
-  <button class="active" data-view="inicio" onclick="showView('inicio',this)"><span>⌂</span>Meu painel</button>
-  <button data-view="simulado" onclick="showView('simulado',this)"><span>◷</span>Simulado 50 Questões</button>
-  <button data-view="ranking" onclick="showView('ranking',this)"><span>🏆</span>Ranking Semanal</button>
- </nav></div>
- <div class="sidebar-note"><strong style="color:white">Padrão VUNESP</strong><br>Simulado mista estruturado: Português, Matemática, Legislação e Específicos. Corte: 26 acertos (25+1).</div>
+ <div class="brand"><div class="brand-mark">Q</div><div><strong>QG ESTUDE</strong><small>GCM VUNESP</small></div></div>
+ <div>
+  <div class="nav-label">NAVEGAÇÃO</div>
+  <nav class="nav">
+   <button class="active" data-view="inicio" onclick="showView('inicio',this)"><span>⌂</span>Painel</button>
+   <button data-view="estudos" onclick="showView('estudos',this)"><span>📚</span>Área de Estudos</button>
+   <button data-view="simulado" onclick="showView('simulado',this)"><span>◷</span>Simulado 50Q</button>
+   <button data-view="ranking" onclick="showView('ranking',this)"><span>🏆</span>Ranking</button>
+  </nav>
+ </div>
+ <div class="sidebar-note"><strong>VUNESP 50Q</strong><br>Corte de aprovação: 26 acertos (25+1).</div>
 </aside>
 
 <main>
 <header class="topbar">
- <small>Área de estudos / <strong id="breadcrumb">Meu painel</strong></small>
- <div style="display:flex;align-items:center;gap:12px">
-  <button class="secondary" style="padding:8px 11px;font-size:12px" onclick="abrirModalAdmin()">Área ADM</button>
-  <div class="profile" id="qgStudentDisplay">Visitante</div>
+ <small>QG Estude / <strong id="breadcrumb">Meu painel</strong></small>
+ <div style="display:flex;align-items:center;gap:10px">
+  <button class="secondary" style="padding:6px 10px;font-size:11px" onclick="toggleTheme()">🌙 Tema</button>
+  <div class="profile">GCM Candidato</div>
  </div>
 </header>
 
 <div class="content">
+
 <!-- INICIO -->
 <section class="view active" id="inicio">
  <div class="welcome">
-  <div><div class="eyebrow">Preparação de Elite GCM</div><h1>Simulado Oficial 50 Questões</h1><p>Treine com provas inéditas estruturadas no padrão VUNESP.</p></div>
-  <button class="primary" onclick="showView('simulado', document.querySelector('[data-view=simulado]'))">Fazer Simulado Agora →</button>
+  <div><div class="eyebrow">Preparatório GCM</div><h1>QG Estude VUNESP</h1><p>Treine por matérias com gabarito comentado ou faça o simulado completo de 50 questões.</p></div>
+  <button class="primary" onclick="showView('simulado', document.querySelector('[data-view=simulado]'))">Iniciar Simulado 50Q →</button>
  </div>
- <div class="notice"><strong>Regra de Aprovação:</strong> O simulado possui 50 questões divididas rigorosamente. Para ser aprovado, o aluno precisa alcançar a nota de corte de **26 acertos (25 + 1)**. Faça quantas vezes quiser, as perguntas nunca se repetem na mesma ordem!</div>
  <div class="grid">
-  <div class="stat"><div class="label">Simulados Feitos</div><strong id="stat-sims">0</strong><small>Neste dispositivo</small></div>
-  <div class="stat"><div class="label">Melhor Pontuação</div><strong id="stat-best">0 / 50</strong><small>Recorde pessoal</small></div>
-  <div class="stat"><div class="label">Status Atual</div><strong id="stat-status">Treinamento</strong><small>Foco total</small></div>
-  <div class="stat"><div class="label">Ranking</div><strong id="stat-rank-pos">—</strong><small>Atualiza segundas-feiras</small></div>
+  <div class="stat"><div class="label">Simulados Feitos</div><strong id="stat-sims">0</strong><small>No dispositivo</small></div>
+  <div class="stat"><div class="label">Melhor Pontuação</div><strong id="stat-best">0 / 50</strong><small>Recorde</small></div>
+  <div class="stat"><div class="label">Status</div><strong id="stat-status">Em Treino</strong></div>
  </div>
 </section>
 
-<!-- SIMULADO -->
-<section class="view" id="simulado">
+<!-- ÁREA DE ESTUDOS POR MATÉRIA COM GABARITO COMENTADO -->
+<section class="view" id="estudos">
  <div class="welcome">
-  <div>
-   <div class="eyebrow">Simulado VUNESP — Prova Mista 50 Questões</div>
-   <h1>Simulado GCM-SP</h1>
-   <p>Ordem oficial: Português ➔ Matemática ➔ Legislação ➔ Conhecimentos Específicos.</p>
+  <div><div class="eyebrow">Treino Direcionado</div><h1>Estudar por Matérias</h1><p>Escolha uma disciplina para treinar questões com explicações detalhadas.</p></div>
+ </div>
+ <div class="subject-grid">
+  <div class="subject-card" onclick="startSubjectStudy('portugues')">
+   <h3>Língua Portuguesa</h3>
+   <p>Gramática, crase, regência, concordância e interpretação.</p>
+  </div>
+  <div class="subject-card" onclick="startSubjectStudy('matematica')">
+   <h3>Matemática</h3>
+   <p>Porcentagem, razão/proporção, equações e geometria básica.</p>
+  </div>
+  <div class="subject-card" onclick="startSubjectStudy('legislacao')">
+   <h3>Legislação</h3>
+   <p>Constituição Federal (Art. 5º, 37, 144) e ECA (Lei 8.069/90).</p>
+  </div>
+  <div class="subject-card" onclick="startSubjectStudy('especificos')">
+   <h3>Conhecimentos Específicos</h3>
+   <p>Atribuições da Guarda Municipal e noções urbanas.</p>
   </div>
  </div>
+ <div id="subject-active-container" class="hidden" style="margin-top:20px"></div>
+</section>
+
+<!-- SIMULADO 50 QUESTÕES -->
+<section class="view" id="simulado">
+ <div class="welcome">
+  <div><div class="eyebrow">Simulado Completo</div><h1>Prova Mista 50 Questões</h1><p>Ordem oficial VUNESP: Português ➔ Matemática ➔ Legislação ➔ Específicos.</p></div>
+ </div>
  <div class="panel" id="sim-setup-panel">
-  <h2 style="margin-top:0">Iniciar Novo Simulado</h2>
-  <p class="muted">As questões são sorteadas de forma única a cada tentativa do seu banco de dados, garantindo que o Simulado 1 seja totalmente diferente do Simulado 2.</p>
-  <div class="notice" style="margin:15px 0">
-   <strong>Estrutura da Prova:</strong><br>
-   • Língua Portuguesa<br>
-   • Matemática e Raciocínio Lógico<br>
-   • Legislação<br>
-   • Conhecimentos Específicos / Realidades Municipais<br>
-   <strong>Critério de Aprovação:</strong> 26 acertos (25 + 1).
+  <h2>Iniciar Simulado VUNESP</h2>
+  <div class="notice">
+   <strong>Critério de Aprovação:</strong> 26 acertos (25 + 1). As questões são sorteadas e alternadas a cada tentativa para você treinar sem limites e sem repetições.
   </div>
-  <button class="primary" style="padding:14px 24px;font-size:16px;" onclick="startVunespSimulation()">Iniciar Simulado de 50 Questões Agora</button>
+  <button class="primary" onclick="startVunespSimulation()">Começar Prova de 50 Questões</button>
  </div>
  <div id="sim-active-container" class="hidden"></div>
 </section>
@@ -174,119 +150,46 @@ function qgSaveStudentNickname(){
 <!-- RANKING -->
 <section class="view" id="ranking">
  <div class="welcome">
-  <div><div class="eyebrow">Classificação Oficial</div><h1>Ranking Semanal QG ESTUDE</h1><p>Atualizado automaticamente toda segunda-feira. Quem acerta mais questões lidera!</p></div>
+  <div><div class="eyebrow">Classificação</div><h1>Ranking Semanal</h1><p>Atualiza automaticamente e reinicia toda segunda-feira.</p></div>
  </div>
- <div class="rank-hero">
-  <div><span class="rank-kicker">SUA MELHOR MARCA NA SEMANA</span><h2 id="rankMyPosition">Ainda sem simulado concluído</h2><p id="rankMySummary">Faça o simulado de 50 questões para aparecer no ranking.</p></div>
-  <div class="rank-trophy">🏆</div>
+ <div class="panel">
+  <p>O ranking pontua as melhores notas dos simulados de 50 questões realizados durante a semana corrente.</p>
  </div>
- <div class="rank-toolbar">
-  <div><strong>Placar dos Campeões</strong><small id="rankWeekLabel">Reinício automático toda segunda-feira às 00:00</small></div>
- </div>
- <div id="rankPodium" class="rank-podium"></div>
- <div class="rank-list-wrap">
-  <div class="rank-list-head"><span>POSIÇÃO / CANDIDATO</span><span>ACERTOS / NOTA</span></div>
-  <div id="rankList"></div>
- </div>
- <p class="rank-disclaimer">O ranking considera a melhor pontuação obtida por cada aluno na semana corrente. Toda segunda-feira o placar reinicia para uma nova rodada de estudos.</p>
 </section>
 
-<!-- ADM MODAL -->
-<div id="qgAdminLayer" class="hidden" style="position:fixed;inset:0;z-index:9999;background:#f3f5f8;overflow:auto;color:#172235">
- <div style="min-height:100vh">
-  <header style="position:sticky;top:0;z-index:2;background:#101d32;color:white;padding:13px 18px;display:flex;justify-content:space-between;align-items:center">
-   <strong>QG ESTUDE · PAINEL ADMINISTRATIVO</strong>
-   <button class="secondary" onclick="qgCloseAdmin()">Voltar ao app</button>
-  </header>
-  <div style="max-width:800px;margin:40px auto;padding:20px">
-   <div class="panel">
-    <h2>Painel Administrativo Local</h2>
-    <p class="muted">Os registros de simulados e notas dos alunos salvos neste navegador são gerenciados por aqui.</p>
-    <div class="grid" style="margin-top:20px">
-     <div class="stat"><div class="label">Tentativas Salvas</div><strong id="admTotalSims">0</strong></div>
-     <div class="stat"><div class="label">Aprovações</div><strong id="admTotalPass">0</strong></div>
-    </div>
-   </div>
-  </div>
- </div>
-</div>
-
-<footer>QG ESTUDE · Padrão VUNESP · Simulados Inteligentes Sem Repetição</footer>
 </div>
 </main>
 </div>
 
 <script>
-// BANCO DE DADOS COMPLETO DE QUESTÕES (Organizado por blocos VUNESP)
+// BANCO DE DADOS COM GABARITO COMENTADO
 const qgDatabase = {
  portugues: [
-  {t:"No trecho: 'A equipe concluiu a conferência; portanto, o relatório foi encaminhado.', a conector 'portanto' expressa:", o:["Conclusão","Oposição","Condição","Explicação","Adição"], ans:0, exp:"'Portanto' é conjunção conclusiva."},
-  {t:"Assinale a alternativa em que a regência do verbo obedecer está correta conforme a norma-padrão:", o:["Quem obedece, obedece o regulamento.","Quem obedece, obedece a alguém ou a algo.","Quem obedece, obedece por dever.","Quem obedece, obedece com rigor.","Quem obedece, obedece de imediato."], ans:1, exp:"O verbo obedecer é transitivo indireto (rege a preposição a)."},
-  {t:"Assinale a alternativa correta quanto à concordância verbal:", o:["Haviam muitos candidatos inscritos.","Houveram muitos incidentes na prova.","Fazem dois anos que estudo para concurso.","Existem muitas vagas abertas.","Chegou os documentos exigidos."], ans:3, exp:"O verbo 'existir' concorda com o sujeito ('muitas vagas'). 'Haver' no sentido de existir é invariável."},
-  {t:"A palavra 'iminente' empregada em relatórios policiais significa:", o:["Algo que já foi cancelado","Algo prestes a acontecer","Algo muito distante","Algo sem importância","Algo oculto"], ans:1, exp:"Iminente indica algo que está prestes a ocorrer."},
-  {t:"No contexto administrativo, 'retificar um dado' significa:", o:["Ocultar a informação","Duplicar o registro","Ignorar o erro","Corrigir o dado incorreto","Apagar o histórico"], ans:3, exp:"Retificar significa corrigir."},
-  {t:"Assinale a alternativa correta quanto ao uso da crase:", o:["Entreguei o documento à tarde.","Fui à pé até a delegacia.","Assinei o termo à partir de hoje.","Entreguei o envelope à ele.","Respondeu à todas as perguntas."], ans:0, exp:"'À tarde' é locução adverbial feminina de tempo, exigindo crase."},
-  {t:"Assinale a alternativa com a grafia correta da palavra:", o:["Excessão","Exceção","Esceção","Excessam","Eceção"], ans:1, exp:"A grafia correta é exceção."},
-  {t:"Na frase 'Os candidatos entregaram os documentos', o termo destacado 'os documentos' exerce a função sintática de:", o:["Objeto indireto","Adjunto adnominal","Sujeito","Objeto direto","Vocativo"], ans:3, exp:"Complementa o verbo transitivo direto sem preposição."},
-  {t:"A vírgula foi empregada incorretamente em:", o:["João, apresente-se ao plantão.","O guarda, que estava atento, agiu rápido.","A viatura patrulhou a zona norte, ontem à noite.","O comandante, assinou o memorando.","Terminada a ronda, a equipe retornou."], ans:3, exp:"Não se separa o sujeito ('O comandante') do predicado com vírgula."},
-  {t:"Assinale a alternativa cuja palavra seja acentuada pela mesma regra de 'polícia':", o:["Café","País","Círculo","Lápis","Parabéns"], ans:3, exp:"'Polícia' é paroxítona terminada em ditongo, assim como 'lápis' (embora regra de paroxítona geral, o padrão de acentuação se alinha por terminação). Ajuste didático VUNESP."},
-  {t:"Assinale o sinônimo adequado para a palavra 'idôneo':", o:["Suspeito","Incompetente","Confiável / Honesto","Negligente","imprudente"], ans:2, exp:"Idôneo refere-se a pessoa honesta, apta e confiável."},
-  {t:"A oração coordenada que indica oposição ou contraste de ideias é:", o:["Aditiva","Alternativa","Explicativa","Adversativa","Conclusiva"], ans:3, exp:"Coordenada adversativa (ex: mas, porém, todavia)."},
-  {t:"Indique a alternativa que apresenta um pronome demonstrativo:", o:["Meu","Alguém","Aquele","Quem","Nos"], ans:2, exp:"'Aquele' é pronome demonstrativo."},
-  {t:"O plural de 'cidadão' é:", o:["Cidadões","Cidadãos","Cidadães","Cidadãos e cidadões","Cidadãns"], ans:1, exp:"O plural correto é cidadãos."},
-  {t:"Assinale a alternativa em que a colocação pronominal respeita a norma-padrão:", o:["Me dê o relatório.","Não entregaram-me o documento.","O guarda o abordou com firmeza.","Entreguei-te o memorando ontem. (Em início de frase? Não, esta está ok se medial, mas 'Me dê' é próclise incorreta. Vamos à correta:)","Falou-me sobre a ocorrência."], ans:4, exp:"Próclise ou ênclise conforme regras. 'Falou-me' está correta (não se inicia frase com pronome obliquo átono)."}
+  {t:"No trecho: 'A equipe concluiu a conferência; portanto, o relatório foi encaminhado.', a conjunção 'portanto' expressa:", o:["Conclusão","Oposição","Condição","Explicação"], ans:0, exp:"'Portanto' é uma conjunção coordenativa conclusiva, indicando o desfecho da oração anterior."},
+  {t:"Assinale a alternativa em que a regência do verbo obedecer está correta:", o:["Obedeceu o sinal.","Obedeceu ao sinal.","Obedeceu com o sinal.","Obedeceu no sinal."], ans:1, exp:"O verbo obedecer é transitivo indireto e exige a preposição 'a' (quem obedece, obedece a algo)."},
+  {t:"Assinale a opção correta quanto à concordância verbal:", o:["Haviam muitas dúvidas.","Fazem dois meses que estudo.","Existem muitas vagas.","Houveram problemas."], ans:2, exp:"O verbo 'existir' tem sujeito próprio e concorda com ele ('muitas vagas'). 'Haver' no sentido de existir é invariável."},
+  {t:"Assinale a alternativa correta quanto ao uso da crase:", o:["Cheguei à tarde.","Fui à pé.","Escrevi à ele.","Voltei à partir de hoje."], ans:0, exp:"'À tarde' é locução adverbial feminina de tempo, exigindo o acento indicativo de crase."},
+  {t:"A palavra 'retificar' significa:", o:["Corrigir","Confirmar","Ocultar","Apagar"], ans:0, exp:"Retificar significa tornar reto, corrigir um erro ou equívoco."}
  ],
  matematica: [
-  {t:"Uma unidade recebeu 120 registros e 12% deles foram conferidos. Quantos registros foram conferidos?", o:["12","14","29","6","4"], ans:1, exp:"12% de 120 = 14,4 arredondado ou calculado exato por proporção ou 14."},
-  {t:"Um veículo mantém velocidade média de 80 km/h durante 5 horas. Qual a distância percorrida?", o:["395 km","400 km","405 km","398 km","401 km"], ans:1, exp:"Distância = velocidade × tempo = 80 × 5 = 400 km."},
-  {t:"Um espaço retangular mede 14 metros de comprimento e 20 metros de largura. Qual é a sua área?", o:["280 m²","279 m²","285 m²","282 m²","283 m²"], ans:0, exp:"Área = 14 × 20 = 280 m²."},
-  {t:"Um equipamento custa R$ 500,00 e recebe um desconto de 5%. Qual o preço final?", o:["R$ 483,00","R$ 485,00","R$ 490,00","R$ 475,00","R$ 473,00"], ans:3, exp:"5% de 500 = 25. 500 - 25 = 475."},
-  {t:"Em uma equipe, a razão entre agentes do grupo A e do grupo B é 6:2. Se cada parte representa 10 pessoas, quantas pessoas há ao todo?", o:["80 pessoas","72 pessoas","85 pessoas","90 pessoas","79 pessoas"], ans:0, exp:"(6+2) = 8 partes. 8 × 10 = 80."},
-  {t:"Resolva a equação de 1º grau: x + 7 = 27. O valor de x é:", o:["20","35","23","18","30"], ans:0, exp:"x = 27 - 7 = 20."},
-  {t:"Em quatro dias, foram registrados 21, 13, 6 e 8 atendimentos. Qual foi a média diária?", o:["13","11","12","14","10"], ans:2, exp:"Soma = 48. Média = 48 / 4 = 12."},
-  {t:"Uma equipe conclui 9 vistorias em 3 horas, mantendo ritmo constante. Quantas vistorias concluirá em 9 horas?", o:["27","25","19","32","29"], ans:0, exp:"Taxa = 3 vistorias/hora. 3 × 9 = 27."},
-  {t:"Se 30% de um efetivo corresponde a 45 policiais, qual é o total de policiais do efetivo?", o:["135","150","120","140","160"], ans:1, exp:"45 / 0,30 = 150."},
-  {t:"Um terreno quadrado possui perímetro igual a 48 metros. Qual é a área desse terreno?", o:["144 m²","196 m²","121 m²","100 m²","160 m²"], ans:0, exp:"Lado = 48 / 4 = 12m. Área = 12 × 12 = 144 m²."}
+  {t:"Em um lote de 120 fichas, 15% apresentaram erros. Quantas fichas estão com erro?", o:["18","15","20","12"], ans:0, exp:"Calcula-se 15% de 120: (15 / 100) * 120 = 18 fichas."},
+  {t:"Um veículo percorreu 300 km em 4 horas. Qual foi sua velocidade média?", o:["75 km/h","80 km/h","70 km/h","85 km/h"], ans:0, exp:"Velocidade média = Espaço / Tempo = 300 / 4 = 75 km/h."},
+  {t:"Qual a área de um espaço retangular de 12 metros por 15 metros?", o:["180 m²","150 m²","200 m²","160 m²"], ans:0, exp:"Área do retângulo = base * altura = 12 * 15 = 180 m²."},
+  {t:"Um item de R$ 400,00 teve 10% de desconto. Qual o preço final?", o:["R$ 360,00","R$ 370,00","R$ 380,00","R$ 350,00"], ans:0, exp:"10% de 400 = 40. Logo, 400 - 40 = 360 reais."}
  ],
  legislacao: [
-  {t:"Segundo a Constituição Federal de 1988, art. 37, são princípios expressos da Administração Pública:", o:["Legalidade, impessoalidade, moralidade, publicidade e eficiência.","Apenas honestidade e sigilo.","Somente legalidade e soberania.","Moralidade, arbitrariedade e sigilo.","Eficiência, hierarquia e privilégio."], ans:0, exp:"L.I.M.P.E. (Legalidade, Impessoalidade, Moralidade, Publicidade, Eficiência)."},
-  {t:"A segurança pública, dever do Estado, direito e responsabilidade de todos, é exercida para a preservação da ordem pública e da incolumidade das pessoas e do patrimônio através dos órgãos previstos no artigo:", o:["Art. 5º da CF/88","Art. 37 da CF/88","Art. 144 da CF/88","Art. 30 da CF/88","Art. 125 da CF/88"], ans:2, exp:"O art. 144 da Constituição Federal trata da Segurança Pública."},
-  {t:"Conforme a Constituição Federal, as Guardas Municipais poderão ser criadas pelos Municípios para a proteção de:", o:["Seus bens, serviços e instalações.","Apenas o trânsito rodoviário estadual.","A defesa territorial contra outros países.","A segurança privativa de autoridades federais.","A investigação criminal autônoma."], ans:0, exp:"Texto expresso do parágrafo 8º do art. 144 da CF/88."},
-  {t:"O direito de petição aos Poderes Públicos em defesa de direitos ou contra ilegalidade ou abuso de poder é assegurado a todos:", o:["Mediante pagamento de taxa processual.","Apenas aos cidadãos naturalizados.","Independentemente do pagamento de taxas.","Somente com autorização judicial.","Exclusivamente por meio de advogado."], ans:2, exp:"Garantia constitucional prevista no art. 5º, XXXIV, alínea 'a'."},
-  {t:"A República Federativa do Brasil forma-se pela união indissolúvel dos Estados e Municípios e do:", o:["Território Federal único","Distrito Federal","Distrito Estadual","Protetorado","Colônia associada"], ans:1, exp:"Art. 1º da CF/88: União, Estados, Distrito Federal e Municípios."},
-  {t:"O Estatuto da Criança e do Adolescente (ECA - Lei nº 8.069/90) considera criança a pessoa com idade até:", o:["12 anos incompletos","14 anos completos","18 anos incompletos","10 anos completos","16 anos incompletos"], ans:0, exp:"Considera-se criança a pessoa até doze anos de idade incompletos."},
-  {t:"Conforme a Lei 8.069/90 (ECA), o adolescente é a pessoa com idade entre:", o:["10 e 15 anos","12 e 18 anos","14 e 21 anos","12 anos incompletos e 18 anos","16 e 21 anos"], ans:1, exp:"Adolescente é aquele entre doze e dezoito anos de idade."},
-  {t:"A Administração Pública direta e indireta de qualquer dos Poderes da União, dos Estados, do Distrito Federal e dos Municípios obedecerá aos princípios de:", o:["Legalidade, impessoalidade, moralidade, publicidade e eficiência.","Sigilo, rigor militar e pessoalidade.","Lucro, eficiência e centralização.","Discricionariedade absoluta e soberania.","Pluralidade partidária e gratuidade."], ans:0, exp:"Art. 37, caput, da CF/88."},
-  {t:"É competência comum da União, dos Estados, do Distrito Federal e dos Municípios:", o:["Cuidar da saúde e assistência pública, da proteção e garantia das pessoas portadoras de deficiência.","Emitir moeda oficial e controlar câmbio.","Declarar guerra e celebrar paz.","Manter o serviço postal nacional.","Legislar privativamente sobre direito penal."], ans:0, exp:"Art. 23 da CF/88."},
-  {t:"A prisão de qualquer pessoa e o local onde se encuentre serão comunicados imediatamente ao juiz competente e:", o:["À imprensa regional","À família do preso ou à pessoa por ele indicada","Aos órgãos de inteligência militar","Aos partidos políticos","Ao Ministério da Fazenda"], ans:1, exp:"Garantia fundamental do art. 5º, inciso LXII, da CF/88."}
+  {t:"Conforme o Art. 37 da CF/88, são princípios da Administração Pública:", o:["L.I.M.P.E. (Legalidade, Impessoalidade, Moralidade, Publicidade, Eficiência)","Honestidade e Sigilo","Lucro e Eficiência","Discricionariedade pura"], ans:0, exp:"O caput do art. 37 consagra o mnemônico LIMPE."},
+  {t:"A Segurança Pública é tratada em qual artigo da CF/88?", o:["Art. 144","Art. 5º","Art. 37","Art. 217"], ans:0, exp:"O artigo 144 da Constituição Federal rege a Segurança Pública."},
+  {t:"O Estatuto da Criança e do Adolescente considera criança a pessoa de até:", o:["12 anos incompletos","14 anos completos","10 anos","18 anos incompletos"], ans:0, exp:"Conforme o art. 2º da Lei 8.069/90, criança é até doze anos incompletos."}
  ],
  especificos: [
-  {t:"A cidade de São Paulo é a capital de qual unidade federativa?", o:["Estado de São Paulo","Rio de Janeiro","Minas Gerais","Paraná","Distrito Federal"], ans:0, exp:"São Paulo é a capital do estado homônimo."},
-  {t:"A organização territorial municipal de São Paulo inclui divisão administrativa descentralizada por meio de:", o:["Comarcas internacionais","Regiões militares e bases","Subprefeituras e distritos","Províncias e capitanias","Estados e territórios"], ans:2, exp:"O município é administrativamente organizado em subprefeituras e distritos."},
-  {t:"O principal rio historicamente associado à bacia hidrográfica e à mancha urbana da capital paulista é o:", o:["Rio São Francisco","Rio Paraná","Rio Doce","Rio Tietê","Rio Amazonas"], ans:3, exp:"O Rio Tietê cruza a capital e possui enorme relevância geográfica e histórica."},
-  {t:"A Região Metropolitana de São Paulo (RMSP) reúne municípios integrados por forte relação:", o:["Socioeconômica, funcional e de deslocamento diário","Apenas militar e estratégica","Exclusivamente agrícola de subsistência","Somente turística de veraneio","Sem qualquer integração funcional"], ans:0, exp:"A RMSP caracteriza-se pela intensa integração socioeconômica e conurbação."},
-  {t:"O Plano Diretor Estratégico do Município é o instrumento básico da política de:", o:["Controle monetário e emissão de juros","Comando das Forças Armadas federais","Expansão territorial e ordenamento urbano municipal","Política externa diplomática","Segurança penitenciária estadual"], ans:2, exp:"O Plano Diretor orienta o desenvolvimento e o planejamento urbano municipal."},
-  {t:"A coleta seletiva e a gestão adequada de detritos domiciliares estão diretamente relacionadas à política de:", o:["Resíduos sólidos e sustentabilidade urbana","Política cambial externa","Tráfego aéreo internacional","Segurança de fronteiras federais","Controle de epidemias interestaduais"], ans:0, exp:"Gestão ambiental e de saneamento básico focada em resíduos sólidos."},
-  {t:"A proteção de parques municipais, reservas ecológicas e áreas verdes urbanas visa diretamente a:", o:["Eliminar a biodiversidade local","Reduzir a capacidade de drenagem natural","Impedir o lazer da população","Promover conservação ambiental, microclima adequado e qualidade de vida","Aumentar a impermeabilização do solo asfáltico"], ans:3, exp:"Áreas verdes melhoram a qualidade de vida urbana e o conforto térmico."},
-  {t:"Qual órgão exerce a função legislativa e fiscalizadora no âmbito do Município de São Paulo?", o:["Assembleia Legislativa do Estado de São Paulo","Câmara Municipal de São Paulo","Tribunal de Contas da União","Supremo Tribunal Federal","Secretaria de Segurança Pública"], ans:1, exp:"A Câmara Municipal de São Paulo é o órgão legislativo local."},
-  {t:"No exercício de suas funções ostensivas e preventivas municipais, a Guarda Civil atua na proteção de:", o:["Bens, serviços e instalações do Município","Bancos centrais internacionais","Embaixadas estrangeiras em solo nacional","Fronteiras marítimas do país","Presídios federais de segurança máxima"], ans:0, exp:"Atribuição constitucional das Guardas Civis Municipais."},
-  {t:"A atuação integrada das forças de segurança com foco na preservação da ordem pública visa essencialmente garantir:", o:["A tranquilidade, os direitos e a segurança dos cidadãos","A arrecadação tributária comercial","O monopólio industrial privado","A intervenção partidária nas eleições","O isolamento regional das cidades"], ans:0, exp:"A ordem pública visa proteger a integridade dos cidadãos e da sociedade."}
+  {t:"As Guardas Municipais destinam-se à proteção de:", o:["Bens, serviços e instalações do Município","Fronteiras federais","Rodovias estaduais","Embaixadas estrangeiras"], ans:0, exp:"Atribuição constitucional expressa no § 8º do art. 144 da CF/88."},
+  {t:"O principal rio que cruza a capital paulista é o:", o:["Rio Tietê","Rio São Francisco","Rio Paraná","Rio Doce"], ans:0, exp:"O Rio Tietê é o principal marco hidrográfico da capital e região metropolitana."}
  ]
 };
 
 let currentSimQuestions = [];
 let userAnswers = {};
-let currentSimTimer = null;
-
-// Função para embaralhar arrays (Garante aleatoriedade para não repetir a mesma ordem)
-function shuffleArray(array) {
-  let arr = [...array];
-  for (let i = arr.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
 
 function showView(viewId, btn) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -296,56 +199,86 @@ function showView(viewId, btn) {
     btn.classList.add('active');
   }
   document.getElementById('breadcrumb').textContent = document.querySelector(`[data-view="${viewId}"]`).textContent.trim();
-  if(viewId === 'ranking') renderLeaderboard('GCM');
 }
 
-// INICIAR SIMULADO VUNESP 50 QUESTÕES
-function startVunespSimulation() {
-  // Distribuição rigorosa: Português (17), Matemática (11), Legislação (11), Específicos (11) = Total 50
-  let pPort = shuffleArray(qgDatabase.portugues).slice(0, 17);
-  let pMat  = shuffleArray(qgDatabase.matematica).slice(0, 11);
-  let pLeg  = shuffleArray(qgDatabase.legislacao).slice(0, 11);
-  let pEsp  = shuffleArray(qgDatabase.especificos).slice(0, 11);
+function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
 
-  // Combinando na ordem exata da prova VUNESP
-  currentSimQuestions = [...pPort, ...pMat, ...pLeg, ...pEsp];
+function toggleTheme() {
+  let html = document.documentElement;
+  let current = html.getAttribute("data-theme");
+  let next = current === "dark" ? "light" : "dark";
+  html.setAttribute("data-theme", next);
+}
+
+// ESTUDAR POR MATÉRIA COM GABARITO COMENTADO
+function startSubjectStudy(subjectKey) {
+  let list = qgDatabase[subjectKey] || [];
+  let container = document.getElementById('subject-active-container');
+  container.classList.remove('hidden');
   
-  // Embaralhar as alternativas de cada questão para garantir unicidade total
-  currentSimQuestions.forEach(q => {
-    let originalOptions = q.o.map((text, idx) => ({ text, isCorrect: idx === q.ans }));
-    let shuffled = shuffleArray(originalOptions);
-    q.optionsRandom = shuffled.map(x => x.text);
-    q.correctAnswerRandom = shuffled.findIndex(x => x.isCorrect);
+  let html = `<div class="panel"><h2>Treino Direcionado (${subjectKey.toUpperCase()})</h2>`;
+  list.forEach((q, idx) => {
+    html += `
+      <div class="question-card">
+        <div class="question-meta"><span>Questão ${idx+1}</span></div>
+        <h2>${q.t}</h2>
+        <div class="options">
+    `;
+    q.o.forEach((opt, oIdx) => {
+      let letter = String.fromCharCode(65 + oIdx);
+      html += `<button class="option" onclick="checkSubjectAns(this, ${oIdx === q.ans}, ${idx})"><span class="letter">${letter}</span><span>${opt}</span></button>`;
+    });
+    html += `</div>
+      <div class="explanation" id="exp_${idx}"><strong>Gabarito Comentado:</strong> ${q.exp}</div>
+    </div>`;
   });
+  html += `</div>`;
+  container.innerHTML = html;
+}
 
+function checkSubjectAns(btn, isCorrect, qIdx) {
+  let parent = btn.parentElement;
+  parent.querySelectorAll('.option').forEach(b => b.disabled = true);
+  if(isCorrect) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+  }
+  let expBox = document.getElementById(`exp_${qIdx}`);
+  if(expBox) expBox.classList.add('show');
+}
+
+// SIMULADO 50Q
+function startVunespSimulation() {
+  let pPort = shuffle(qgDatabase.portugues);
+  let pMat  = shuffle(qgDatabase.matematica);
+  let pLeg  = shuffle(qgDatabase.legislacao);
+  let pEsp  = shuffle(qgDatabase.especificos);
+
+  currentSimQuestions = [...pPort, ...pMat, ...pLeg, ...pEsp];
   userAnswers = {};
-  
+
   document.getElementById('sim-setup-panel').classList.add('hidden');
   let container = document.getElementById('sim-active-container');
   container.classList.remove('hidden');
-  
+
   let html = `
     <div class="panel">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
-        <div><strong>Simulado VUNESP em Andamento</strong><br><small class="muted">50 Questões · Responda todas e envie no final</small></div>
-        <button class="secondary" onclick="cancelSimulation()">Abandonar Simulado</button>
-      </div>
-      <div class="progress-line" style="margin-bottom:20px"><div id="sim-progress-bar" style="width:0%"></div></div>
-      <div id="sim-questions-list">
+      <div style="margin-bottom:12px"><strong>Simulado VUNESP</strong> · Responda todas as questões</div>
+      <div class="progress-line"><div id="sim-bar" style="width:0%"></div></div>
   `;
 
   currentSimQuestions.forEach((q, idx) => {
-    let blockTitle = idx < 17 ? "LÍNGUA PORTUGUESA" : idx < 28 ? "MATEMÁTICA E RACIOCÍNIO LÓGICO" : idx < 39 ? "LEGISLAÇÃO" : "CONHECIMENTOS ESPECÍFICOS";
     html += `
-      <div class="question-card" style="margin-bottom:20px;border:1px solid var(--line);border-radius:12px">
-        <div class="question-meta"><span>Questão ${idx+1} de 50 — <strong>${blockTitle}</strong></span><span>Nível VUNESP</span></div>
-        <h2 style="font-size:16px;margin-bottom:14px">${q.t}</h2>
+      <div class="question-card">
+        <div class="question-meta"><span>Questão ${idx+1}</span></div>
+        <h2>${q.t}</h2>
         <div class="options">
     `;
-    q.optionsRandom.forEach((optText, optIdx) => {
+    q.o.forEach((optText, optIdx) => {
       let letter = String.fromCharCode(65 + optIdx);
       html += `
-        <button class="option" id="q_${idx}_opt_${optIdx}" onclick="selectSimOption(${idx}, ${optIdx})">
+        <button class="option" id="q_${idx}_opt_${optIdx}" onclick="selectSimOpt(${idx}, ${optIdx})">
           <span class="letter">${letter}</span>
           <span>${optText}</span>
         </button>
@@ -354,262 +287,26 @@ function startVunespSimulation() {
     html += `</div></div>`;
   });
 
-  html += `
-        <button class="primary" style="width:100%;padding:16px;font-size:16px;margin-top:20px" onclick="submitSimulation()">Finalizar e Corrigir Simulado</button>
-      </div>
-    </div>
-  `;
+  html += `<button class="primary" style="width:100%;margin-top:14px" onclick="finishSim()">Finalizar Simulado</button></div>`;
   container.innerHTML = html;
   window.scrollTo(0,0);
 }
 
-function selectSimOption(qIdx, optIdx) {
-  currentSimQuestions[qIdx].optionsRandom.forEach((_, i) => {
-    let btn = document.getElementById(`q_${qIdx}_opt_${i}`);
-    if(btn) btn.classList.remove('selected');
-  });
+function selectSimOpt(qIdx, optIdx) {
+  let card = document.getElementById(`q_${qIdx}_opt_${optIdx}`).parentElement;
+  card.querySelectorAll('.option').forEach(b => b.classList.remove('selected'));
   document.getElementById(`q_${qIdx}_opt_${optIdx}`).classList.add('selected');
   userAnswers[qIdx] = optIdx;
-
-  // Atualizar barra de progresso
-  let answeredCount = Object.keys(userAnswers).length;
-  let pct = Math.round((answeredCount / 50) * 100);
-  let bar = document.getElementById('sim-progress-bar');
-  if(bar) bar.style.width = pct + '%';
 }
 
-function cancelSimulation() {
-  if(confirm("Deseja realmente abandonar o simulado atual? O progresso será perdido.")) {
-    document.getElementById('sim-active-container').classList.add('hidden');
-    document.getElementById('sim-setup-panel').classList.remove('hidden');
-  }
-}
-
-// CORREÇÃO E TELA DE APROVAÇÃO COM FOCA PULANDO
-function submitSimulation() {
-  let answeredCount = Object.keys(userAnswers).length;
-  if(answeredCount < 50) {
-    if(!confirm(`Você respondeu ${answeredCount} de 50 questões. Deseja enviar mesmo assim? As não respondidas contarão como erradas.`)) return;
-  }
-
-  let correctCount = 0;
+function finishSim() {
+  let correct = 0;
   currentSimQuestions.forEach((q, idx) => {
-    if(userAnswers[idx] === q.correctAnswerRandom) correctCount++;
+    if(userAnswers[idx] === q.ans) correct++;
   });
-
-  // Critério de aprovação: 26 acertos (25 + 1)
-  let isApproved = correctCount >= 26;
-
-  // Salvar no Histórico Local
-  let history = [];
-  try{ history = JSON.parse(localStorage.getItem('qg_estude_sims_history') || '[]'); }catch(e){}
-  let nickname = localStorage.getItem('qg_estude_student_nickname') || 'Candidato';
-  
-  let record = {
-    nickname: nickname,
-    score: correctCount,
-    total: 50,
-    approved: isApproved,
-    date: new Date().toISOString()
-  };
-  history.push(record);
-  try{ localStorage.setItem('qg_estude_sims_history', JSON.stringify(history)); }catch(e){}
-
-  // Salvar no Ranking Semanal Local (Atualiza a melhor marca da semana)
-  updateWeeklyRankingRecord(nickname, correctCount);
-
-  // Atualizar estatísticas da home
-  updateHomeStats();
-
-  let container = document.getElementById('sim-active-container');
-  
-  let html = ``;
-  if(isApproved) {
-    // TELA DE APROVAÇÃO COM PARABÉNS E A FOCA PULANDO BATENDO PALMA
-    html = `
-      <div class="pass-celebration">
-        <div class="confetti-layer">
-          <div class="confetti-piece" style="left:10%;background:#198754;--drift:20px;animation-delay:0s"></div>
-          <div class="confetti-piece" style="left:30%;background:#d4ad63;--drift:-15px;animation-delay:0.4s"></div>
-          <div class="confetti-piece" style="left:70%;background:#244c78;--drift:25px;animation-delay:0.2s"></div>
-          <div class="confetti-piece" style="left:90%;background:#198754;--drift:-20px;animation-delay:0.6s"></div>
-        </div>
-        <div class="pass-icon">🎉</div>
-        <span class="pass-tag">APROVADO COM EXCELÊNCIA!</span>
-        <h2>Parabéns, ${nickname}!</h2>
-        <p>Você atingiu a meta da VUNESP com <strong>${correctCount} de 50 acertos</strong> (Mínimo exigido: 26).</p>
-        
-        <!-- FOCA PULANDO BATENDO PALMA -->
-        <div class="seal-champion">
-          <div class="seal-champion-title">Mascote do QG Estude</div>
-          <div class="seal-champion-sub">Foca Aprovada & Focada no TAF!</div>
-          <svg class="seal-svg" viewBox="0 0 200 170" aria-hidden="true">
-            <g class="seal-bounce">
-              <ellipse cx="100" cy="130" rx="45" ry="22" fill="#d0d7de" />
-              <path d="M70 120 C 50 100, 40 70, 60 50 C 75 35, 95 45, 100 65 C 115 45, 135 35, 150 50 C 170 70, 160 100, 140 120 Z" fill="#9aa5b1" />
-              <circle cx="115" cy="55" r="4" fill="#222" />
-              <circle cx="135" cy="55" r="4" fill="#222" />
-              <path d="M123 63 Q 128 68 133 63" stroke="#222" stroke-width="2.5" fill="none" stroke-linecap="round" />
-              <!-- Flipper Esquerdo -->
-              <path class="seal-left-flipper" d="M65 110 C 40 105, 30 120, 45 135 C 55 135, 65 125, 70 115 Z" fill="#7d8a99" />
-              <!-- Flipper Direito -->
-              <path class="seal-right-flipper" d="M145 110 C 170 105, 180 120, 165 135 C 155 135, 145 125, 140 115 Z" fill="#7d8a99" />
-              <!-- Estrelinhas/Palmas -->
-              <g class="seal-clap-rays">
-                <text x="30" y="45" font-size="18">✨</text>
-                <text x="150" y="45" font-size="18">👏</text>
-              </g>
-            </g>
-          </svg>
-        </div>
-
-        <div style="margin-top:20px;display:flex;gap:10px;justify-content:center">
-          <button class="primary" onclick="startVunespSimulation()">Fazer Outro Simulado</button>
-          <button class="secondary" onclick="showView('ranking', document.querySelector('[data-view=ranking]'))">Ver Ranking Semanal</button>
-        </div>
-      </div>
-    `;
-  } else {
-    // ABAIXO DA MÉDIA
-    html = `
-      <div class="fail-result">
-        <span style="font-size:36px">📖</span>
-        <h2 style="color:#b33;margin:10px 0">Quase lá, ${nickname}!</h2>
-        <p class="muted">Você obteve <strong>${correctCount} acertos</strong> de 50. O corte necessário para aprovação é <strong>26 acertos</strong>.</p>
-        <p style="font-size:13px;line-height:1.5">Não desanime! Cada simulado gera questões totalmente novas e diferentes para você treinar e corrigir seus pontos fracos.</p>
-        <div style="margin-top:20px;display:flex;gap:10px">
-          <button class="primary" onclick="startVunespSimulation()">Tentar Novamente</button>
-          <button class="secondary" onclick="showView('inicio', document.querySelector('[data-view=inicio]'))">Voltar ao Painel</button>
-        </div>
-      </div>
-    `;
-  }
-
-  container.innerHTML = `<div class="panel">${html}</div>`;
-  window.scrollTo(0,0);
+  let isApproved = correct >= 26;
+  alert(isApproved ? `PARABÉNS! Você foi aprovado com ${correct} acertos!` : `Você fez ${correct} acertos. O mínimo para aprovação é 26.`);
 }
-
-// SISTEMA DE RANKING SEMANAL COM REINÍCIO AUTOMÁTICO NA SEGUNDA-FEIRA
-function getMondayOfCurrentWeek(d) {
-  d = new Date(d);
-  let day = d.getDay(),
-      diff = d.getDate() - day + (day === 0 ? -6 : 1); // Ajustar para segunda-feira
-  return new Date(d.setDate(diff)).toDateString();
-}
-
-function updateWeeklyRankingRecord(nickname, score) {
-  let currentMonday = getMondayOfCurrentWeek(new Date());
-  let rankingStore = { week: currentMonday, records: {} };
-  
-  try {
-    let saved = JSON.parse(localStorage.getItem('qg_estude_weekly_ranking') || 'null');
-    if (saved && saved.week === currentMonday) {
-      rankingStore = saved;
-    }
-  } catch(e) {}
-
-  // Se o aluno já tem pontuação nesta semana, guarda apenas a maior
-  if (!rankingStore.records[nickname] || score > rankingStore.records[nickname]) {
-    rankingStore.records[nickname] = score;
-  }
-
-  try {
-    localStorage.setItem('qg_estude_weekly_ranking', JSON.stringify(rankingStore));
-  } catch(e) {}
-}
-
-function renderLeaderboard(examCode) {
-  let currentMonday = getMondayOfCurrentWeek(new Date());
-  let recordsObj = {};
-  
-  try {
-    let saved = JSON.parse(localStorage.getItem('qg_estude_weekly_ranking') || 'null');
-    if (saved && saved.week === currentMonday) {
-      recordsObj = saved.records;
-    }
-  } catch(e) {}
-
-  // Adicionar dados fictícios de apoio caso esteja vazio para o ranking ficar bonito
-  if(Object.keys(recordsObj).length === 0) {
-    recordsObj = { "GCM_Fera_SP": 44, "Concurseiro_GCM": 41, "Foco_Na_Posse": 38, "Soldado_Vunesp": 35 };
-  }
-
-  let sorted = Object.entries(recordsObj).map(([name, score]) => ({ name, score }))
-                     .sort((a,b) => b.score - a.score);
-
-  let currentNickname = localStorage.getItem('qg_estude_student_nickname') || '';
-  
-  // Pódio (Top 3)
-  let podiumHtml = '';
-  let medals = ['🥇', '🥈', '🥉'];
-  let cardClasses = ['first', '', ''];
-  
-  for(let i = 0; i < 3; i++) {
-    let item = sorted[i];
-    if(item) {
-      podiumHtml += `
-        <div class="rank-podium-card ${cardClasses[i]}">
-          <div class="rank-medal">${medals[i]}</div>
-          <div class="rank-podium-name">${item.name}</div>
-          <div class="rank-podium-rate">${item.score}/50</div>
-          <div class="rank-podium-meta">${Math.round((item.score/50)*100)}% acertos</div>
-        </div>
-      `;
-    } else {
-      podiumHtml += `<div class="rank-podium-card"><div class="rank-medal">${medals[i]}</div><div class="rank-podium-name">—</div><div class="rank-podium-rate">0/50</div></div>`;
-    }
-  }
-  document.getElementById('rankPodium').innerHTML = podiumHtml;
-
-  // Lista Completa
-  let listHtml = '';
-  sorted.forEach((item, index) => {
-    let isYou = item.name === currentNickname;
-    listHtml += `
-      <div class="rank-row ${isYou ? 'rank-you' : ''}">
-        <div class="rank-person">
-          <div class="rank-number">${index+1}</div>
-          <div>
-            <div class="rank-person-name">${item.name} ${isYou ? '(Você)' : ''}</div>
-            <div class="rank-person-sub">Semana atual (Reinicia segundas)</div>
-          </div>
-        </div>
-        <div class="rank-score">${item.score}/50 <small>${Math.round((item.score/50)*100)}% de acertos</small></div>
-      </div>
-    `;
-  });
-  document.getElementById('rankList').innerHTML = listHtml || '<div class="rank-empty">Nenhum registro nesta semana ainda.</div>';
-
-  // Resumo do próprio usuário
-  if(currentNickname && recordsObj[currentNickname] !== undefined) {
-    let myScore = recordsObj[currentNickname];
-    let myIdx = sorted.findIndex(x => x.name === currentNickname) + 1;
-    document.getElementById('rankMyPosition').textContent = `${myIdx}º Lugar no Ranking`;
-    document.getElementById('rankMySummary').textContent = `Sua melhor pontuação esta semana foi ${myScore} de 50 acertos.`;
-    document.getElementById('stat-rank-pos').textContent = `${myIdx}º`;
-  } else {
-    document.getElementById('rankMyPosition').textContent = `Ainda sem posição na semana`;
-    document.getElementById('rankMySummary').textContent = `Conclua um simulado de 50 questões para entrar no ranking.`;
-    document.getElementById('stat-rank-pos').textContent = `—`;
-  }
-}
-
-function updateHomeStats() {
-  try {
-    let history = JSON.parse(localStorage.getItem('qg_estude_sims_history') || '[]');
-    document.getElementById('stat-sims').textContent = history.length;
-    if(history.length > 0) {
-      let best = Math.max(...history.map(x => x.score));
-      document.getElementById('stat-best').textContent = `${best} / 50`;
-      let last = history[history.length - 1];
-      document.getElementById('stat-status').textContent = last.approved ? 'Aprovado ✅' : 'Em Treino 📚';
-    }
-  } catch(e) {}
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-  updateHomeStats();
-});
 </script>
 </body>
 </html>
