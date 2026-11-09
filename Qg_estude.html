@@ -49,7 +49,7 @@
                     <button onclick="fazerLogout()" class="text-xs text-red-400 hover:text-red-300 ml-2" title="Sair"><i class="fa-solid fa-right-from-bracket"></i></button>
                 </div>
                 <!-- Botão Área ADM -->
-                <button onclick="abrirModalAdmin()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg text-sm border border-gray-700 flex items-center space-x-2 transition">
+                <button type="button" onclick="abrirModalAdmin()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1.5 rounded-lg text-sm border border-gray-700 flex items-center space-x-2 transition cursor-pointer">
                     <i class="fa-solid fa-lock text-yellow-500"></i>
                     <span>Área ADM</span>
                 </button>
@@ -76,4 +76,143 @@
                     <input type="text" id="inputNickname" required placeholder="Ex: Guerreiro_PM" 
                         class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-600 transition">
                 </div>
-                <button type="submit" class="w-full bg-blue-
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-blue-600/20">
+                    Acessar Plataforma
+                </button>
+            </form>
+        </div>
+
+        <!-- TELA 2: PAINEL PRINCIPAL DO ALUNO (Oculto inicialmente) -->
+        <div id="viewDashboard" class="hidden space-y-6">
+            <div class="bg-gradient-to-r from-blue-900/40 to-brand-card border border-blue-800/40 p-6 rounded-2xl flex flex-col md:flex-row justify-between items-center shadow-lg">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white" id="saudacaoAluno">Olá, Guerreiro!</h2>
+                    <p class="text-gray-300 text-sm mt-1">Escolha um simulado abaixo para iniciar sua preparação focada.</p>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <button onclick="carregarRanking()" class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-yellow-400 px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center space-x-2 transition">
+                        <i class="fa-solid fa-trophy"></i>
+                        <span>Ver Ranking Geral</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Grade de Simulados -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Card PMESP -->
+                <div class="bg-brand-card border border-gray-800 p-6 rounded-2xl hover:border-blue-600/50 transition flex flex-col justify-between">
+                    <div>
+                        <span class="bg-blue-600/10 text-blue-400 text-xs px-3 py-1 rounded-full font-semibold">Concurso Estadual</span>
+                        <h3 class="text-xl font-bold text-white mt-3">Simulado PMESP - Soldado</h3>
+                        <p class="text-gray-400 text-sm mt-2">Questões focadas no padrão Vunesp: Língua Portuguesa, Matemática, História, Geografia, Atualidades e Informática.</p>
+                    </div>
+                    <div class="mt-6">
+                        <button onclick="iniciarSimulado('PMESP')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl transition">
+                            Iniciar Simulado PMESP
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card GCM-SP -->
+                <div class="bg-brand-card border border-gray-800 p-6 rounded-2xl hover:border-purple-600/50 transition flex flex-col justify-between">
+                    <div>
+                        <span class="bg-purple-600/10 text-purple-400 text-xs px-3 py-1 rounded-full font-semibold">Concurso Municipal</span>
+                        <h3 class="text-xl font-bold text-white mt-3">Simulado GCM - Guarda Civil</h3>
+                        <p class="text-gray-400 text-sm mt-2">Foco em Legislação Municipal, Estatuto da Criança e do Adolescente (ECA), Constituição Federal e Direitos Humanos.</p>
+                    </div>
+                    <div class="mt-6">
+                        <button onclick="iniciarSimulado('GCM')" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2.5 rounded-xl transition">
+                            Iniciar Simulado GCM-SP
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MODAL DE LOGIN ADMIN -->
+    <div id="modalAdmin" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-brand-card border border-gray-800 max-w-sm w-full p-6 rounded-2xl relative shadow-2xl">
+            <button type="button" onclick="fecharModalAdmin()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <h3 class="text-lg font-bold text-white mb-2"><i class="fa-solid fa-lock text-yellow-500 mr-2"></i>Painel do Administrador</h3>
+            <p class="text-xs text-gray-400 mb-4">Acesso restrito para gestão de conteúdos e questões.</p>
+            
+            <form id="formAdminLogin" onsubmit="fazerLoginAdmin(event)" class="space-y-3">
+                <input type="email" id="adminEmail" required placeholder="E-mail do Administrador" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-yellow-500">
+                <input type="password" id="adminSenha" required placeholder="Senha" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-yellow-500">
+                <button type="submit" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2.5 rounded-xl text-sm transition">Entrar como ADM</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE CONFIGURAÇÃO DO SUPABASE E LÓGICA -->
+    <script>
+        // Configuração do Supabase
+        const SUPABASE_URL = 'https://nacalwxpvfbjisyosboz.supabase.co';
+        const SUPABASE_ANON_KEY = 'Sb_publishable_OjIWYiN3KE47ymE_bn1fSQ_7CWo0g54';
+        
+        let supabaseClient;
+        
+        // Inicialização com tratamento de erro
+        try {
+            if (window.supabase) {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            }
+        } catch (err) {
+            console.error("Erro ao inicializar Supabase:", err);
+        }
+
+        // Funções do Modal Admin
+        function abrirModalAdmin() {
+            const modal = document.getElementById('modalAdmin');
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function fecharModalAdmin() {
+            const modal = document.getElementById('modalAdmin');
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // Login do Administrador
+        async function fazerLoginAdmin(e) {
+            e.preventDefault();
+            const email = document.getElementById('adminEmail').value;
+            const senha = document.getElementById('adminSenha').value;
+
+            if (!supabaseClient) {
+                alert("Erro: O cliente do Supabase não foi carregado corretamente.");
+                return;
+            }
+
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: senha
+            });
+
+            if (error) {
+                alert("Erro ao entrar: " + error.message);
+            } else {
+                alert("Login de Administrador efetuado com sucesso!");
+                fecharModalAdmin();
+            }
+        }
+
+        // Funções de navegação do aluno
+        function entrarComoAluno(e) {
+            e.preventDefault();
+            const nickname = document.getElementById('inputNickname').value.trim();
+            if (!nickname) return;
+            
+            localStorage.setItem('qg_usuario', nickname);
+            atualizarInterfaceAluno();
+        }
+
+        function atualizarInterfaceAluno() {
+            const usuario = localStorage.getItem('qg_usuario');
+            if (usuario) {
+                document.getElementById('view
