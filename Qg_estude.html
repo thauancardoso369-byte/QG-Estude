@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -41,6 +40,51 @@ footer{text-align:center;color:#8a95a5;font-size:11px;padding:24px}
 
 @media(max-width:850px){.app{grid-template-columns:1fr}.sidebar{padding:12px 14px;gap:10px}.brand{padding:0}.nav{display:flex;overflow:auto;gap:3px}.nav-label,.sidebar-note{display:none}.nav button{white-space:nowrap;width:auto;padding:9px}.nav button span{width:auto;margin-right:4px}.topbar{height:54px;padding:0 15px}.content{padding:20px 14px}.question-layout{grid-template-columns:1fr}.side-panel{order:-1}.subject-list{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.welcome{align-items:flex-start;flex-direction:column}.welcome h1{font-size:24px}.exams{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr);gap:8px}.stat{padding:12px}.stat strong{font-size:22px}.content{padding:17px 12px}.question-card{padding:16px}.question-actions{flex-wrap:wrap}.question-actions button{flex:1}}
+
+/* Ajustes de leitura e toque para celulares */
+@media (max-width: 700px) {
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body { font-size: 16px; line-height: 1.55; }
+  .brand strong { font-size: 17px; }
+  .brand small { font-size: 13px; }
+  .nav { padding-bottom: 3px; }
+  .nav button { font-size: 14px; min-height: 44px; padding: 10px 12px; }
+  .topbar { min-height: 56px; height: auto; }
+  .topbar small, .profile { font-size: 14px; }
+  .content { padding: 18px 14px; }
+  .eyebrow, .nav-label { font-size: 12px; }
+  .welcome h1 { font-size: 27px; line-height: 1.2; }
+  .welcome p, .exam-card p, .muted, .desc { font-size: 15px; line-height: 1.55; }
+  .section-head h2 { font-size: 20px; }
+  .section-head p { font-size: 14px; line-height: 1.45; }
+  .stat .label { font-size: 14px; }
+  .stat small, .notice, .chip, .subject-list button { font-size: 14px; line-height: 1.45; }
+  .stat strong { font-size: 24px; }
+  .exam-card h3 { font-size: 19px; }
+  .panel, .exam-card { padding: 16px; }
+  .question-card { padding: 18px; }
+  .question-meta { font-size: 14px; flex-wrap: wrap; }
+  .question-card h2 { font-size: 19px; line-height: 1.55; }
+  .option { font-size: 16px; line-height: 1.55; padding: 15px 13px; min-height: 50px; }
+  .letter { flex-basis: 29px; height: 29px; font-size: 14px; }
+  .feedback { font-size: 15px; line-height: 1.6; }
+  button, input, select, textarea { font-size: 16px; }
+  .primary, .secondary, .question-actions button { min-height: 46px; padding: 12px 16px; }
+  .question-actions { gap: 10px; }
+  footer { font-size: 13px; }
+  #qg-admin-launch { font-size: 14px !important; min-height: 44px; }
+  #qg-admin-inline-entry button { font-size: 14px !important; min-height: 44px; }
+  #qg-admin-modal, #qg-admin-modal * { line-height: 1.5; }
+}
+@media (max-width: 420px) {
+  .content { padding: 16px 11px; }
+  .welcome h1 { font-size: 25px; }
+  .question-card h2 { font-size: 18px; }
+  .option { font-size: 15.5px; }
+  .grid { gap: 8px; }
+  .stat { padding: 11px; }
+}
+
 </style>
 <script>
 /* Identificação simples do aluno: sem autenticação, somente apelido neste dispositivo. */
